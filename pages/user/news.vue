@@ -25,15 +25,14 @@ const displayedActivities = computed(() => {
   const start = (currentPage.value - 1) * activitiesPerPage.value
   return store.news.result.slice(start, start + activitiesPerPage.value)
 })
-console.log(displayedActivities, 'displayedActivities')
 </script>
 
 <template>
-  <div class="pages">
-    <div class="sec-title">
-      <span>{{ $lang('平台公告') }}</span>
-      <i class="fas fa-gift"></i>
+  <div class="news">
+    <div class="news-title">
+      <span>{{ $lang('網站公告') }}</span>
     </div>
+
     <ul class="pagination">
       <li :class="{ disabled: currentPage === 1 }" @click="previousPage">
         <a>« {{ $lang('上一頁') }}</a>
@@ -42,102 +41,77 @@ console.log(displayedActivities, 'displayedActivities')
         <a>{{ $lang('下一頁') }} »</a>
       </li>
     </ul>
-    <div class="post">
+    <div class="card">
       <div v-for="item in displayedActivities" :key="item.title" class="Item">
-        <input :id="item.title" type="checkbox" />
-        <label :for="item.title">
-          <div class="itemTitle" style="cursor: pointer">
-            <div>{{ item.title }}</div>
-          </div>
-          <div class="itemContent">
-            <div class="html" v-html="item.content"></div>
-          </div>
-        </label>
+        <div class="itemTitle" style="cursor: pointer">
+          <div class="image"><img :src="item.image" /></div>
+        </div>
+        <div class="itemContent">
+          {{ item.title }}
+          <br />
+          <div class="html" v-html="item.content"></div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="sass">
-@import '@/assets/sass/user/model2/coin2.scss'
-.pages
-  padding: 20px
-  @media screen and (max-width: 768px)
-    padding: 10px
-</style>
+@import '@/assets/sass/user/model3/coin2.scss'
 
-<style scoped lang="sass">
-.router
-  width: 100%
-  height: 35px
-  position: relative
-  border-radius: 5px
-  font-size: 16px
-  background-color: #afafaf
-  color: #fff
-  display: flex
-  align-items: center
-  justify-content: flex-start
-  border: 1px solid #fff
-  svg
-    padding: 0 20px 0 10px
-  .home
-    cursor: pointer
-</style>
-
-<style scoped lang="sass">
 .pagination
   display: flex
-  padding-left: 0
-  list-style: none
-  border-radius: .25rem
-  margin: 20px 0
-  li
-    margin: 0 5px 0 0
-  li.disabled
-    opacity: .5
-    pointer-events: none
-  a
-    background-color: #ffffff
-    color: rgba(0, 0, 0, .87)
-    padding: 3px 10px
-    border-radius: 2px
-    font-size: 14px
-    font-weight: 500
-    transition: box-shadow .2s cubic-bezier(.4,0,1,1), background-color .2s cubic-bezier(.4,0,.2,1), color .2s cubic-bezier(.4,0,.2,1)
-    outline: 0
-    border: 0
-</style>
+  align-items: center
+  padding: 24px 0
 
-<style scoped lang="sass">
-.post
-  margin: 10px 0
-  .Item
-    position: relative
+  li
+    padding: 0px
+  a
+    padding: 8px
     background-color: #fff
-    margin: 10px 0
-    width: 100%
-    .itemContent
-      border-bottom: 1px solid
-      display: none
-      padding: 10px 5px 20px 5px
-    input[type="checkbox"]
-      display: none
-    label
-      width: 100%
-    input[type="checkbox"]:checked ~ label .itemContent
-      display: block
-    .itemTitle
-      width: 100%
-      border-bottom: 1px solid
-      padding: 8px
-      background-color: white
-      .image
-        width: 100%
-        img
-          width: 100%
-          max-height: 400px
-          object-fit: cover
-          border-radius: 5px
-          margin: 0 0 10px 0
+    margin: 0 4px
+    cursor: pointer
+    transition: all 300ms
+
+    &:hover
+      background-color: darken(#fff, 10)
+
+.news
+  padding: 20px
+
+  @media screen and (max-width: 768px)
+    padding: 10px
+
+  &-title
+    font-weight: bold
+    padding: 12px 15px
+    font-size: 18px
+    margin-bottom: 6px
+    background-color: #32333a
+    color: #fff
+    border-radius: 6px
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26)
+
+    @media (min-width: 768px)
+      padding: 22px 26px
+      font-size: 20px
+      margin-bottom: 16px
+
+
+.card
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26)
+  border-radius: .375rem
+  background-color: #fff
+  padding: 16px
+
+  @media screen and (min-width: 768px)
+    padding: 30px
+
+  p
+    padding: 15px
+    font-size: 15px
+
+    @media screen and (min-width: 768px)
+      font-size: 16px
+      padding: 0
 </style>

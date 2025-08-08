@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-const { t } = useI18n()
 const router = useRouter()
 const playerStore = usePlayerStore()
 const siteStore = useSiteStore()
@@ -23,33 +22,26 @@ await useAsyncData(() => {
 const submitBankApply = async () => {
   console.log(bankInfo)
   if (bankInfo.value.branch === '') {
-    return ElMessage.error(t('請填寫分行'))
+    return ElMessage.error('請填寫分行')
   }
   if (bankInfo.value.account === '') {
-    return ElMessage.error(t('請填寫戶名'))
+    return ElMessage.error('請填寫戶名')
   }
   if (bankInfo.value.accountNo === '') {
-    return ElMessage.error(t('請填寫帳號'))
+    return ElMessage.error('請填寫帳號')
   }
   if (bankInfo.value.image[0] === '') {
-    return ElMessage.error(t('請上傳身分證正面'))
+    return ElMessage.error('請上傳身分證正面')
   }
   if (bankInfo.value.image[1] === '') {
-    return ElMessage.error(t('請上傳身分證反面'))
+    return ElMessage.error('請上傳身分證反面')
   }
-  // if (bankInfo.value.image[2] === '') {
-  //   return ElMessage.error('請上傳存摺')
-  // }
+  if (bankInfo.value.image[2] === '') {
+    return ElMessage.error('請上傳存摺')
+  }
   const bankApplyRes = await bankApply(bankInfo.value)
   if (bankApplyRes) {
-    setTimeout(async () => {
-      const res = await playerStore.fetchInfo()
-      if (res.success) {
-        if (playerStore.playerInfo.bankInfo.status === 1) {
-          navigateTo('/user/withdraw')
-        }
-      }
-    }, 1000)
+    await playerStore.fetchInfo()
   }
 }
 const changeType = async (type) => {
@@ -87,10 +79,6 @@ const updateImage = (data) => {
 </script>
 <template>
   <div>
-    <div class="sec-title">
-      <span>{{ $lang('實名認證') }}</span>
-      <i class="fas fa-money-check"></i>
-    </div>
     <div class="bank_form">
       <div
         v-if="Object.keys(playerStore.playerInfo.bankInfo || {}).length === 0"
@@ -151,16 +139,16 @@ const updateImage = (data) => {
               required
             />
           </div>
-          <div class="input-classic">
+          <!-- <div class="input-classic">
             <span class="input-title">{{ $lang('上傳檔案') }}</span>
-            <!-- <input
+            <input
               id="file"
               type="file"
               onchange="app.checkImg(this)"
               accept="image/png, image/jpeg, image/jpg"
               multiple
-            /> -->
-          </div>
+            />
+          </div> -->
           <div class="input-classic">
             <span class="input-title">{{ $lang('身分證正面') }}</span>
             <pureImgUploader
@@ -177,14 +165,14 @@ const updateImage = (data) => {
               @update-image="updateImage"
             ></pureImgUploader>
           </div>
-          <!-- <div class="input-classic">
+          <div class="input-classic">
             <span class="input-title">{{ $lang('存摺封面照') }}</span>
             <pureImgUploader
               :limit="1"
               :index="2"
               @update-image="updateImage"
             ></pureImgUploader>
-          </div> -->
+          </div>
         </div>
         <!-- <div v-if="type === 'address'">
           <div class="input-classic">
@@ -227,12 +215,10 @@ const updateImage = (data) => {
   </div>
 </template>
 <style scoped lang="sass">
-@import '@/assets/sass/user/model2/coin2.scss'
+@import '@/assets/sass/user/model3/coin2.scss'
 </style>
 
 <style scoped lang="sass">
-.form-bg
-  // background-image: url('@/assets/image/kava-hero.jpg') !important
 .formSection
   margin: 20px 0 0 0
   width: 100%
@@ -240,7 +226,6 @@ const updateImage = (data) => {
   position: relative
   border-radius: 5px
   font-size: 16px
-  border: 1px solid #fff
   overflow-y: auto
   @media screen and (max-width: 768px)
     height: 48vh
@@ -248,6 +233,63 @@ const updateImage = (data) => {
     width: 100%
   .input-classic
     .input-title
-      margin: 0 10px 0 0
+      margin: 0 10px 10px 0
       width: 80px
+</style>
+
+<style scoped lang="sass">
+.bank_form
+  .form-bg
+    padding: 5px 10px 20px
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%)
+    border-radius: .375rem
+    margin-top: 0
+    @media screen and (min-width: 768px)
+      padding: 30px
+
+  .btn-submit.submit
+    cursor: pointer
+    display: block
+    border-radius: 4px
+    letter-spacing: .5px
+    text-align: center
+    border-style: none
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, .2), 0px 2px 2px 0px rgba(0, 0, 0, .14), 0px 3px 1px -2px rgba(0, 0, 0, .12)
+    outline: none
+    text-shadow: 0 0 10px rgba(0, 0, 0, .5)
+    padding: 6px 16px
+    font-size: 13px
+    background-color: #6c757d
+    font-weight: bold
+    color: #fff
+    margin: 0 auto
+
+    @media screen and (min-width: 768px)
+      padding: 6px 16px
+      font-size: 16px
+
+  .input-classic
+    display: flex
+    flex-wrap: nowrap
+    margin-bottom: 25px
+
+    @media screen and (min-width: 768px)
+      width: 100%
+      max-width: 100%
+      margin-left: 0
+      margin-right: 0
+
+    span.input-title
+      color: #252525
+      font-weight: bold
+      font-size: 15px
+      width: 35%
+
+    select,
+    input
+      width: 100%
+      color: rgba(0, 0, 0, .87)
+      padding: 5px
+      background-color: rgba(0, 0, 0, 0)
+      border-bottom: 1px solid rgba(0, 0, 0, .87)
 </style>

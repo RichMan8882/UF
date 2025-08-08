@@ -450,6 +450,7 @@ const getChartData = async (timestamp: any) => {
       }
     })
     createChartData.value = { newKLines, time: timestamp }
+    console.log('createChartData.value', createChartData.value)
   }
 }
 
@@ -776,7 +777,7 @@ await onMounted(async () => {
     }
     timeoutId.value = setTimeout(
       () => {
-        navigateTo('/user')
+        navigateTo('/user/info')
       },
       siteStore.siteData?.gameCenterOutInterval
         ? siteStore.siteData?.gameCenterOutInterval * 60 * 1000
@@ -876,717 +877,655 @@ const betAmountsList = computed(() => {
   }
 })
 
-const languageList = ref([
-  {
-    name: '繁體中文',
-    value: 'zh_TW'
-  },
-  {
-    name: '简体中文',
-    value: 'zh_CN'
-  },
-  {
-    name: 'English',
-    value: 'en_US'
-  },
-  {
-    name: '日本語',
-    value: 'ja_JP'
+const checkSymbolTV = (value) => {
+  switch (value) {
+    case 'COZCA0':
+      return true
+    case 'COZSA0':
+      return true
+    case 'COZWA0':
+      return true
+    case 'LEAHD3M':
+      return false
+    case 'LECAD3M':
+      return false
+    case 'LENID3M':
+      return false
+    case 'LEPBD3M':
+      return false
+    case 'LESND3M':
+      return false
+    case 'LEZSD3M':
+      return false
+    case 'NECLA0':
+      return true
+    case 'NEHOA0':
+      return true
+    case 'NENGA0':
+      return true
+    case 'NENGA0':
+      return true
+    case 'WFAUDUSD':
+      return true
+    case 'WFEURGBP':
+      return true
+    case 'WFEURUSD':
+      return true
+    case 'WFGBPJPY':
+      return true
+    case 'WFGBPUSD':
+      return true
+    case 'WFUSDCAD':
+      return true
+    case 'WFUSDCNY':
+      return true
+    case 'WFUSDHKD':
+      return true
+    case 'WFUSDJPY':
+      return true
+    case 'WFUSDTWD':
+      return true
+    default:
+      return true
   }
-])
-const popupSwitch = ref(false)
-const langChange = (value: string) => {
-  locale.value = value
 }
 </script>
 
 <template>
-  <div id="Base_Member">
-    <header data-header class="{auth}">
-      <input id="popupSwitch" v-model="popupSwitch" type="checkbox" name="" />
-      <label v-if="!popupSwitch" class="mobile-btn" for="popupSwitch"
-        ><i class="fas fa-bars"></i>
-      </label>
-      <label v-else class="mobile-btn" for="popupSwitch">
-        <i class="fas fa-bars fa-times"></i>
-      </label>
-      <h1 class="logo" @click="navigateTo('/')">
-        <img :src="siteStore.siteData.logo" alt="" data-webLogo />
-      </h1>
-      <input id="langSwitch" type="checkbox" />
-      <div class="info-row">
-        <div class="game-time">
-          {{ $lang('現在時間') }}：<span>{{ currentTime }}</span>
+  <div id="Base_Member" class="page">
+    <div class="head">
+      <div class="logo" @click="navigateTo(`/`)">
+        <img :src="siteStore.siteData.logo" />
+        <!-- <div class="title">{{ siteStore.siteData.gameName }}</div> -->
+      </div>
+      <div class="userInfo">
+        <div class="name">{{ PlayerStore.playerInfo.username }}</div>
+        <div class="wallet"></div>
+        <b> {{ new Intl.NumberFormat('zh-TW').format(playerWalletBalance) }}</b>
+      </div>
+    </div>
+    <div class="body">
+      <input
+        id="coinBox"
+        type="checkbox"
+        hidden="hidden"
+        :checked="coinBoxChecked"
+      />
+      <div class="bodyLeft">
+        <div class="leftItem" @click="goPopup('當前委託')">
+          <i class="fas fa-clipboard-list"></i>
+          <div>{{ $lang('當前委託') }}</div>
         </div>
-        <div class="user-item">
-          <div class="user-item-title"><i class="fas fa-user-alt"></i></div>
-          <span data-userName>{{ PlayerStore.playerInfo.username }}</span>
+        <div class="leftItem" @click="goPopup('歷史委託')">
+          <i class="fas fa-history"></i>
+          <div>{{ $lang('歷史委託') }}</div>
         </div>
-        <div class="user-item">
-          <div class="user-item-title"><i class="fas fa-coins"></i></div>
-          <b class="pr-1">$</b
-          ><span name="wallet" data-userWallet>{{
-            new Intl.NumberFormat('zh-TW').format(playerWalletBalance)
-          }}</span>
+        <div class="leftItem" @click="goPopup('歷史盤口')">
+          <i class="fas fa-award"></i>
+          <div>{{ $lang('歷史盤口') }}</div>
         </div>
-        <div
-          class="info-item"
-          data-toggle="modal"
-          data-target=".formModal"
-          data-type="0"
-          @click="goPopup('當前委託')"
+        <div class="leftItem" @click="goPopup('網站公告')">
+          <i class="fas fa-bullhorn"></i>
+          <div>{{ $lang('網站公告') }}</div>
+        </div>
+        <div class="leftItem" @click="goPopup('規則說明')">
+          <i class="fas fa-question-circle"></i>
+          <div>{{ $lang('規則說明') }}</div>
+        </div>
+        <label for="coinBox" class="leftItem rankBtn"
+          ><i class="fas fa-chart-bar"></i>
+          <div>{{ $lang('交易類別') }}</div></label
         >
-          <i class="fas fa-clipboard-list"></i>{{ $lang('當前委託') }}
-        </div>
-        <div
-          class="info-item"
-          data-toggle="modal"
-          data-target=".formModal"
-          data-type="1"
-          @click="goPopup('歷史委託')"
-        >
-          <i class="fas fa-history"></i>{{ $lang('歷史委託') }}
-        </div>
-        <div
-          class="info-item"
-          data-toggle="modal"
-          data-target=".formModal"
-          data-type="2"
-          @click="goPopup('歷史盤口')"
-        >
-          <i class="fas fa-award"></i>{{ $lang('歷史盤口') }}
-        </div>
-        <div
-          class="info-item"
-          data-toggle="modal"
-          data-target=".formModal"
-          data-type="3"
-          @click="goPopup('網站公告')"
-        >
-          <i class="fas fa-bullhorn"></i>{{ $lang('網站公告') }}
-        </div>
-        <div
-          class="info-item"
-          data-toggle="modal"
-          data-target=".formModal"
-          data-type="4"
-          @click="goPopup('規則說明')"
-        >
-          <i class="fas fa-question-circle"></i>{{ $lang('規則說明') }}
-        </div>
-        <div class="info-item lang-row">
-          <label
-            for="langSwitch"
-            class="dropdown-toggle span-lang"
-            data-toggle="dropdown"
-          >
-            <i class="fas fa-globe-asia"></i>
-            <span v-if="locale === 'zh_TW'" class="zh_TW">繁體中文</span>
-            <span v-if="locale === 'zh_CN'" class="zh_CN">简体中文</span>
-            <span v-if="locale === 'en_US'" class="en_US">English</span>
-            <span v-if="locale === 'ja_JP'" class="vi_VN">日本語</span>
-          </label>
-          <div class="dropdown-menu">
-            <!-- @lang-item2 -->
-            <a
-              v-for="(items, index) in languageList"
-              :key="index"
-              href=""
-              class="dropdown-item"
-              @click="langChange(items.value)"
-              ><span class="lang-img">{{ items.name }}</span></a
-            >
-            <!-- @lang-item2 -->
+      </div>
+      <div id="TempPage" class="tempPage">
+        <div class="chartSection">
+          <div v-if="checkSymbolTV(symbol)" class="chart">
+            <gameChart
+              :symbol="symbol"
+              :symbol-data="symbolData"
+              :socket-new-price="socketNewPrice"
+              :create-chart-data="createChartData"
+              :now-timestamp="nowTimestamp"
+              :socket-current-round-countdown="socketCurrentRoundCountdown"
+              :round-no="betData.roundNo"
+            ></gameChart>
           </div>
-        </div>
-      </div>
-      <div class="lang-row-m">
-        <label
-          for="langSwitch"
-          class="dropdown-toggle span-lang"
-          data-toggle="dropdown"
-        >
-          <i class="fas fa-globe-asia"></i>
-          <span v-if="locale === 'zh_TW'" class="zh_TW">繁體中文</span>
-          <span v-if="locale === 'zh_CN'" class="zh_CN">简体中文</span>
-          <span v-if="locale === 'en_US'" class="en_US">English</span>
-          <span v-if="locale === 'ja_JP'" class="vi_VN">日本語</span>
-        </label>
-        <div class="dropdown-menu">
-          <!-- @lang-item2 -->
-          <a
-            v-for="(items, index) in languageList"
-            :key="index"
-            href=""
-            class="dropdown-item"
-            @click="langChange(items.value)"
-            ><span class="lang-img">{{ items.name }}</span></a
-          >
-          <!-- @lang-item2 -->
-        </div>
-      </div>
-    </header>
-    <main>
-      <div class="nav-gp">
-        <div class="now-game" data-rateName>
-          <div class="now-game-txt" data-nowGameT>
-            {{
-              symbolData
-                ? symbolData.label || symbolData.name || symbolData.symbol
-                : ''
-            }}
+          <div v-if="checkSymbolTV(symbol)" class="k-line-box">
+            <gameTvWidgetGe :symbol="symbol" />
           </div>
-        </div>
-        <div class="nav-row owl-carousel owl-theme" data-pairRow>
-          <a
-            v-for="item in availableCurrency"
-            :key="item.symbol"
-            class="nav-list"
-            :class="{ active: symbol === item.symbol }"
-            @click="selectSymbol(item)"
-          >
-            <div class="nav-list-desc">
-              <div class="nav-name" data-itemName data-game>
-                {{
-                  item.symbolData.label ||
-                  item.symbolData.name ||
-                  item.symbolData.symbol
-                }}
-              </div>
-              <div
-                class="view-item-amplitude"
-                :data-type="
-                  item.price[item.price.length - 1].close >
-                  item.price[item.price.length - 1].open
-                    ? 'up'
-                    : 'down'
-                "
-              >
-                <div class="view-item-data color-ch">
-                  <span>{{ $lang('即時') }}</span>
-                  <span data-pairNow>{{
-                    item.price[item.price.length - 1].open
-                  }}</span>
-                </div>
-                <div class="view-item-data">
-                  <span>{{ $lang('收盤') }}</span>
-                  <span data-pairLast>{{
-                    item.price[item.price.length - 1].close
-                  }}</span>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-      <input id="coinBox" type="checkbox" hidden />
-      <div id="inside-page" data-bopt>
-        <div v-if="availableCurrency.length > 0" class="gameBlock">
           <gameChart
+            v-else
             :symbol="symbol"
             :symbol-data="symbolData"
             :socket-new-price="socketNewPrice"
             :create-chart-data="createChartData"
             :now-timestamp="nowTimestamp"
             :socket-current-round-countdown="socketCurrentRoundCountdown"
-          />
+            :round-no="betData.roundNo"
+          ></gameChart>
         </div>
-        <div class="kLineBox">
-          <gameTvWidgetGe :symbol="symbol" />
-        </div>
-        <div class="control-box">
-          <div class="form" data-inputRow>
-            <input
-              id="game-1"
-              class="gameType"
-              name="game-1"
-              type="checkbox"
-              data-gameType
-              data-group="1"
-              hidden
-            />
-            <input
-              id="game-2"
-              class="gameType"
-              name="game-2"
-              type="checkbox"
-              data-gameType
-              data-group="1"
-              hidden
-            />
-            <input
-              id="game-3"
-              class="gameType"
-              name="game-3"
-              type="checkbox"
-              data-gameType
-              data-group="2"
-              hidden
-            />
-            <input
-              id="game-4"
-              class="gameType"
-              name="game-4"
-              type="checkbox"
-              data-gameType
-              data-group="2"
-              hidden
-            />
-            <input
-              id="game-5"
-              class="gameType"
-              name="game-5"
-              type="checkbox"
-              data-gameType
-              data-group="3"
-              hidden
-            />
-            <input
-              id="game-6"
-              class="gameType"
-              name="game-6"
-              type="checkbox"
-              data-gameType
-              data-group="3"
-              hidden
-            />
-            <input
-              id="game-7"
-              class="gameType"
-              name="game-7"
-              type="checkbox"
-              data-gameType
-              data-group="4"
-              hidden
-            />
-            <div class="control-num">
-              <div class="control-num-item">
-                <div class="title">{{ $lang('當前交易期數') }}</div>
-                <span data-roundNum>{{ betData.roundNo }}</span>
+        <div class="controlBlock">
+          <div class="containerRow">
+            <div data-event="1" data-inputrow="" class="centerRow">
+              <input
+                id="game-1"
+                name="game-1"
+                type="checkbox"
+                hidden="hidden"
+                class="gameType"
+              />
+              <input
+                id="game-2"
+                name="game-2"
+                type="checkbox"
+                hidden="hidden"
+                class="gameType"
+              />
+              <input
+                id="game-3"
+                name="game-3"
+                type="checkbox"
+                hidden="hidden"
+                class="gameType"
+              />
+              <input
+                id="game-4"
+                name="game-4"
+                type="checkbox"
+                hidden="hidden"
+                class="gameType"
+              />
+              <input
+                id="game-5"
+                name="game-5"
+                type="checkbox"
+                hidden="hidden"
+                class="gameType"
+              />
+              <input
+                id="game-6"
+                name="game-6"
+                type="checkbox"
+                hidden="hidden"
+                class="gameType"
+              />
+              <input
+                id="game-7"
+                name="game-7"
+                type="checkbox"
+                hidden="hidden"
+                class="gameType"
+              />
+              <div class="leftBox">
+                <label
+                  v-if="showOption(0)"
+                  for="game-1"
+                  class=""
+                  @click="addBetGameType(0)"
+                  ><span>{{ $lang('高') }}</span>
+                  <span class="odds">{{ gameOptionOdd(0) }}</span></label
+                >
+                <label
+                  v-if="showOption(2)"
+                  for="game-3"
+                  class=""
+                  @click="addBetGameType(2)"
+                  ><span>{{ $lang('單') }}</span>
+                  <span class="odds">{{ gameOptionOdd(2) }}</span></label
+                >
+                <label
+                  v-if="showOption(1)"
+                  for="game-2"
+                  class=""
+                  @click="addBetGameType(1)"
+                  ><span>{{ $lang('低') }}</span>
+                  <span class="odds">{{ gameOptionOdd(1) }}</span></label
+                >
+                <label
+                  v-if="showOption(3)"
+                  for="game-4"
+                  class=""
+                  @click="addBetGameType(3)"
+                  ><span>{{ $lang('雙') }}</span>
+                  <span class="odds">{{ gameOptionOdd(3) }}</span></label
+                >
+                <label
+                  v-if="showOption(4)"
+                  for="game-5"
+                  class=""
+                  @click="addBetGameType(4)"
+                  ><span>{{ $lang('漲') }}</span>
+                  <span class="odds">{{ gameOptionOdd(4) }}</span></label
+                >
+                <label
+                  v-if="showOption(5)"
+                  for="game-6"
+                  class=""
+                  @click="addBetGameType(5)"
+                  ><span>{{ $lang('跌') }}</span>
+                  <span class="odds">{{ gameOptionOdd(5) }}</span></label
+                >
               </div>
-              <div class="control-num-item">
-                <div class="title">{{ $lang('最後購買時間') }}</div>
-                <div class="time-box gameTime">
-                  <span id="time">{{ socketCurrentRoundCountdown }}</span
-                  >s
-                </div>
+              <div class="rightBox">
+                <label
+                  v-if="showOption(6)"
+                  for="game-7"
+                  class=""
+                  @click="addBetGameType(6)"
+                  ><span>{{ $lang('反指標') }}</span>
+                  <span class="odds">{{ gameOptionOdd(6) }}</span></label
+                >
               </div>
             </div>
-            <div class="rank-box">
-              <div class="add-box" data-quickSelect>
-                <span
-                  v-for="item in betAmountsList"
-                  class="game-coin"
-                  @click="betData.amount = `${Number(item)}`"
-                  >{{ betFormatNumber(item) }}</span
-                >
-                <!-- <span
-                  class="game-coin"
-                  data-coin="100"
-                  @click="betData.amount = '100'"
-                  >100</span
-                >
-                <span
-                  class="game-coin"
-                  data-coin="500"
-                  @click="betData.amount = '500'"
-                  >500</span
-                >
-                <span
-                  class="game-coin"
-                  data-coin="1000"
-                  @click="betData.amount = '1000'"
-                  >1k</span
-                > -->
-              </div>
-              <div class="control-btn-out">
-                <div class="control-btn" data-event="1">
-                  <label
-                    v-if="showOption(0)"
-                    for="game-1"
-                    class="game-height hidden"
-                    @click="addBetGameType(0)"
-                  >
-                    <div class="in-bg">
-                      {{ $lang('高')
-                      }}<span class="odds">{{ gameOptionOdd(0) }}</span>
-                    </div>
-                  </label>
-                  <label
-                    v-if="showOption(1)"
-                    for="game-2"
-                    class="game-low hidden"
-                    @click="addBetGameType(1)"
-                  >
-                    <div class="in-bg">
-                      {{ $lang('低')
-                      }}<span class="odds">{{ gameOptionOdd(1) }}</span>
-                    </div>
-                  </label>
-                  <label
-                    v-if="showOption(2)"
-                    for="game-3"
-                    class="game-changed hidden"
-                    @click="addBetGameType(2)"
-                  >
-                    <div class="in-bg">
-                      {{ $lang('單')
-                      }}<span class="odds">{{ gameOptionOdd(2) }}</span>
-                    </div>
-                  </label>
-                  <label
-                    v-if="showOption(3)"
-                    for="game-4"
-                    class="game-changed hidden"
-                    @click="addBetGameType(3)"
-                  >
-                    <div class="in-bg">
-                      {{ $lang('雙')
-                      }}<span class="odds">{{ gameOptionOdd(3) }}</span>
-                    </div>
-                  </label>
-                  <label
-                    v-if="showOption(4)"
-                    for="game-5"
-                    class="game-low"
-                    @click="addBetGameType(4)"
-                  >
-                    <div class="in-bg">
-                      {{ $lang('漲')
-                      }}<span class="odds">{{ gameOptionOdd(4) }}</span>
-                    </div>
-                  </label>
-                  <label
-                    v-if="showOption(5)"
-                    for="game-6"
-                    class="game-height"
-                    @click="addBetGameType(5)"
-                  >
-                    <div class="in-bg">
-                      {{ $lang('跌')
-                      }}<span class="odds">{{ gameOptionOdd(5) }}</span>
-                    </div>
-                  </label>
-                  <!-- <label
-                    for="game-7"
-                    class="game-changed"
-                    v-if="showOption(6)"
-                    @click="addBetGameType(6)"
-                    ><div class="in-bg">
-                      {{ $lang('反指標')
-                      }}<span class="odds">{{ gameOptionOdd(6) }}</span>
-                    </div></label
-                  > -->
-                </div>
-                <div class="coins-input">
-                  <div class="icon">
-                    <i class="fas fa-coins"></i>
+            <div class="bottomRow">
+              <div class="totalBox">
+                <label for="keyInput" class="inputBox"
+                  ><span>{{ $lang('自行輸入金額') }}</span>
+                  <div class="outerBtn hidden">
+                    <i class="far fa-caret-square-up"></i>
                   </div>
                   <input
                     id="keyInput"
                     v-model="betData.amount"
+                    v-trim-input
                     type="text"
                     name="totalView"
                     autocomplete="off"
+                    data-min="1"
+                    data-max="5000000"
                   />
-                  <!-- <input
-                    type="text"
-                    name="total"
-                    autocomplete="off"
-                    value="0"
-                    hidden
-                  /> -->
+                  <a class="mobileQuickSelect">
+                    <input id="mobileQuickSelect" type="checkbox" hidden />
+                    <label for="mobileQuickSelect">
+                      <i class="fa-solid fa-caret-up"></i>
+                    </label>
+                    <div class="mobileQuickSelectPopup">
+                      <label for="mobileQuickSelect">
+                        <div class="selectContent">
+                          <!-- <a @click="betData.amount = '100'">100</a>
+                          <a @click="betData.amount = '1000'">1k</a>
+                          <a @click="betData.amount = '10000'">10k</a>
+                          <a @click="betData.amount = '1000000'">1M</a>
+                          <a @click="betData.amount = '10000000'">10M</a> -->
+                          <a
+                            v-for="item in betAmountsList"
+                            @click="betData.amount = `${Number(item)}`"
+                          >
+                            {{ betFormatNumber(item) }}
+                          </a>
+                        </div>
+                      </label>
+                    </div>
+                  </a>
+                </label>
+                <div data-quickselect="" class="quickSelect">
+                  <!-- <span @click="betData.amount = '100'">100</span>
+                  <span @click="betData.amount = '500'">500</span>
+                  <span @click="betData.amount = '800'">800</span> -->
+                  <span
+                    v-for="item in betAmountsList"
+                    @click="betData.amount = `${Number(item)}`"
+                    >{{ betFormatNumber(item) }}</span
+                  >
                 </div>
-                <button
-                  type="button"
-                  class="checkBtn"
-                  data-submit
-                  @click="checkBetData()"
-                >
-                  {{ $lang('確定') }}
+              </div>
+              <div class="btnBlock">
+                <button type="button" class="reBtn" @click="clearBetData()">
+                  {{ $lang('取消') }}
                 </button>
                 <button
                   type="button"
-                  class="reBtn"
-                  data-reset
-                  @click="clearBetData()"
+                  class="checkBtn"
+                  :disabled="disableBet"
+                  @click="checkBetData()"
                 >
-                  {{ $lang('取消') }}
+                  {{ $lang('確定') }}
                 </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </main>
-    <div v-if="showToolPopup" class="popup">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title">{{ record.title }}</h2>
-          <button type="button" data-dismiss="modal" @click="closePopup">
-            {{ $lang('關閉') }}
-          </button>
+      <div class="bodyRight">
+        <input
+          id="rightTab1"
+          type="radio"
+          name="bodyRightTab"
+          hidden="hidden"
+          :checked="true"
+        />
+        <input
+          id="rightTab2"
+          type="radio"
+          name="bodyRightTab"
+          hidden="hidden"
+        />
+        <div class="title">{{ $lang('交易類別') }}</div>
+        <div class="rightTabRow">
+          <label for="rightTab1" class="leftBorder">{{ $lang('即時') }}</label>
+          <label for="rightTab2">{{ $lang('收盤') }}</label>
         </div>
-        <div class="modal-body modal-body-sp">
-          <div data-type="1" class="log">
-            <div
-              v-if="record.type !== 'announcement' && record.type !== 'rule'"
-              class="searchRow"
-            >
-              <div class="coinSelect">
-                <select
-                  v-model="search.symbol"
-                  name="coin"
-                  @change="searchOrder"
-                >
-                  <option
-                    v-for="item in availableCurrency"
-                    :key="item.symbol"
-                    :value="item.symbol"
+        <div class="rightItemRow">
+          <div class="rightItemList">
+            <a
+              v-for="item in availableCurrency"
+              :key="item.symbol"
+              class="rightItem"
+              :class="{ active: symbol === item.symbol }"
+              @click="selectSymbol(item)"
+              ><span class="itemImg">
+                <img :src="item.symbolData.icon" />
+              </span>
+              <span data-itemname="" class="itemName">{{
+                item.symbolData.label ||
+                item.symbolData.name ||
+                item.symbolData.symbol
+              }}</span>
+              <span
+                :data-type="
+                  item.price[item.price.length - 1].close >
+                  item.price[item.price.length - 1].open
+                    ? 'up'
+                    : 'down'
+                "
+                class="itemInfo"
+                ><b class="now">{{
+                  item.price[item.price.length - 1].close
+                }}</b>
+                <b class="last">{{
+                  item.price[item.price.length - 1].close
+                }}</b>
+                <i class="fa-solid fa-angles-up"></i></span
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div v-if="showToolPopup" class="popup">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">{{ record.title }}</h2>
+            <button type="button" data-dismiss="modal" @click="closePopup">
+              {{ $lang('關閉') }}
+            </button>
+          </div>
+          <div class="modal-body modal-body-sp">
+            <div data-type="1" class="log">
+              <div
+                v-if="record.type !== 'announcement' && record.type !== 'rule'"
+                class="searchRow"
+              >
+                <div class="coinSelect">
+                  <select
+                    v-model="search.symbol"
+                    name="coin"
+                    @change="searchOrder"
                   >
-                    {{
-                      item.symbolData.label ||
-                      item.symbolData.name ||
-                      item.symbolData.symbol
-                    }}
-                  </option>
-                </select>
-              </div>
-              <label for="inputSearch" class="inputDate"
-                ><i class="fas fa-search"></i>
-                <input
-                  id="inputSearch"
-                  v-model="search.roundNo"
-                  v-trim-input
-                  type="text"
-                  name="number"
-                  :placeholder="`${$lang('請輸入期號')}`"
-              /></label>
-              <label for="dateStart" class="inputDate"
-                ><i class="fas fa-calendar-alt"></i>
-                <el-date-picker
-                  v-model="search.dateRangeStart"
-                  type="datetime"
-                  :placeholder="`${$lang('起始時間')}`"
-                  :default-time="defaultTime"
-                  :disabled-date="disabledDate"
-                >
-                </el-date-picker>
-              </label>
-              <label for="dateEnd" class="inputDate"
-                ><i class="fas fa-calendar-alt"></i>
-                <el-date-picker
-                  v-model="search.dateRangeEnd"
-                  type="datetime"
-                  :placeholder="`${$lang('結束時間')}`"
-                  :default-time="defaultTime"
-                  :disabled-date="disabledDate"
-                >
-                </el-date-picker>
-              </label>
-              <button type="button" class="searchBtn" @click="searchOrder">
-                {{ $lang('搜尋') }}
-              </button>
-            </div>
-            <div class="dataBlock">
-              <!-- currentOrder -->
-              <div v-if="record.type === 'currentOrder'" class="modal-1">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>{{ $lang('時間/幣種') }}</th>
-                      <th>{{ $lang('投注內容') }}</th>
-                      <th>{{ $lang('投注金額') }}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(item, index) in connectRecordList" :key="index">
-                      <td>
-                        <div>{{ formatDate(item.createdAt) }}</div>
-                        <div>{{ item.label || item.name || item.symbol }}</div>
-                      </td>
-                      <td>
-                        <div>
-                          {{ $lang('期號') }}: <span>{{ item.roundNo }}</span>
-                        </div>
-                        <div>
-                          {{ $lang('賠率') }}:
-                          <span>{{ item.odds }}</span>
-                        </div>
-                        <div v-if="item.option.length > 0">
-                          {{ $lang('內容') }}:
-                          <span
-                            v-for="optionItem in item.option"
-                            :key="optionItem"
-                            class="gameOptionSpan"
-                            >{{ gameOptionName(optionItem) }}</span
-                          >
-                        </div>
-                        <div v-else>
-                          {{ $lang('內容') }}:
-                          <span class="gameOptionSpan">
-                            {{ gameOptionName(item.option) }}</span
-                          >
-                        </div>
-                        <div>
-                          {{ $lang('匯率') }}:
-                          <span>{{
-                            new Intl.NumberFormat('zh-TW', {
-                              minimumFractionDigits: 4,
-                              maximumFractionDigits: 6
-                            }).format(Number(item.originalRoundData.openPrice))
-                          }}</span>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          {{ $lang('金額') }}:
-                          <span>
-                            {{
-                              new Intl.NumberFormat('zh-TW').format(
-                                Number(item.amount)
-                              )
-                            }}</span
-                          >
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!-- historyOrder -->
-              <div v-if="record.type === 'historyOrder'" class="modal-1">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>{{ $lang('時間/幣種') }}</th>
-                      <th>{{ $lang('投注內容') }}</th>
-                      <th>{{ $lang('投注金額') }}</th>
-                      <th style="text-align: center">{{ $lang('盈虧') }}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(item, index) in connectRecordList" :key="index">
-                      <td>
-                        <div>{{ formatDate(item.createdAt) }}</div>
-                        <div>{{ item.label || item.name || item.symbol }}</div>
-                      </td>
-                      <td>
-                        <div>
-                          {{ $lang('期號') }}: <span>{{ item.roundNo }}</span>
-                        </div>
-                        <div>
-                          {{ $lang('賠率') }}:
-                          <span>{{ item.odds }}</span>
-                        </div>
-                        <div v-if="item.option.length > 0">
-                          {{ $lang('內容') }}:
-                          <span
-                            v-for="optionItem in item.option"
-                            :key="optionItem"
-                            class="gameOptionSpan"
-                            >{{ gameOptionName(optionItem) }}</span
-                          >
-                        </div>
-                        <div v-else>
-                          {{ $lang('內容') }}:
-                          <span class="gameOptionSpan">
-                            {{ gameOptionName(item.option) }}</span
-                          >
-                        </div>
-                        <div>
-                          {{ $lang('匯率') }}:
-                          <span>{{
-                            new Intl.NumberFormat('zh-TW', {
-                              minimumFractionDigits: 4,
-                              maximumFractionDigits: 6
-                            }).format(Number(item.openPrice))
-                          }}</span>
-                        </div>
-                        <div>
-                          {{ $lang('結束') }}:
-                          <span>{{
-                            new Intl.NumberFormat('zh-TW', {
-                              minimumFractionDigits: 4,
-                              maximumFractionDigits: 6
-                            }).format(Number(item.roundInfo.closePrice))
-                          }}</span>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <span>
-                            {{
-                              new Intl.NumberFormat('zh-TW').format(
-                                Number(item.amount)
-                              )
-                            }}</span
-                          >
-                        </div>
-                      </td>
-                      <td>
-                        <div style="text-align: center">
-                          <span>{{ item.profit }}</span>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div v-if="record.type === 'historyRecord'" class="modal-1">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>{{ $lang('期號/類別') }}</th>
-                      <th>{{ $lang('盤口') }}</th>
-                      <th>{{ $lang('結果') }}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(item, index) in historyRecordList" :key="index">
-                      <td>
-                        <div>{{ item.roundNo }}</div>
-                        <div>{{ item.label || item.name || item.symbol }}</div>
-                      </td>
-                      <td>
-                        <div>
-                          {{
-                            new Intl.NumberFormat('zh-TW', {
-                              minimumFractionDigits: 4,
-                              maximumFractionDigits: 6
-                            }).format(Number(item.closePrice))
-                          }}
-                        </div>
-                      </td>
-                      <td class="gameResultName">
-                        <div
-                          v-for="resultItem in item.result"
-                          :key="resultItem"
-                          class="gameResultNameItem"
-                        >
-                          {{ gameResultName(resultItem) }}
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div v-if="record.type === 'announcement'" class="modal-3">
-                <label
-                  v-for="(item, index) in news.result"
-                  :key="index"
-                  class="bulItem"
-                >
-                  <input :id="item.title" type="checkbox" />
-                  <div class="title">
-                    <span class="titleBox">{{ item.title }}</span>
-                  </div>
-                  <div class="content" v-html="item.content"></div>
+                    <option
+                      v-for="item in availableCurrency"
+                      :key="item.symbol"
+                      :value="item.symbol"
+                    >
+                      {{
+                        item.symbolData.label ||
+                        item.symbolData.name ||
+                        item.symbolData.symbol
+                      }}
+                    </option>
+                  </select>
+                </div>
+                <label for="inputSearch" class="inputDate"
+                  ><i class="fas fa-search"></i>
+                  <input
+                    id="inputSearch"
+                    v-model="search.roundNo"
+                    v-trim-input
+                    type="text"
+                    name="number"
+                    :placeholder="`${$lang('請輸入期號')}`"
+                /></label>
+                <label for="dateStart" class="inputDate"
+                  ><i class="fas fa-calendar-alt"></i>
+                  <el-date-picker
+                    v-model="search.dateRangeStart"
+                    type="datetime"
+                    :placeholder="`${$lang('起始時間')}`"
+                    :default-time="defaultTime"
+                    :disabled-date="disabledDate"
+                  >
+                  </el-date-picker>
                 </label>
+                <label for="dateEnd" class="inputDate"
+                  ><i class="fas fa-calendar-alt"></i>
+                  <el-date-picker
+                    v-model="search.dateRangeEnd"
+                    type="datetime"
+                    :placeholder="`${$lang('結束時間')}`"
+                    :default-time="defaultTime"
+                    :disabled-date="disabledDate"
+                  >
+                  </el-date-picker>
+                </label>
+                <button type="button" class="searchBtn" @click="searchOrder">
+                  {{ $lang('搜尋') }}
+                </button>
               </div>
-              <div v-if="record.type === 'rule'" class="modal-4">
-                <div v-for="(item, index) in rule.result" :key="index">
-                  <div v-html="item.content"></div>
+              <div class="dataBlock">
+                <!-- currentOrder -->
+                <div v-if="record.type === 'currentOrder'" class="modal-1">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>{{ $lang('時間/幣種') }}</th>
+                        <th>{{ $lang('投注內容') }}</th>
+                        <th>{{ $lang('投注金額') }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="(item, index) in connectRecordList"
+                        :key="index"
+                      >
+                        <td>
+                          <div>{{ formatDate(item.createdAt) }}</div>
+                          <div>
+                            {{ item.label || item.name || item.symbol }}
+                          </div>
+                        </td>
+                        <td>
+                          <div>
+                            {{ $lang('期號') }}: <span>{{ item.roundNo }}</span>
+                          </div>
+                          <div>
+                            {{ $lang('賠率') }}:
+                            <span>{{ item.odds }}</span>
+                          </div>
+                          <div v-if="item.option.length > 0">
+                            {{ $lang('內容') }}:
+                            <span
+                              v-for="optionItem in item.option"
+                              :key="optionItem"
+                              class="gameOptionSpan"
+                              >{{ gameOptionName(optionItem) }}</span
+                            >
+                          </div>
+                          <div v-else>
+                            {{ $lang('內容') }}:
+                            <span class="gameOptionSpan">
+                              {{ gameOptionName(item.option) }}</span
+                            >
+                          </div>
+                          <div>
+                            {{ $lang('匯率') }}:
+                            <span>{{
+                              new Intl.NumberFormat('zh-TW', {
+                                minimumFractionDigits: 4,
+                                maximumFractionDigits: 6
+                              }).format(
+                                Number(item.originalRoundData.openPrice)
+                              )
+                            }}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div>
+                            {{ $lang('金額') }}:
+                            <span>
+                              {{
+                                new Intl.NumberFormat('zh-TW').format(
+                                  Number(item.amount)
+                                )
+                              }}</span
+                            >
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- historyOrder -->
+                <div v-if="record.type === 'historyOrder'" class="modal-1">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>{{ $lang('時間/幣種') }}</th>
+                        <th>{{ $lang('投注內容') }}</th>
+                        <th>{{ $lang('投注金額') }}</th>
+                        <th style="text-align: center">{{ $lang('輸贏') }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="(item, index) in connectRecordList"
+                        :key="index"
+                      >
+                        <td>
+                          <div>{{ formatDate(item.createdAt) }}</div>
+                          <div>
+                            {{ item.label || item.name || item.symbol }}
+                          </div>
+                        </td>
+                        <td>
+                          <div>
+                            {{ $lang('期號') }}: <span>{{ item.roundNo }}</span>
+                          </div>
+                          <div>
+                            {{ $lang('賠率') }}:
+                            <span>{{ item.odds }}</span>
+                          </div>
+                          <div v-if="item.option.length > 0">
+                            {{ $lang('內容') }}:
+                            <span
+                              v-for="optionItem in item.option"
+                              :key="optionItem"
+                              class="gameOptionSpan"
+                              >{{ gameOptionName(optionItem) }}</span
+                            >
+                          </div>
+                          <div v-else>
+                            {{ $lang('內容') }}:
+                            <span class="gameOptionSpan">
+                              {{ gameOptionName(item.option) }}</span
+                            >
+                          </div>
+                          <div>
+                            {{ $lang('匯率') }}:
+                            <span>{{
+                              new Intl.NumberFormat('zh-TW', {
+                                minimumFractionDigits: 4,
+                                maximumFractionDigits: 6
+                              }).format(Number(item.openPrice))
+                            }}</span>
+                          </div>
+                          <div>
+                            {{ $lang('結束') }}:
+                            <span>{{
+                              new Intl.NumberFormat('zh-TW', {
+                                minimumFractionDigits: 4,
+                                maximumFractionDigits: 6
+                              }).format(Number(item.roundInfo.closePrice))
+                            }}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div>
+                            <span>
+                              {{
+                                new Intl.NumberFormat('zh-TW').format(
+                                  Number(item.amount)
+                                )
+                              }}</span
+                            >
+                          </div>
+                        </td>
+                        <td>
+                          <div style="text-align: center">
+                            <span>{{ item.profit }}</span>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div v-if="record.type === 'historyRecord'" class="modal-1">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>{{ $lang('期號/類別') }}</th>
+                        <th>{{ $lang('盤口') }}</th>
+                        <th>{{ $lang('結果') }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="(item, index) in historyRecordList"
+                        :key="index"
+                      >
+                        <td>
+                          <div>{{ item.roundNo }}</div>
+                          <div>
+                            {{ item.label || item.name || item.symbol }}
+                          </div>
+                        </td>
+                        <td>
+                          <div>
+                            {{
+                              new Intl.NumberFormat('zh-TW', {
+                                minimumFractionDigits: 4,
+                                maximumFractionDigits: 6
+                              }).format(Number(item.closePirce))
+                            }}
+                          </div>
+                        </td>
+                        <td class="gameResultName">
+                          <div
+                            v-for="resultItem in item.result"
+                            :key="resultItem"
+                            class="gameResultNameItem"
+                          >
+                            {{ gameResultName(resultItem) }}
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div v-if="record.type === 'announcement'" class="modal-3">
+                  <label
+                    v-for="(item, index) in news.result"
+                    :key="index"
+                    class="bulItem"
+                  >
+                    <input :id="item.title" type="checkbox" />
+                    <div class="title">
+                      <span class="titleBox">{{ item.title }}</span>
+                    </div>
+                    <div class="content" v-html="item.content"></div>
+                  </label>
+                </div>
+                <div v-if="record.type === 'rule'" class="modal-4">
+                  <div v-for="(item, index) in rule.result" :key="index">
+                    <div v-html="item.content"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1598,134 +1537,465 @@ const langChange = (value: string) => {
 </template>
 
 <style scoped lang="sass">
-@import '@/assets/sass/game/model8/binary4.css'
+@import '@/assets/sass/game/model1/TempPage.min.css'
+.page
+  position: relative
+  width: 100dvw
+  height: 100dvh
+</style>
+
+<style scoped lang="sass">
+.head
+  background-color: #191f2d
+  height: 80px
+  width: 100%
+  display: flex
+  flex-flow: row nowrap
+  align-items: center
+  justify-content: flex-start
+  padding: 0 15px
+  border-bottom: 1px solid #363c4e
+  .logo
+    margin-right: auto
+    font-size: 28px
+    color: var(--font-color-1)
+    display: flex
+    flex-flow: row nowrap
+    align-items: center
+    font-weight: 700
+    img
+      height: 50px
+      display: block
+      margin-right: 10px
+    .title
+      color: #8c8f96
+      font-size: 28px
+      font-weight: 700
+  .userInfo
+    color: #f9761e
+    font-weight: 400
+    font-size: 14px
+    text-align: right
+</style>
+
+<style scoped lang="sass">
+.body
+  display: flex
+  flex-flow: row nowrap
+  align-items: flex-start
+  justify-content: flex-start
+  height: 100dvh
+  width: 100%
+  #coinBox:checked ~ .bodyRight
+    -webkit-transform: translateX(0)
+    transform: translateX(0)
+</style>
+
+<style scoped lang="sass">
+.bodyLeft
+  min-width: 115px
+  padding: 20px 0 0 0
+  height: calc(100% - 80px)
+  background-color: #191f2d
+  border-right: 1px solid #363c4e
+  @media screen and (max-width: 1024px)
+    position: fixed
+    bottom: 0
+    left: 0
+    width: 100%
+    flex: 1 1 100%
+    -ms-flex: 1 1 100%
+    height: 80px
+    border-top: 1px solid #363c4e
+    border-right: 0
+    overflow-y: hidden
+    display: flex
+    flex-flow: row nowrap
+    align-items: center
+    justify-content: center
+    z-index: 3
+    padding-top: 5px
+  .leftItem
+    text-align: center
+    color: #fff
+    font-size: 13px
+    padding: 10px
+    display: block
+    cursor: pointer
+    transition: all .3s ease
+    font-weight: 700
+    margin-bottom: 0
+    cursor: pointer
+    &:hover
+      background-color: #ffffff0d
+    @media screen and (max-width: 1024px)
+      font-size: 12px
+    svg
+      font-size: 200%
+      margin-bottom: 10px
+  .rankBtn
+    display: none
+    @media screen and (max-width: 1024px)
+      display: block
+</style>
+
+<style scoped lang="sass">
+.bodyRight
+  width: 300px
+  background-color: #21293c
+  height: 100%
+  border-left: 1px solid #363c4e
+  @media screen and (max-width: 1024px)
+    flex: 0 0 270px
+    position: fixed
+    right: 0
+    top: 80px
+    z-index: 3
+    height: calc(100% - 80px - 80px)
+    transform: translateX(100%)
+    transition: all .3s ease
+  .title
+    padding: 10px 20px
+    font-size: 18px
+    color: #e8e8e8
+    font-weight: 700
+  .rightTabRow
+    display: flex
+    flex-flow: row wrap
+    align-items: center
+    width: 100%
+    position: relative
+  .rightTabRow::after
+    content: " "
+    width: 50%
+    display: inline-block
+    height: 2px
+    background-color: #f9761e
+    -webkit-transition: all ease .2s
+    transition: all ease .2s
+  label
+    width: 50%
+    text-align: center
+    padding: 10px 5px
+    color: #fff
+    font-weight: 700
+    font-size: 15px
+    cursor: pointer
+  .leftBorder
+    border-right: 1px solid #363c4e
+  #rightTab2:checked ~ .rightTabRow::after
+    -webkit-transform: translateX(100%)
+    transform: translateX(100%)
+  #rightTab1:checked ~ .rightItemRow .rightItemList .rightItem .itemInfo .last
+    display: none
+  #rightTab2:checked ~ .rightItemRow .rightItemList .rightItem .itemInfo .now
+    display: none
+  #rightTab2:checked ~ .rightItemRow .rightItemList .rightItem .itemInfo svg
+    display: none
+</style>
+
+<style scoped lang="sass">
+.tempPage
+  height: 100%
+  width: calc(100vw - 380px)
+  // background-image: url(@/assets/gameImage/bg-img.jpg)
+  background-position: 50%
+  background-size: cover
+  background-repeat: no-repeat
+  color: #fff
+  position: relative
+  z-index: 1
+  @media screen and (max-width: 1024px)
+    flex: 1 1 auto
+</style>
+
+<style scoped lang="sass">
+.rightItemRow
+  margin-top: 10px
+  overflow-y: auto
+  height: calc(100% - 109px)
+  .rightItemList
+    padding: 0 0 30px 0
+  .rightItem
+    display: flex
+    flex-flow: row nowrap
+    align-items: center
+    width: 100%
+    padding: 10px 15px
+    transition: all .2s ease
+    cursor: pointer
+    &:hover
+      background-color: #ffffff0d
+    .itemImg
+      background-position: 100% 10.81081%
+      width: 30px
+      height: 30px
+      border-radius: 50%
+      // background-image: url(@/assets/gameImage/item.png)
+      background-size: 100% auto
+      background-repeat: no-repeat
+      display: inline-block
+    .itemName
+      color: #fff
+      font-size: 14px
+      margin-right: auto
+      padding-left: 10px
+      font-weight: 700
+    .itemInfo
+      color: #fff
+      svg
+        margin: 0 0 0 5px
+    .itemInfo[data-type]
+      color: #fff
+    .itemInfo[data-type="up"] *:not(.last)
+      color: #2cac40
+      -webkit-animation: colorUp 1s ease-in infinite forwards
+      animation: colorUp 1s ease-in infinite forwards
+    .itemInfo[data-type="up"] i::before
+      content: "\f102"
+    .itemInfo[data-type="down"] *:not(.last)
+      color: #db4931
+      -webkit-animation: colorDown 1s ease-in infinite forwards
+      animation: colorDown 1s ease-in infinite forwards
+    .itemInfo[data-type="down"] svg
+        transform: rotate(180deg)
+    @keyframes colorUp
+      0%,40%
+        color: #db4931
+      100%
+        color: white
+    @keyframes colorDown
+      0%,40%
+        color: #2cac40
+      100%
+        color: white
+  .rightItem.active
+    background-color: #ffffff0d
+</style>
+
+<style scoped lang="sass">
+.controlBlock
+  height: 125px
+  width: 100%
+  padding: 10px 0
+  .containerRow
+    display: flex
+    align-items: stretch
+    height: 100%
+    max-width: 992px
+    padding: 0 10px
+    width: 100%
+    margin: 0 auto
+    flex-flow: row wrap
+    align-content: flex-start
+</style>
+
+<style scoped lang="sass">
+.centerRow
+  width: calc(55% - 8px)
+  margin-right: 8px
+  display: flex
+  flex-flow: row wrap
+  align-items: stretch
+  height: 100%
+.centerRow[data-event="1"] .leftBox
+  flex: 1 1 70%
+.centerRow .leftBox
+  display: flex
+  flex-flow: row wrap
+  align-content: flex-start
+  align-items: center
+  height: 100%
+.centerRow[data-event="1"] .leftBox label
+  width: calc(50% - 4px)
+  height: calc(50% - 4px)
+.centerRow .leftBox label[for=game-1]
+  background-color: #2cac40
+.centerRow .leftBox label
+  display: flex
+  flex-flow: row nowrap
+  align-items: center
+  justify-content: space-between
+  color: #fff
+  font-size: 17px
+  font-weight: 700
+  padding: 0 10px
+  border-radius: 3px
+  cursor: pointer
+  margin-bottom: 0
+.centerRow[data-event="1"] .leftBox label:last-of-type
+  margin-top: 8px
+.centerRow[data-event="1"] .leftBox label:nth-last-of-type(2)
+  margin-top: 8px
+.centerRow .leftBox label[for=game-2]
+  background-color: #db4931
+.centerRow .leftBox label:nth-of-type(2)
+  margin-left: auto
+.centerRow .leftBox label[for=game-3]
+  background-color: #7d8189
+.leftBox label:nth-of-type(4)
+  margin-left: auto
+.centerRow .leftBox label[for=game-4]
+  background-color: #7d8189
+.centerRow[data-event="1"] .rightBox label
+  flex: 1 1 calc(50% - 8px)
+.centerRow label[for=game-7]
+  background-color: #1166c7
+  height: 100%
+.centerRow[data-event="1"] .rightBox
+  padding-left: 8px
+.centerRow .rightBox label
+  margin-bottom: 0
+  justify-content: center
+  color: #fff
+  font-size: 16px
+  font-weight: 700
+  cursor: pointer
+  border-radius: 3px
+  display: flex
+  flex-flow: row wrap
+  align-items: center
+  align-content: center
+  padding: 0 10px
+.bottomRow
+  width: 45%
+  height: 100%
+  display: flex
+  flex-flow: row nowrap
+  align-items: center
+  position: relative
+.bottomRow .totalBox
+  width: 70%
+  height: 100%
+.bottomRow .inputBox
+  width: 100%
+  background-color: #3f475e
+  border-radius: 3px
+  padding: 5px 15px
+  color: #fff
+  height: calc(70% - 5px)
+  margin-bottom: 5px
+  cursor: pointer
+  display: flex
+  flex-flow: row nowrap
+  align-items: flex-end
+  position: relative
+.bottomRow .inputBox span
+  display: block
+  width: 100%
+  font-weight: 700
+  font-size: 16px
+  position: absolute
+  left: 15px
+  top: 5px
+  pointer-events: none
+  opacity: .3
+.bottomRow .inputBox input
+  background-color: transparent
+  border: 0
+  text-align: center
+  width: 100%
+  color: #fff
+  font-size: 20px
+  font-weight: 700
+  outline: none
+  cursor: pointer
+.bottomRow .quickSelect
+  height: 30%
+  display: flex
+  flex-flow: row nowrap
+  align-items: center
+  justify-content: space-between
+.bottomRow .quickSelect span
+  width: calc(33.3334% - 3.3334px)
+  height: 100%
+  display: flex
+  flex-flow: row nowrap
+  align-items: center
+  justify-content: center
+  font-size: 16px
+  font-weight: 700
+  background-color: #3f475e
+  cursor: pointer
+  transition: all .2s ease
+.bottomRow .btnBlock
+  width: calc(30% - 8px)
+  margin-left: 8px
+  height: 100%
+.bottomRow .reBtn
+  width: 100%
+  outline: 0
+  height: calc(50% - 2.5px)
+  font-weight: 700
+  font-size: 18px
+  display: flex
+  flex-flow: row nowrap
+  align-items: center
+  justify-content: center
+  background-color: transparent
+  transition: all .15s ease
+  cursor: pointer
+  white-space: nowrap
+  border: 4px solid #d25540
+  border-radius: 3px
+  color: #de7b6b
+  margin-bottom: 5px
+.bottomRow .checkBtn
+  width: 100%
+  outline: 0
+  height: calc(50% - 2.5px)
+  font-weight: 700
+  font-size: 18px
+  display: flex
+  flex-flow: row nowrap
+  align-items: center
+  justify-content: center
+  background-color: transparent
+  transition: all .15s ease
+  cursor: pointer
+  white-space: nowrap
+  border: 4px solid #5baf46
+  border-radius: 3px
+  color: #5baf46
+@media screen and (max-width: 1024px)
+  .centerRow
+    width: 100%
+    margin-right: 0
+    height: 60%
+  .bottomRow
+    height: calc(40% - 4px)
+    margin-top: 4px
+    width: 100%
+  .controlBlock
+    position: fixed
+    bottom: calc(var(--head-height) + 20px)
+    left: 0
+    height: auto
+</style>
+
+<style scoped lang="sass">
+.chartSection
+  width: 100%
+  height: calc(100% - 210px)
+  @media screen and (max-width: 1024px)
+    height: calc(100% - 310px)
+  @media screen and (max-width: 768px)
+    height: calc(100% - 270px)
 </style>
 
 <style scoped>
-header input {
-  display: none;
-}
-</style>
-
-<style scoped>
-@media screen and (max-width: 768px) {
-  #Base_Member .modal-content .modal-body .dataBlock .modal-0,
-  #Base_Member .modal-content .modal-body .dataBlock .modal-1 {
-    width: 100%;
-    min-width: 0;
-    padding: 10px;
-  }
-}
-</style>
-
-<style scoped>
-.logo {
-  cursor: pointer;
-}
-.nav-row::-webkit-scrollbar {
-  width: 12px !important; /* 滚动条的宽度 */
-  height: 12px !important; /* 如果需要垂直滚动条，可以设置高度 */
-  display: block !important;
-  background-color: white !important;
-}
-.nav-row::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 6px;
-}
-.dropdown-toggle {
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  font-weight: bold;
-  padding: 15px;
-}
-
-.dropdown-toggle::after {
-  display: inline-block;
-  margin-left: 22px;
-  vertical-align: 0.255em;
-  content: '';
-  border-top: 0.3em solid;
-  border-right: 0.3em solid transparent;
-  border-bottom: 0;
-  border-left: 0.3em solid transparent;
-}
-
-.dropdown-toggle svg {
-  margin-right: 10px;
-}
-
-.dropdown-item {
-  display: block;
-  width: 100%;
-  padding: 0.25rem 1.5rem;
-  clear: both;
-  font-weight: 400;
-  color: #212529;
-  text-align: inherit;
-  white-space: nowrap;
-  background-color: transparent;
-  border: 0;
-}
-.dropdown-item:hover {
-  color: #16181b;
-  text-decoration: none;
-  background-color: #f8f9fa;
-}
-
-@media screen and (max-width: 1366px) {
-  .dropdown-toggle {
-    padding: 8px;
-  }
-  .lang-row .dropdown-menu {
-    top: 0;
-  }
-  .lang-row-m .dropdown-menu {
-    top: -16px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .dropdown-toggle svg {
-    margin: 0 4px;
-  }
-}
-</style>
-
-<style scoped>
-#langSwitch:checked ~ .info-row .lang-row .dropdown-menu,
-#langSwitch:checked ~ .lang-row-m .dropdown-menu {
-  display: block;
-}
-
-#popupSwitch:checked ~ .info-row {
-  display: block;
-}
-</style>
-
-<style scoped>
-[hidden] {
-  display: none !important;
-}
 .popup {
   position: fixed;
-  z-index: 999;
-  left: 50%;
-  top: 50%;
+  z-index: 1;
+  left: 0;
+  top: 0;
   width: 100%;
-  height: 90dvh;
+  height: 100%;
   overflow: auto;
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.4);
   transition: opacity 0.15s linear;
   padding: 0 40px;
-  transform: translate(-50%, -50%);
 }
 .dataBody {
   padding: 10px 0;
@@ -1733,7 +2003,7 @@ header input {
 .gameOptionSpan {
   padding: 0 5px;
 }
-.inputDate >>> .el-input__prefix {
+.inputDate :deep(.el-input__prefix) {
   display: none;
 }
 .inputDate input {
@@ -1751,7 +2021,10 @@ header input {
   display: none;
 }
 .bulItem input[type='checkbox']:checked ~ .content {
-  display: block !important;
+  display: block;
+}
+.gameResultName {
+  display: flex;
 }
 .gameResultNameItem {
   padding: 0 5px;
@@ -1766,41 +2039,79 @@ header input {
 input {
   margin: 0;
 }
-.gameBlock {
-  height: 60%;
+</style>
+
+<style>
+.el-input__wrapper {
+  background-color: #00000000;
+  border: 1px solid #00000000;
+  box-shadow: none;
 }
 </style>
 
-<style scoped>
-@media screen and (max-width: 1366px) {
-  #inside-page {
-    height: calc(100dvh - 87px);
-  }
+<style>
+.chart {
+  height: 60%;
+}
+.k-line-box {
+  height: 40%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.k-line-box .tradingview-widget-container {
+  height: 100%;
+  width: 100%;
+}
+
+.k-line-box #tradingview_a45bd {
+  height: 100%;
 }
 
 @media screen and (max-width: 992px) {
-  #inside-page {
-    height: calc(100dvh - 40px);
-  }
-  .gameBlock {
-    height: calc(50% - 120px) !important;
-  }
-  .kLineBox {
-    height: calc(50% - 140px) !important;
+  .k-line-box {
+    width: 100%;
+    height: 40%;
+    max-width: 100%;
   }
 }
-
-/* @media screen and (max-width: 768px) {
-  .gameBlock {
-    height: 40%;
-  }
-} */
 </style>
 
-<style scoped>
-.el-input__wrapper {
-  background: #000;
-  border: 1px solid #000;
-  box-shadow: none;
-}
+<style scoped lang="sass">
+label
+  margin: 0
+.mobileQuickSelect
+  position: relative
+  display: none
+  @media screen and (max-width: 768px)
+    display: block
+    font-size: 12px
+    color: #fff
+    text-align: center
+    padding: 0 0 8px 0
+    svg
+      font-size: 20px
+  input[type='checkbox']:checked ~ .mobileQuickSelectPopup
+    display: block
+  input[type='checkbox']:checked ~ label svg
+    transform: rotate(180deg)
+  .mobileQuickSelectPopup
+    position: absolute
+    width: 230px
+    background-color: #323e61
+    top: -60px
+    left: -205px
+    display: none
+    .selectContent
+      width: 100%
+      display: flex
+      justify-content: flex-start
+      align-items: center
+      padding: 0 5px 0
+      flex-wrap: wrap
+      label
+        margin: 0
+      a
+        width: 50px
+        margin: 3px 0
 </style>

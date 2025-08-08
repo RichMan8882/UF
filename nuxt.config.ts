@@ -109,7 +109,7 @@ export default defineNuxtConfig({
       PLEDGESOCKETURL: 'wss://pledgesocket.comethike.com:8443',
       // APIBASE: 'https://localhost.demoto.me/api',
       APIBASE: 'https://bpapi2.comethike.com',
-      siteId: '670cd760afc81ff546c041fe'
+      siteId: '68960d7525999ffdeae811f2'
     }
   },
 

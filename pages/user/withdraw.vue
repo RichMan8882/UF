@@ -212,191 +212,249 @@ watch(
 )
 </script>
 <template>
-  <div class="page">
-    <div class="sec-title span-lang">
-      <span class="zh_TW">{{ $lang('資產提現') }}</span>
+  <div class="withdraw">
+    <div class="withdraw-title">
       <i class="fas fa-wallet"></i>
+      <span>{{ $lang('總資產') }}</span>
     </div>
-    <div class="form-bg link-btn-row">
-      <router-link to="/user/deposit" class="btn-form-link span-lang">
+
+    <div class="withdraw-tabs">
+      <button
+        type="button"
+        class="withdraw-tabs-btn"
+        @click="navigateTo('/user/deposit')"
+      >
         {{ $lang('儲值') }}
-      </router-link>
-      <div
-        class="btn-form-link span-lang"
+      </button>
+      <button
+        type="button"
+        class="withdraw-tabs-btn"
         :class="selectType === 'withdraw' ? 'active' : ''"
         @click="selectType = 'withdraw'"
       >
         {{ $lang('提領') }}
-      </div>
-      <div
+      </button>
+      <button
         v-if="playerStore.playerInfo.wallet.length > 1"
-        class="btn-form-link span-lang"
+        type="button"
+        class="withdraw-tabs-btn"
         :class="selectType === 'transfer' ? 'active' : ''"
         @click="selectType = 'transfer'"
       >
         {{ $lang('劃轉') }}
-      </div>
-      <!-- <router-link to="/user/transfer" class="btn-form-link span-lang">
-        {{ $lang("轉點") }}
-      </router-link> -->
+      </button>
     </div>
-    <div v-if="playerStore.playerInfo.bankInfo.bankName" class="withdraw_form">
-      <div v-if="selectType === 'withdraw'" class="form-bg">
-        <div class="input-classic">
-          <span class="input-title">{{ $lang('銀行名稱') }}</span>
-          <div class="input-text">
-            {{ playerStore.playerInfo.bankInfo.bankName }}
-          </div>
-        </div>
-        <div class="input-classic">
-          <span class="input-title">{{ $lang('銀行帳戶') }}</span>
-          <div class="input-text">
-            {{ hiddenAccountNo(playerStore.playerInfo.bankInfo.accountNo) }}
-          </div>
-        </div>
-        <div class="input-classic">
-          <span class="input-title"
-            >{{ $lang('我的資產') }}({{ $lang('主錢包') }})</span
-          >
-          <div class="input-text">
-            {{ new Intl.NumberFormat('zh-TW').format(mainBalance) }}
-          </div>
-        </div>
-        <div class="input-classic">
-          <span class="input-title">{{ $lang('金額') }}</span>
-          <input v-model="withdrawAmount" v-trim-input type="number" />
-          <span class="input-title text-right w-100"
-            >{{ $lang('限制金額') }}：{{
-              new Intl.NumberFormat('zh-TW').format(
-                siteStore.siteData.minWithdrawAmount
-              )
-            }}
-            ~
-            {{
-              new Intl.NumberFormat('zh-TW').format(
-                siteStore.siteData.maxWithdrawAmount
-              )
-            }}</span
-          >
-          <span class="input-title text-right w-100" style="margin: 0 0 0 10px"
-            >{{ $lang('手續費') }}：{{
-              withdrawAmount > 0 ? withdrawFeeCount() : 0
-            }}</span
-          >
-        </div>
-        <div
-          v-if="siteStore.siteData.transactionPasswordRequired"
-          class="input-classic"
+
+    <div
+      v-if="selectType === 'withdraw' && playerStore.playerInfo.bankInfo"
+      class="form"
+    >
+      <div class="form-item">
+        <h4>
+          {{ $lang('銀行名稱') }}
+        </h4>
+        <input
+          class="disabled"
+          type="text"
+          :value="playerStore.playerInfo.bankInfo.bankName || '-'"
+        />
+      </div>
+      <div class="form-item">
+        <h4>
+          {{ $lang('銀行帳戶') }}
+        </h4>
+        <input
+          class="disabled"
+          type="text"
+          :value="
+            hiddenAccountNo(playerStore.playerInfo.bankInfo.accountNo) || '-'
+          "
+        />
+      </div>
+      <div class="form-item">
+        <h4>{{ $lang('我的資產') }}({{ $lang('主錢包') }})</h4>
+        <input
+          class="disabled"
+          type="text"
+          :value="new Intl.NumberFormat('zh-TW').format(mainBalance) || '-'"
+        />
+      </div>
+      <div class="form-item">
+        <h4>
+          {{ $lang('金額') }}
+        </h4>
+        <input v-model="withdrawAmount" v-trim-input type="number" />
+        <span class="tip">
+          {{ $lang('限制金額') }}：{{
+            new Intl.NumberFormat('zh-TW').format(
+              siteStore.siteData.minWithdrawAmount
+            )
+          }}
+          ~
+          {{
+            new Intl.NumberFormat('zh-TW').format(
+              siteStore.siteData.maxWithdrawAmount
+            )
+          }}
+        </span>
+
+        <span class="fee text-right w-100" style="margin: 0 0 0 10px"
+          >{{ $lang('手續費') }}：{{
+            withdrawAmount > 0 ? withdrawFeeCount() : 0
+          }}</span
         >
-          <span class="input-title">{{ $lang('金鑰密碼') }}</span>
-          <input v-model="tPwd" v-trim-input type="password" />
-        </div>
-        <div class="button-row">
-          <button type="button" class="submit btn-submit" @click="goWithdraw">
-            {{ $lang('送出') }}
-          </button>
-        </div>
       </div>
-      <div v-if="selectType === 'transfer'" class="form-bg">
-        <div class="input-classic">
-          <span class="input-title">{{ $lang('轉出錢包') }}</span>
-          <div class="input-text">
-            <select v-model="transferWalletData.from" class="selectStyle">
-              <option
-                v-for="item in playerStore.playerInfo.wallet"
-                :key="item.id"
-                :value="item.id"
-                @click="transferWalletData.from = item.id"
-              >
-                {{ walletTypeName(item) }} ($
-                {{ new Intl.NumberFormat('zh-tw').format(item.balance) }})
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="input-classic">
-          <span class="input-title">{{ $lang('轉入錢包') }}</span>
-          <div class="input-text">
-            <select v-model="transferWalletData.to" class="selectStyle">
-              <option
-                v-for="item in playerStore.playerInfo.wallet"
-                :key="item.id"
-                :value="item.id"
-                @click="transferWalletData.to = item.id"
-              >
-                {{ walletTypeName(item) }} ($
-                {{ new Intl.NumberFormat('zh-tw').format(item.balance) }})
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="input-classic">
-          <span class="input-title">{{ $lang('數量') }}</span>
-          <input
-            v-model="transferWalletData.amount"
-            v-trim-input
-            type="number"
-          />
-        </div>
-        <div class="button-row">
-          <button type="button" class="submit btn-submit" @click="goTransfer">
-            {{ $lang('送出') }}
-          </button>
-        </div>
+      <div
+        v-if="siteStore.siteData.transactionPasswordRequired"
+        class="form-item"
+      >
+        <h4>
+          {{ $lang('交易密碼') }}
+        </h4>
+        <input v-model="tPwd" v-trim-input type="password" />
       </div>
-      <!-- <div class="form-bg" v-else>
-        <div class="input-classic">
-          <span class="input-title">{{ $lang('銀行') }}</span>
-          <div class="input-text">
-            {{ playerStore.playerInfo.bankInfo.bankName }}
-            {{ playerStore.playerInfo.bankInfo.branch }}
-          </div>
-        </div>
-        <div class="input-classic">
-          <span class="input-title">{{ $lang('銀行帳號') }}</span>
-          <div class="input-text">{{ playerStore.playerInfo.bankInfo.accountNo }}</div>
-        </div>
-        <div class="input-classic">
-          <span class="input-title">{{ $lang('戶名') }}</span>
-          <div class="input-text">{{ playerStore.playerInfo.bankInfo.account }}</div>
-        </div>
-        <div class="input-classic">
-          <span class="input-title">{{ $lang('金額') }}</span>
-          <input
-            name="balance"
-            v-model="withdrawAmount"
-            maxlength="7"
-            type="number"
-          />
-          <span class="input-title text-right w-100"
-            >{{ $lang('限制金額') }}：{{ siteStore.siteData.minWithdrawAmount }} ~
-            {{ siteStore.siteData.maxWithdrawAmount }}</span
+
+      <button type="button" class="submit form-btn-sec" @click="goWithdraw">
+        {{ $lang('送出') }}
+      </button>
+    </div>
+
+    <div v-if="selectType === 'transfer'" class="form">
+      <div class="form-item">
+        <h4>
+          {{ $lang('轉出錢包') }}
+        </h4>
+        <select v-model="transferWalletData.from" class="selectStyle">
+          <option
+            v-for="item in playerStore.playerInfo.wallet"
+            :key="item.id"
+            :value="item.id"
+            @click="transferWalletData.from = item.id"
           >
-          <span class="input-title text-right w-100"
-            >{{ $lang('手續費') }}：{{
-              withdrawAmount > 0 ? withdrawFee(withdrawAmount) : 0
-            }}</span
+            {{ walletTypeName(item) }} ($
+            {{ new Intl.NumberFormat('zh-tw').format(item.balance) }})
+          </option>
+        </select>
+      </div>
+      <div class="form-item">
+        <h4>
+          {{ $lang('轉入錢包') }}
+        </h4>
+        <select v-model="transferWalletData.to" class="selectStyle">
+          <option
+            v-for="item in playerStore.playerInfo.wallet"
+            :key="item.id"
+            :value="item.id"
+            @click="transferWalletData.to = item.id"
           >
-        </div>
-        <div class="input-classic">
-          <span class="input-title">{{ $lang('金鑰密碼') }}</span>
-          <input name="tPwd" type="password" required v-model="tPwd" />
-        </div>
-        <div class="button-row">
-          <button
-            type="button"
-            class="submit btn-submit"
-            @click="goFetchWithdraw"
-          >
-            {{ $lang('送出') }}
-          </button>
-        </div>
-      </div> -->
+            {{ walletTypeName(item) }} ($
+            {{ new Intl.NumberFormat('zh-tw').format(item.balance) }})
+          </option>
+        </select>
+      </div>
+      <div class="form-item">
+        <h4>
+          {{ $lang('數量') }}
+        </h4>
+        <input v-model="transferWalletData.amount" v-trim-input type="number" />
+      </div>
+
+      <button type="button" class="submit form-btn-sec" @click="goTransfer">
+        {{ $lang('送出') }}
+      </button>
     </div>
   </div>
 </template>
+
 <style scoped lang="sass">
-@import '@/assets/sass/user/model2/coin2.scss'
-.withdraw_form
-  padding: 0 10px
+.withdraw-title
+    font-weight: bold
+    padding: 12px 15px
+    font-size: 18px
+    margin-bottom: 6px
+    background-color: #32333a
+    color: #fff
+    border-radius: 6px
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26)
+    display: flex
+    align-items: center
+
+    span
+      display: block
+      margin-left: 10px
+      margin-top: 2px
+
+    @media (min-width: 768px)
+      padding: 22px 26px
+      font-size: 20px
+      margin-bottom: 16px
+</style>
+
+<style scoped lang="sass">
+.withdraw
+  padding: 5px 10px 35px
+
+  &-tabs
+    display: flex
+    justify-content: flex-end
+    margin-bottom: 28px
+
+    &-btn
+      padding: 6px 12px
+      border-radius: 4px
+      background-color: #6c757d
+      color: #fff
+      margin-left: 12px
+      font-size: 14px
+      transition: opacity 0.3s
+
+      &:hover
+        opacity: 0.7
+
+      &.active
+        background-color: #007bff
+
+  .form
+    margin-bottom: 40px
+  .form-item
+    width: 100%
+
+    .fee
+      font-size: 14px
+      color: rgb(47, 138, 88)
+      font-weight: bold
+      margin-left: 6px
+
+    .tip
+      color: rgb(208, 77, 94)
+      font-size: 14px
+
+  p
+    margin-top: 24px
+    margin-bottom: 10px
+    text-align: center
+
+  .form-btn-sec
+    margin: 0 auto
+    display: block
+
+
+  @media screen and (min-width: 768px)
+    padding: 30px 30px 60px
+
+    .form-item
+      max-width: 600px
+      margin: 0 auto 10px
+</style>
+<style scoped lang="sass">
+.selectStyle
+  width: 100%
+  height: 32px
+  padding: 2px 15px
+  font-size: 19px
+  line-height: 32px
+  font-weight: 400
+  background-color: #fff
+  border: 1px solid #000
+  border-radius: 4px
 </style>

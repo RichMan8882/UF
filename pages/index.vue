@@ -228,7 +228,7 @@ const footerList = ref([
               </div>
             </div>
             <div class="functionButton">
-              <div class="btn-login" @click="navigateTo('/user/info')">
+              <div class="btn-login" @click="navigateTo('/user')">
                 {{ $lang('用戶中心') }}
               </div>
               <div

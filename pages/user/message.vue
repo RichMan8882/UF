@@ -148,6 +148,7 @@ const formatDate = (timestamp: string) => {
                     </div>
                   </div>
                 </label>
+
                 <div class="msgContent">
                   <div
                     v-for="(txt, txtIndex) in item.thread"
@@ -224,7 +225,7 @@ const formatDate = (timestamp: string) => {
 </template>
 
 <style scoped lang="sass">
-@import '@/assets/sass/user/model2/coin2.scss'
+@import '@/assets/sass/user/model3/coin2.scss'
 .pages
   @media screen and (max-width: 768px)
     padding: 10px

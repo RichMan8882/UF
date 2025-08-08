@@ -84,7 +84,9 @@ onMounted(async () => {
 const backCountTime = (ms) => {
   const totalSeconds = Math.floor(ms / 1000)
   const days = String(Math.floor(totalSeconds / (24 * 3600))).padStart(2, '0')
-  const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0')
+  const hours = String(
+    Math.floor((totalSeconds % (24 * 3600)) / 3600)
+  ).padStart(2, '0')
   const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(
     2,
     '0'
@@ -132,134 +134,125 @@ onBeforeMount(() => {
 })
 </script>
 <template>
-  <div class="page">
-    <div class="sec-title">
-      <span>{{ $lang('質押') }}</span>
-      <i class="fas fa-user-circle"></i>
+  <div class="pages-user-pledge">
+    <div class="switch-btn" @click="switchInt = !switchInt">
+      {{ switchInt ? t('質押紀錄') : t('質押下單') }}
     </div>
-    <div class="pages-user-pledge">
-      <div class="switch-btn" @click="switchInt = !switchInt">
-        {{ switchInt ? t('質押紀錄') : t('質押下單') }}
-      </div>
-      <div v-if="switchInt" class="pledge-list">
-        <div v-for="item in pledgeSocketStore.productData" :key="item.siteId">
-          <!--  v-if="
+    <div v-if="switchInt" class="pledge-list">
+      <div v-for="item in pledgeSocketStore.productData" :key="item.siteId">
+        <!--  v-if="
             playerStore.playerInfo.additionalInfo.level.toString() ===
             item.additionalInfo.level
           " -->
-          <div class="pledge-item">
-            <div class="price">
-              <div class="left">{{ item.name }}</div>
-              <div class="right">{{ (item.duration / 24).toFixed(1) }}D</div>
+        <div class="pledge-item">
+          <div class="price">
+            <div class="left">{{ item.name }}</div>
+            <div class="right">{{ (item.duration / 24).toFixed(1) }}D</div>
+          </div>
+          <img :src="item.icon" alt="" />
+          <div class="num">
+            <div>
+              {{ $lang('數量') }}：{{ item.minStack }}-{{ item.maxStack }}
             </div>
-            <img :src="item.icon" alt="" />
-            <div class="num">
-              <div>
-                {{ $lang('數量') }}：{{ item.minStack }}-{{ item.maxStack }}
-              </div>
-              <div class="btn" @click="openPledge(item)">
-                {{ $lang('質押') }}
-              </div>
+            <div class="btn" @click="openPledge(item)">
+              {{ $lang('質押') }}
             </div>
-            <div class="interest">
-              {{ $lang('利息')
-              }}<span>{{ parseInt(item.bonusRatio * 100) }}</span
-              >%
-            </div>
+          </div>
+          <div class="interest">
+            {{ $lang('利息') }}<span>{{ parseInt(item.bonusRatio * 100) }}</span
+            >%
           </div>
         </div>
       </div>
-      <div v-if="!switchInt" class="pledge-record">
-        <div
-          v-for="item in pledgeSocketStore.ordersData"
-          :key="item.id"
-          class="record-item"
-        >
-          <img :src="item.productSnapshot.icon" alt="" />
-          <div class="content">
-            <div class="content-left">
-              <div>{{ $lang('質押編號') }}：{{ item.orderId }}</div>
-              <div>
-                {{ $lang('天數') }}：{{
-                  (item.productSnapshot.duration / 24).toFixed(1)
-                }}
-              </div>
-              <div>
-                {{ $lang('利息') }}：{{
-                  parseInt(item.productSnapshot.bonusRatio * 100)
-                }}
-                %
-              </div>
-              <div>{{ $lang('數量') }}：{{ item.amount }}</div>
-              <div>
-                {{ $lang('預估收益') }}：{{
-                  item.amount * item.productSnapshot.bonusRatio
-                }}
-              </div>
+    </div>
+    <div v-if="!switchInt" class="pledge-record">
+      <div
+        v-for="item in pledgeSocketStore.ordersData"
+        :key="item.id"
+        class="record-item"
+      >
+        <img :src="item.productSnapshot.icon" alt="" />
+        <div class="content">
+          <div class="content-left">
+            <div>{{ $lang('質押編號') }}：{{ item.orderId }}</div>
+            <div>
+              {{ $lang('天數') }}：{{
+                (item.productSnapshot.duration / 24).toFixed(1)
+              }}
             </div>
-            <div class="content-right">
-              <div class="reciprocal">
-                {{ $lang('倒數') }}:{{ item.backCount }}
-              </div>
-              <div
-                v-if="item.status === 1"
-                class="content-btn"
-                :class="item.status !== 0 ? 'red' : ''"
-              >
-                {{ $lang('結算') }}
-              </div>
-              <div
-                v-if="item.status === 0"
-                class="content-btn"
-                :class="item.status !== 0 ? 'red' : ''"
-              >
-                {{ $lang('進行中') }}
-              </div>
+            <div>
+              {{ $lang('利息') }}：{{
+                parseInt(item.productSnapshot.bonusRatio * 100)
+              }}
+              %
+            </div>
+            <div>{{ $lang('數量') }}：{{ item.amount }}</div>
+            <div>
+              {{ $lang('預估收益') }}：{{
+                item.amount * item.productSnapshot.bonusRatio
+              }}
             </div>
           </div>
-          <div class="time">
-            <div>{{ $lang('開始') }} {{ formatDate(item.createdAt) }}</div>
-            <div>{{ $lang('結束') }} {{ formatDate(item.endTime) }}</div>
+          <div class="content-right">
+            <div class="reciprocal">
+              {{ $lang('倒數') }}:{{ item.backCount }}
+            </div>
+            <div
+              v-if="item.status === 1"
+              class="content-btn"
+              :class="item.status !== 0 ? 'red' : ''"
+            >
+              {{ $lang('結算') }}
+            </div>
+            <div
+              v-if="item.status === 0"
+              class="content-btn"
+              :class="item.status !== 0 ? 'red' : ''"
+            >
+              {{ $lang('進行中') }}
+            </div>
           </div>
+        </div>
+        <div class="time">
+          <div>{{ $lang('開始') }} {{ formatDate(item.createdAt) }}</div>
+          <div>{{ $lang('結束') }} {{ formatDate(item.endTime) }}</div>
         </div>
       </div>
-      <div v-if="dialogVisible" class="mask" @click="hideDialog"></div>
-      <div v-if="dialogVisible" class="dialog-box">
-        <div class="title">{{ currentData.name }}</div>
-        <div class="text">{{ $lang('質押數額') }}</div>
-        <div class="inputbox">
-          <input
-            v-model="buyForm.amount"
-            v-positive-integer
-            :placeholder="`${currentData.minStack}-${currentData.maxStack}`"
-          />
-          <div @click="buyForm.amount = currentData.maxStack">
-            {{ $lang('最大') }}
-          </div>
+    </div>
+    <div v-if="dialogVisible" class="mask" @click="hideDialog"></div>
+    <div v-if="dialogVisible" class="dialog-box">
+      <div class="title">{{ currentData.name }}</div>
+      <div class="text">{{ $lang('質押數額') }}</div>
+      <div class="inputbox">
+        <input
+          v-model="buyForm.amount"
+          v-positive-integer
+          :placeholder="`${currentData.minStack}-${currentData.maxStack}`"
+        />
+        <div @click="buyForm.amount = currentData.maxStack">
+          {{ $lang('最大') }}
         </div>
-        <div class="text">
-          {{ $lang('資金帳戶') }}（{{ pledgeSocketStore.walletData.balance }}）
-        </div>
-        <div
-          class="dybtn"
-          :class="buyForm.amount && availableClick ? 'opensubmit' : ''"
-          @click="buyForm.amount && availableClick ? goBuy() : ''"
-        >
-          {{ $lang('立即質押') }}
-        </div>
+      </div>
+      <div class="text">
+        {{ $lang('資金帳戶') }}（{{ pledgeSocketStore.walletData.balance }}）
+      </div>
+      <div
+        class="dybtn"
+        :class="buyForm.amount && availableClick ? 'opensubmit' : ''"
+        @click="buyForm.amount && availableClick ? goBuy() : ''"
+      >
+        {{ $lang('立即質押') }}
       </div>
     </div>
   </div>
 </template>
 <style scoped lang="sass">
-@import '@/assets/sass/user/model2/coin2.scss'
-
 .pages-user-pledge
-    padding: 50px 30px 90px
+    padding: 77px 30px 90px
     .switch-btn
       position: absolute
       right: 30px
-      top: 0px
+      top: 30px
       width: 140px
       padding: 8px
       text-align: center
@@ -337,7 +330,7 @@ onBeforeMount(() => {
           width: 120px
           height: 120px
           position: absolute
-          top: -30px
+          top: 10px
           left: 10px
           object-fit: contain
         .content

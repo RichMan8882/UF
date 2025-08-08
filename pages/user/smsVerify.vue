@@ -53,57 +53,49 @@ const verifySmsCode = async () => {
 </script>
 
 <template>
-  <div class="pages">
-    <div class="sec-title">
-      <span>{{ $lang('請驗證電話號碼') }}</span>
-      <i class="fas fa-wallet"></i>
+  <div class="card">
+    <div class="sms-title">
+      <span>
+        <i class="fas fa-wallet"></i>
+      </span>
+      {{ $lang('請驗證電話號碼') }}
     </div>
-    <div class="formSection">
-      <div class="formContent">
-        <button
-          type="button"
-          :class="
-            isButtonDisabled ? 'buttonWhGreen btbDisabled' : 'buttonWhGreen'
-          "
-          :disabled="isButtonDisabled"
-          @click="getPhoneCode"
-        >
-          <div v-if="!isButtonDisabled">
-            <i class="fas fa-envelope"></i>
-          </div>
-          <div v-else>{{ countdown }}</div>
-          <div>{{ $lang('發送驗證碼') }}</div>
-        </button>
-        <div class="verify_form">
-          <div class="input-classic">
-            <span class="input-title"> {{ $lang('手機號碼') }}</span>
-            <div class="input-text">
-              {{ playerStore.playerInfo.countryCode }}
-              {{ playerStore.playerInfo.mobile }}
-            </div>
-          </div>
-          <div class="input-classic">
-            <span class="input-title">{{ $t('簡訊驗證碼') }}</span>
-            <input v-trim-input v-model="smsCode" name="code" type="text" />
-          </div>
-          <div class="input-classic">
-            <div class="info-text">
-              <a :href="siteStore.chatbox" target="_blank"
-                >{{ $t('收不到驗證碼') }}?</a
-              >
-            </div>
-          </div>
-        </div>
-        <button type="button" class="buttonWhite" @click="verifySmsCode">
-          {{ $lang('送出') }}
-        </button>
+    <button
+      type="button"
+      :class="isButtonDisabled ? 'buttonWhGreen btbDisabled' : 'buttonWhGreen'"
+      :disabled="isButtonDisabled"
+      @click="getPhoneCode"
+    >
+      <div v-if="!isButtonDisabled">
+        <i class="fas fa-envelope"></i>
       </div>
+      <div v-else>{{ countdown }}</div>
+      <div>{{ $lang('發送驗證碼') }}</div>
+    </button>
+    <div class="verify_form">
+      <div class="input-classic">
+        <span class="input-title"> {{ $lang('手機號碼') }}</span>
+        <div class="input-text">
+          {{ playerStore.playerInfo.countryCode }}
+          {{ playerStore.playerInfo.mobile }}
+        </div>
+      </div>
+      <div class="input-classic">
+        <span class="input-title">{{ $lang('簡訊驗證碼') }}</span>
+        <input v-trim-input v-model="smsCode" name="code" type="text" />
+      </div>
+      <a :href="siteStore.chatbox" class="not-found" target="_blank"
+        >{{ $t('收不到驗證碼') }}?</a
+      >
     </div>
+    <button type="button" class="submit btn-submit" @click="verifySmsCode">
+      {{ $lang('送出') }}
+    </button>
   </div>
 </template>
 
 <style scoped lang="sass">
-@import '@/assets/sass/user/model2/coin2.scss'
+@import '@/assets/sass/user/model3/coin2.scss'
 .pages
   @media screen and (max-width: 768px)
     padding: 10px
@@ -129,19 +121,101 @@ const verifySmsCode = async () => {
 </style>
 
 <style scoped lang="sass">
-.formSection
-  margin: 20px 0 0 0
-  width: 100%
-  height: 50vh
-  position: relative
-  border-radius: 5px
-  font-size: 16px
-  border: 1px solid #fff
-  overflow-y: auto
-  @media screen and (max-width: 768px)
-    height: 48vh
-  .formContent
+.card
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26)
+  border-radius: .375rem
+  background-color: #fff
+  padding: 5px 10px
+
+  @media screen and (min-width: 768px)
+    padding: 30px
+
+.sms-title
+  font-weight: bold
+  padding: 12px 15px
+  font-size: 18px
+  margin-bottom: 6px
+  background-color: #32333a
+  color: #fff
+  border-radius: 6px
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26)
+
+.input-classic
+  display: flex
+  flex-wrap: nowrap
+  margin-bottom: 25px
+
+  @media screen and (min-width: 768px)
     width: 100%
+    max-width: 100%
+    margin-left: 0
+    margin-right: 0
+
+  span.input-title
+    color: #252525
+    font-weight: bold
+    font-size: 15px
+    width: 35%
+
+
+  .input-text
+    background-color: rgba(0, 0, 0, 0.2)
+    font-size: 15px
+    padding: 5px 10px
+    width: 100%
+
+  select,
+  input
+    width: 100%
+    color: rgba(0, 0, 0, .87)
+    padding: 5px
+    background-color: rgba(0, 0, 0, 0)
+    border-bottom: 1px solid rgba(0, 0, 0, .87)
+
+.btn-submit.submit
+  cursor: pointer
+  display: block
+  border-radius: 4px
+  letter-spacing: .5px
+  text-align: center
+  border-style: none
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, .2), 0px 2px 2px 0px rgba(0, 0, 0, .14), 0px 3px 1px -2px rgba(0, 0, 0, .12)
+  outline: none
+  text-shadow: 0 0 10px rgba(0, 0, 0, .5)
+  padding: 6px 16px
+  font-size: 13px
+  background-color: #6c757d
+  font-weight: bold
+  color: #fff
+  margin: 0 auto 30px
+  transition: all 0.3s
+  &:hover
+    opacity: 0.8
+.not-found
+  cursor: pointer
+  display: block
+  border-radius: 4px
+  letter-spacing: .5px
+  text-align: center
+  border-style: none
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, .2), 0px 2px 2px 0px rgba(0, 0, 0, .14), 0px 3px 1px -2px rgba(0, 0, 0, .12)
+  outline: none
+  text-shadow: 0 0 10px rgba(0, 0, 0, .5)
+  padding: 6px 16px
+  font-size: 14px
+  background-color: rgb(203, 79, 79)
+  font-weight: bold
+  color: #fff
+  width: 150px
+  margin-bottom: 40px
+  margin-top: 20px
+  transition: all 0.3s
+  &:hover
+    opacity: 0.8
+.verify_form
+  max-width: 500px
+  width: 100%
+  margin: 0 auto
 </style>
 
 <style scoped lang="sass">
@@ -169,126 +243,4 @@ const verifySmsCode = async () => {
   background-color: #51765d
   color: #b9b9b9
   cursor: not-allowed
-.buttonWhite
-  margin: 60px auto 20px auto
-  width: 100px
-  height: 40px
-  background-color: #c0c0c0
-  border-radius: 5px
-  text-align: center
-  line-height: 40px
-  cursor: pointer
-  font-size: 16px
-  color: #000
-  display: flex
-  justify-content: center
-  align-items: center
-  &:hover
-    background-color: #f1f1f1
-  @media screen and (max-width: 768px)
-    width: 135px
-</style>
-
-<style scoped lang="sass">
-.form_input
-  width: 100%
-  border-radius: 5px
-  margin: 20px auto
-  font-size: 16px
-  overflow: hidden
-  position: relative
-  display: block
-  display: flex
-  justify-content: center
-  align-items: center
-  flex-wrap: wrap
-  .inputTitle
-    background-color: #fff
-    border-radius: 5px
-    width: 30%
-    display: block
-    text-align: center
-    margin: 0 10px 0 0
-    font-size: 16px
-    padding: 5px 0
-    @media screen and (max-width: 768px)
-      width: 32%
-      font-size: 14px
-  .empty
-    background-color: #fff0
-  .inputIten
-    border-radius: 5px
-    position: relative
-    width: 60%
-    background-color: #e2efff
-    padding: 5px 15px
-    .input_text
-      display: flex
-      justify-content: flex-start
-      align-items: center
-      .textNormal
-        padding: 0 10px 0
-    .input_style
-      border-radius: 5px
-      border: none
-      background-color: #e2efff
-      height: 100%
-      width: 100%
-    input
-      width: 100%
-      height: 100%
-      border: none
-      background-color: #e2efff
-      font-size: 16px
-      outline: none
-      &::placeholder
-        color: #000
-      @media screen and (max-width: 768px)
-        font-size: 14px
-    select
-      width: 100%
-      border: none
-      background-color: #e2efff
-      outline: none
-    .eyes
-      position: absolute
-      right: 5px
-      top: 50%
-      transform: translateY(-50%)
-      z-index: 99
-      cursor: pointer
-  .padding_Right_more
-    padding: 5px 25px 5px 15px
-  .flexStyle
-    display: flex
-    justify-content: flex-start
-    align-items: center
-    input
-      margin: 5px 0 5px 10px
-  .tipsLeft
-    width: 30%
-    @media screen and (max-width: 768px)
-      width: 32%
-  .tipsRight
-    width: 60%
-    display: block
-    text-align: center
-    font-size: 12px
-    padding: 2px 0
-    color: #cf0000
-    text-align: right
-    @media screen and (max-width: 768px)
-      width: 60%
-      font-size: 10px
-  .fullFlex
-    width: 100%
-  .inputCheck
-    width: 5%
-    @media screen and (max-width: 768px)
-     width: 10%
-  .text
-    width: 85%
-    @media screen and (max-width: 768px)
-     width: 80%
-     font-size: 12px
 </style>

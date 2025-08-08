@@ -171,19 +171,19 @@ const applyStatus = (status: any) => {
   const statusList = [
     {
       value: 0,
-      label: '未審核'
+      label: t('未審核')
     },
     {
       value: 1,
-      label: '已完成'
+      label: t('已完成')
     },
     {
       value: 2,
-      label: '已駁回'
+      label: t('已駁回')
     }
   ]
   const data = statusList.find((item) => item.value === status)
-  return data ? data.label : t('未知')
+  return data ? t(data.label) : t('未知')
 }
 const formatDate = (timestamp: string) => {
   const date = new Date(timestamp)
@@ -205,138 +205,121 @@ const hiddenAccountNo = (value) => {
 }
 const formatMemo = (value: any) => {
   const str = value
-    .replace('用戶操作', t('用戶操作'))
-    .replace('劃轉至', t('劃轉至'))
-    .replace('漲跌', t('漲跌'))
-    .replace('上期', t('上期'))
-    .replace('會員投注', t('會員投注'))
-    .replace('期', t('期'))
-    .replace('比特幣', t('比特幣'))
-    .replace('美元', t('美元'))
-    .replace('漲', t('漲'))
-    .replace('結算結果', t('結算結果'))
-    .replace('投注本金加獎金共', t('投注本金加獎金共'))
-    .replace('投注-', t('投注'))
-    .replace('投注成功', t('投注成功'))
-    .replace('期別', t('期別'))
-    .replace('選項', t('選項'))
-    .replace('金額', t('金額'))
-    .replace('主錢包', t('主錢包'))
-    .replace('質押錢包', t('質押錢包'))
-    .replace('數量', t('數量'))
-    .replace('成功', t('成功'))
-    .replace('別', t('別'))
+  // .replace('用戶操作', t('用戶操作'))
+  // .replace('劃轉至', t('劃轉至'))
   return str
 }
 </script>
 
 <template>
   <div class="pages">
-    <div class="sec-title">
-      <span>{{ $t('提領紀錄') }}</span>
-      <i class="fas fa-history"></i>
-    </div>
-    <div class="formSection">
-      <div class="formContent">
-        <div class="changeType">
-          <!-- <button
-            type="button"
-            class="buttonWhite"
-            :class="recordType === 'transaction' ? 'active' : ''"
-            @click="changeRecordType('transaction')"
-          >
-            {{ $lang('交易紀錄') }}
-          </button> -->
-          <button
-            type="button"
-            class="buttonWhite"
-            :class="recordType === 'withdraw' ? 'active' : ''"
-            @click="changeRecordType('withdraw')"
-          >
-            {{ $lang('提領紀錄') }}
-          </button>
-        </div>
-        <div v-if="recordType === 'transaction'" class="recordBox">
-          <div
-            v-if="playerStore.playerInfo.wallet.length > 1"
-            class="walletBox"
-          >
-            <span class="">{{ $lang('錢包') }}</span>
-            <select v-model="selectWalletId" class="selectStyle">
-              <option
-                v-for="item in playerStore.playerInfo.wallet"
-                :key="item.id"
-                :value="item.id"
-                @click="(selectWalletId = item.id), (selectWallet = item)"
-              >
-                {{ walletTypeName(item.type) }}
-              </option>
-            </select>
+    <div class="card">
+      <div class="formSection">
+        <div class="formContent">
+          <div class="changeType">
+            <button
+              type="button"
+              class="buttonWhite"
+              :class="recordType === 'transaction' ? 'active' : ''"
+              @click="changeRecordType('transaction')"
+            >
+              {{ $lang('入金紀錄') }}
+            </button>
+            <button
+              type="button"
+              class="buttonWhite"
+              :class="recordType === 'withdraw' ? 'active' : ''"
+              @click="changeRecordType('withdraw')"
+            >
+              {{ $lang('匯出紀錄') }}
+            </button>
           </div>
-          <table>
-            <tr class="recordBox-title">
-              <th>{{ $lang('交易時間') }}</th>
-              <th>{{ $lang('細目') }}</th>
-              <th>{{ $lang('金額') }}</th>
-            </tr>
-            <tr
-              v-for="(item, index) in recordList"
-              :key="index"
-              class="recordBox-toggle"
+          <div v-if="recordType === 'transaction'" class="recordBox">
+            <div
+              v-if="playerStore.playerInfo.wallet.length > 1"
+              class="walletBox"
             >
-              <th>{{ formatDate(item.createdAt) }}</th>
-              <th>
-                <div>
-                  {{ $lang('類型') }}:{{ transactionRecordType(item.type) }}
-                </div>
-                <div>{{ $lang('備註') }}:{{ formatMemo(item.memo) }}</div>
-              </th>
-              <th>{{ new Intl.NumberFormat('zh-TW').format(item.amount) }}</th>
-            </tr>
-          </table>
-        </div>
-        <div v-if="recordType === 'withdraw'" class="recordBox">
-          <table>
-            <tr class="recordBox-title">
-              <th>{{ $lang('交易時間') }}</th>
-              <th>{{ $lang('細目') }}</th>
-              <th>{{ $lang('金額') }}</th>
-            </tr>
-            <tr
-              v-for="(item, index) in withdrawRecordList"
-              :key="index"
-              class="recordBox-toggle"
-            >
-              <th>{{ formatDate(item.createdAt) }}</th>
-              <th v-if="showSectionType(item.bankData.bankName)">
-                <div>{{ $lang('交易所') }}:{{ item.bankData.bankName }}</div>
-                <div>{{ $lang('錢包地址') }}:{{ item.bankData.accountNo }}</div>
-                <div>{{ $lang('狀態') }}:{{ applyStatus(item.status) }}</div>
-                <div>
-                  {{ $lang('手續費') }}: $
-                  {{ new Intl.NumberFormat('zh-TW').format(item.fee) }}
-                </div>
-              </th>
-              <th v-else>
-                <div>{{ $lang('銀行') }}:{{ item.bankData.bankName }}</div>
-                <div>{{ $lang('分行') }}:{{ item.bankData.branch }}</div>
-                <div>{{ $lang('戶名') }}:{{ item.bankData.account }}</div>
-                <div>
-                  {{ $lang('帳號') }}:{{
-                    hiddenAccountNo(item.bankData.accountNo)
-                  }}
-                </div>
-                <div>{{ $lang('狀態') }}:{{ applyStatus(item.status) }}</div>
-                <div>
-                  {{ $lang('手續費') }}: $
-                  {{ new Intl.NumberFormat('zh-TW').format(item.fee) }}
-                </div>
-              </th>
-              <th>
-                $ {{ new Intl.NumberFormat('zh-TW').format(item.amount) }}
-              </th>
-            </tr>
-          </table>
+              <span class="">{{ $lang('錢包') }}</span>
+              <select v-model="selectWalletId" class="selectStyle">
+                <option
+                  v-for="item in playerStore.playerInfo.wallet"
+                  :key="item.id"
+                  :value="item.id"
+                  @click="(selectWalletId = item.id), (selectWallet = item)"
+                >
+                  {{ walletTypeName(item.type) }}
+                </option>
+              </select>
+            </div>
+            <table>
+              <tr class="recordBox-title">
+                <th>{{ $lang('交易時間') }}</th>
+                <th>{{ $lang('細目') }}</th>
+                <th>{{ $lang('金額') }}</th>
+              </tr>
+              <tr
+                v-for="(item, index) in recordList"
+                :key="index"
+                class="recordBox-toggle"
+              >
+                <th>{{ formatDate(item.createdAt) }}</th>
+                <th>
+                  <div>
+                    {{ $lang('類型') }}:{{ transactionRecordType(item.type) }}
+                  </div>
+                  <div>{{ $lang('備註') }}:{{ formatMemo(item.memo) }}</div>
+                </th>
+                <th>
+                  {{ new Intl.NumberFormat('zh-TW').format(item.amount) }}
+                </th>
+              </tr>
+            </table>
+          </div>
+          <div v-if="recordType === 'withdraw'" class="recordBox">
+            <table>
+              <tr class="recordBox-title">
+                <th>{{ $lang('交易時間') }}</th>
+                <th>{{ $lang('細目') }}</th>
+                <th>{{ $lang('金額') }}</th>
+              </tr>
+              <tr
+                v-for="(item, index) in withdrawRecordList"
+                :key="index"
+                class="recordBox-toggle"
+              >
+                <th>{{ formatDate(item.timestamp) }}</th>
+                <th v-if="showSectionType(item.bankData.bankName)">
+                  <div>{{ $lang('交易所') }}:{{ item.bankData.bankName }}</div>
+                  <div>
+                    {{ $lang('錢包地址') }}:{{ item.bankData.accountNo }}
+                  </div>
+                  <div>{{ $lang('狀態') }}:{{ applyStatus(item.status) }}</div>
+                  <div>
+                    {{ $lang('手續費') }}: $
+                    {{ new Intl.NumberFormat('zh-TW').format(item.fee) }}
+                  </div>
+                </th>
+                <th v-else>
+                  <div>{{ $lang('銀行') }}:{{ item.bankData.bankName }}</div>
+                  <div>{{ $lang('分行') }}:{{ item.bankData.branch }}</div>
+                  <div>{{ $lang('戶名') }}:{{ item.bankData.account }}</div>
+                  <div>
+                    {{ $lang('帳號') }}:{{
+                      hiddenAccountNo(item.bankData.accountNo)
+                    }}
+                  </div>
+                  <div>{{ $lang('狀態') }}:{{ applyStatus(item.status) }}</div>
+                  <div>
+                    {{ $lang('手續費') }}: $
+                    {{ new Intl.NumberFormat('zh-TW').format(item.fee) }}
+                  </div>
+                </th>
+                <th>
+                  $ {{ new Intl.NumberFormat('zh-TW').format(item.amount) }}
+                </th>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -344,20 +327,13 @@ const formatMemo = (value: any) => {
 </template>
 
 <style scoped lang="sass">
-@import '@/assets/sass/user/model2/coin2.scss'
+@import '@/assets/sass/user/model3/coin2.scss'
 .pages
   @media screen and (max-width: 768px)
     padding: 10px
 </style>
 
 <style scoped lang="sass">
-.walletBox
-  background-color: rgba(0, 0, 0, 0.2)
-  padding: 5px 10px
-  border-radius: 5px
-  display: inline-block
-  select
-    margin-left: 10px
 .selectStyle
   height: 32px
   padding: 2px 15px
@@ -368,6 +344,8 @@ const formatMemo = (value: any) => {
   border: 1px solid #000
   border-radius: 4px
   width: 130px !important
+  margin-left: 10px
+  margin-bottom: 10px
 .router
   width: 100%
   height: 35px
@@ -388,7 +366,6 @@ const formatMemo = (value: any) => {
 
 <style scoped lang="sass">
 .formSection
-  margin: 20px 0 0 0
   width: 100%
   height: 58vh
   position: relative
@@ -400,6 +377,49 @@ const formatMemo = (value: any) => {
     height: 48vh
   .formContent
     width: 100%
+
+
+.card
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26)
+  border-radius: .375rem
+  background-color: #fff
+  padding: 5px 0
+
+  @media screen and (min-width: 768px)
+    padding: 0
+
+.pages
+  padding: 0
+
+  .changeType
+    border-bottom: 1px solid rgba(0, 0, 0, .12)
+
+    @media screen and (min-width: 768px)
+      padding: 15px
+      padding-bottom: 0
+
+  .formSection
+    height: auto
+
+  .recordBox
+    padding: 0
+
+    @media screen and (min-width: 768px)
+      padding: 16px
+
+    tr
+      background-color: transparent
+
+    th
+      background-color: transparent
+
+  .tab
+    background-color: #fff
+    border-bottom: 3px solid rgba(0, 0, 0, .2)
+    font-size: 15px
+    color: #1d1d1d
+    padding: 0 12px 5px
+    font-weight: bold
 </style>
 
 <style scoped lang="sass">
@@ -429,17 +449,17 @@ const formatMemo = (value: any) => {
   svg
     padding: 0 10px 0 0
 .buttonWhite
-  margin: 30px 0 0 30px
-  min-width: 100px
+  margin: 20px 0 20px 30px
+  // width: 100px
+  padding: 0 10px
   height: 40px
   background-color: rgba(0, 0, 0, 0.2)
   border-radius: 5px
   text-align: center
-  // line-height: 40px
+  line-height: 40px
   cursor: pointer
   font-size: 16px
   color: #000
-  padding: 0 10px
   @media screen and (max-width: 768px)
     width: 135px
 .active

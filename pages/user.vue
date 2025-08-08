@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 const router = useRouter()
 const siteStore = useSiteStore()
 const { signout } = useAuthStore()
@@ -7,7 +7,13 @@ const PlayerStore = usePlayerStore()
 const ticketStore = useTicketStore()
 const { queryTicket } = ticketStore
 const intervalId = ref(null)
-const checkPath = (link: string) => {
+const { t } = useI18n()
+
+const isDashboard = computed(() => {
+  return router.currentRoute.value.name === 'user'
+})
+
+const checkPath = (link) => {
   if (router.currentRoute.value.fullPath === `/user/${link}`) {
     return 'active'
   } else {
@@ -16,11 +22,9 @@ const checkPath = (link: string) => {
 }
 const unreadMessage = () => {
   const list = []
-  ticketStore.tickets.forEach((item: any) => {
+  ticketStore.tickets.forEach((item) => {
     if (
-      item.thread.find(
-        (message: any) => message.role !== 0 && message.read === null
-      )
+      item.thread.find((message) => message.role !== 0 && message.read === null)
     ) {
       list.push(item)
     }
@@ -33,7 +37,6 @@ onMounted(async () => {
       return navigateTo('/user/smsVerify')
     }
   }
-
   const queryChatboxPromise = queryChatbox()
   queryChatboxPromise
     .then((queryChatboxRes) => {
@@ -63,7 +66,6 @@ onMounted(async () => {
 })
 onBeforeUnmount(() => {
   if (intervalId.value) {
-    console.log('clearInterval queryTicket', intervalId.value)
     clearInterval(intervalId.value)
     intervalId.value = null
   }
@@ -92,10 +94,6 @@ watch(
         return router.push('/user/smsVerify')
       }
     }
-    if (router.currentRoute.value.name === 'user') {
-      return navigateTo('/user/info')
-    }
-    document.getElementById('form-control').checked = false
   }
 )
 const pledgeSocketStore = usePledgeSocketStore()
@@ -112,253 +110,296 @@ onBeforeUnmount(() => {
     pledgeSocketStore.closeWebSocket()
   }
 })
+const walletName = (type) => {
+  switch (type) {
+    case 1:
+      return siteStore.siteData.mainWalletType === type
+        ? t('我的資產(電子錢包)')
+        : t('美元資產(電子錢包)')
+    case 2:
+      return siteStore.siteData.mainWalletType === type
+        ? t('我的資產(電子錢包)')
+        : t('電力資產(電子錢包)')
+    case 3:
+      return siteStore.siteData.mainWalletType === type
+        ? t('我的資產(電子錢包)')
+        : t('商城資產(電子錢包)')
+    case 4:
+      return siteStore.siteData.mainWalletType === type
+        ? t('我的資產(電子錢包)')
+        : t('質押資產(電子錢包)')
+    default:
+      return t('其他資產')
+  }
+}
 </script>
 <template>
-  <div>
-    <div class="navBar">
-      <div class="left">
-        <div class="logo" @click="navigateTo('/')">
-          <img :src="siteStore.siteData.logo" alt="" />
+  <div class="page">
+    <div class="container">
+      <div class="header">
+        <div class="header-sec">
+          <button
+            type="button"
+            class="header-logout"
+            @click="navigateTo('/user')"
+          >
+            {{ $lang('會員中心') }}
+          </button>
+          <!-- <div class="header-info">
+            <span> $ {{ PlayerStore.playerInfo?.balance }} </span>
+          </div> -->
         </div>
-      </div>
-      <div class="right">
-        <a class="btn-login" @click="navigateTo('/user/info')"> 用戶中心 </a>
-        <a class="btn-reg" @click="signout">登出</a>
-      </div>
-    </div>
-    <div class="userpage">
-      <div class="form-block">
-        <div class="gw template">
-          <div class="form-container big">
-            <div class="white-bg">
-              <input id="form-control" type="checkbox" hidden />
-              <div class="form-row">
-                <div class="left-block">
-                  <label for="form-control" class="form-close">
-                    <i class="fas fa-long-arrow-alt-left"></i>
-                  </label>
-                  <a target="_blank" class="auth" @click="gameWindowOpen">
-                    <i class="fas fa-chart-line"></i>
-                    {{ $lang('期權交易') }}
-                  </a>
-                  <a
-                    v-if="
-                      siteStore.siteData?.gameType?.find(
-                        (item: any) => item === 5
-                      )
-                    "
-                    :class="checkPath('pledge')"
-                    @click="navigateTo(`/user/pledge`)"
-                  >
-                    <i class="fas fa-coins"></i>
-                    {{ $lang('質押') }}
-                  </a>
-                  <a
-                    :class="checkPath('info')"
-                    @click="navigateTo(`/user/info`)"
-                  >
-                    <i class="fas fa-user-circle"></i>
-                    {{ $lang('用戶中心') }}
-                  </a>
-                  <a
-                    :class="checkPath('setting')"
-                    @click="navigateTo(`/user/setting`)"
-                  >
-                    <i class="fab fa-whmcs"></i>
-                    {{ $lang('用戶設置') }}
-                  </a>
-                  <a
-                    :class="checkPath('bank')"
-                    @click="navigateTo(`/user/bank`)"
-                  >
-                    <i class="fa-solid fa-building-columns"></i>
-                    {{ $lang('實名認證') }}
-                  </a>
-                  <a
-                    :class="checkPath('deposit')"
-                    @click="navigateTo(`/user/deposit`)"
-                  >
-                    <i class="fas fa-wallet"></i>
-                    {{ $lang('資產置入') }}
-                  </a>
-                  <a
-                    :class="checkPath('withdraw')"
-                    @click="navigateTo(`/user/withdraw`)"
-                  >
-                    <i class="fas fa-wallet"></i>
-                    {{ $lang('資產提現') }}
-                  </a>
-                  <a
-                    :class="checkPath('activity')"
-                    @click="navigateTo(`/user/activity`)"
-                  >
-                    <i class="fas fa-gift"></i>
-                    {{ $lang('近期活動') }}
-                  </a>
-                  <!-- <a
-                  :class="checkPath('setting')"
-                  @click="navigateTo(`/user/setting`)"
-                >
-                  <i class="fab fa-whmcs"></i>
-                  {{ $lang('會員設定') }}
-                </a> -->
-
-                  <!-- <a
-                :class="checkPath('gamePage')"
-                @click="navigateTo(`/user/gamePage`)"
-              >
-                <i class="fab fa-fantasy-flight-games"></i>
-                {{ $lang("其他交易") }}
-              </a> -->
-                  <a
-                    :class="checkPath('news')"
-                    @click="navigateTo(`/user/news`)"
-                  >
-                    <i class="far fa-comment-alt"></i>
-                    {{ $lang('平台公告') }}
-                  </a>
-                  <a
-                    :class="checkPath('record')"
-                    @click="navigateTo(`/user/record`)"
-                  >
-                    <i class="fas fa-history"></i>
-                    {{ $lang('提領紀錄') }}
-                  </a>
-                  <!-- <a
-                  :class="checkPath('message')"
-                  class="message"
-                  @click="navigateTo(`/user/message`)"
-                >
-                  <i class="far fa-comments"></i>
-                  {{ $lang('站內訊息') }}
-                  <span v-if="unreadMessage() > 0" class="badgeOpint"> </span>
-                </a> -->
-                  <a :href="siteStore.chatbox" target="_blank">
-                    <i class="fas fa-headset"></i>
-                    {{ $lang('聯繫客服') }}
-                  </a>
-                </div>
-                <div class="right-block">
-                  <label for="form-control" class="form-btn">
-                    <i class="fas fa-list"></i>
-                  </label>
-                  <router-view></router-view>
-                </div>
-              </div>
-            </div>
+        <div class="header-info">
+          <span
+            v-for="(item, index) in PlayerStore.playerInfo?.wallet"
+            :key="index"
+          >
+            {{ walletName(item.type) }} $
+            {{ new Intl.NumberFormat('zh-tw').format(item.balance) }}
+          </span>
+        </div>
+        <div class="header-main">
+          <div class="header-info">
+            <span>
+              {{ PlayerStore.playerInfo?.account }}
+            </span>
           </div>
+
+          <button type="button" class="header-logout" @click="signout">
+            {{ $lang('登出') }}
+          </button>
         </div>
       </div>
+
+      <div class="main shadow">
+        <router-view />
+      </div>
+
+      <div v-if="isDashboard" class="tip shadow">
+        <span>
+          <i class="fa-solid fa-circle-info"></i>
+        </span>
+
+        <p>
+          {{
+            $lang('平台系統會不定時更新及優化，如有無法登入情形請洽客服聯繫')
+          }}
+          <br />
+          {{
+            $lang(
+              '嚴禁使用第三方套利程式，否則會依中華民國刑法第360條以及台灣洗錢法第2條辦理實施法律訴訟追討賠償，請勿以身試法。'
+            )
+          }}
+        </p>
+      </div>
+
+      <div class="back">
+        <button type="button" class="back-btn" @click="navigateTo('/')">
+          {{ $lang('回首頁') }}
+        </button>
+      </div>
     </div>
+    <video
+      class="login-video"
+      src="https://telegra.ph/file/41782785ac0d23abf1b01.mp4"
+      autoplay
+      muted
+      playsinline
+      loop
+    />
   </div>
 </template>
+
+<style lang="sass">
+.form-btn-sec
+  cursor: pointer
+  display: inline-block
+  border-radius: 4px
+  letter-spacing: .5px
+  text-align: center
+  border-style: none
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, .2), 0px 2px 2px 0px rgba(0, 0, 0, .14), 0px 3px 1px -2px rgba(0, 0, 0, .12)
+  outline: none
+  transition: all ease .2s
+  text-shadow: 0 0 10px rgba(0, 0, 0, .5)
+  padding: 6px 16px
+  background-color: #6c757d
+  font-weight: bold
+  color: #fff
+  font-size: 13px
+
+  @media screen and (min-width: 768px)
+    font-size: 15px
+
+.form-item
+  margin-bottom: 10px
+
+  h4
+    font-size: 15px
+    font-weight: bold
+
+  input
+    padding: 5px 10px
+    color: #000
+    font-size: 14px
+    margin-top: 0
+    width: 100%
+
+    &.disabled
+      background-color: rgba(0, 0, 0, 0.2)
+      pointer-events: none
+</style>
+
 <style scoped lang="sass">
-@import '@/assets/sass/user/model2/coin2.scss'
-.form-block
+.page
+  background-color: #fff
+  position: relative
+  width: 100dvw
   height: 100dvh
   overflow-y: auto
-  @media screen and (max-width: 768px)
-    padding: 0 0 200px 0
-input[type='checkbox']
-  display: none
+  overflow-x: hidden
+  padding: 16px 0
+.container
+  width: 100%
+  padding-right: 15px
+  padding-left: 15px
+  margin-right: auto
+  margin-left: auto
+  max-width: 1000px
+  height: 100%
 
-.form-container
-  background-image: url("@/assets/image/kava-hero.jpg")
-  background-size: cover
-  background-position: center
-  background-repeat: no-repeat
-  padding: 0 !important
-  .white-bg
-    background-color: white
-    opacity: 0.8
-    padding: 30px
+  @media (min-width: 768px)
+    display: flex
+    flex-direction: column
+    justify-content: center
+
+.shadow
+  box-shadow: 0 0 10px rgba(0, 0, 0, .2)
 </style>
 
 <style scoped lang="sass">
-.left-block
-  a
-    svg
-      margin-right: 10px
-</style>
-
-<style scoped>
-.form-row {
-  cursor: pointer;
-}
-.message {
-  position: relative;
-}
-.badgeOpint {
-  background-color: #ff0000;
-  color: #fff;
-  border-radius: 50%;
-  /* position: absolute; */
-  margin: 0 0 0 10px;
-  width: 10px;
-  height: 10px;
-}
-</style>
-
-<style scoped lang="sass">
-.navBar
+.header
   display: flex
   justify-content: space-between
   align-items: center
-  padding: 25px 30px
-  .left
-    width: 50%
-    .logo
-      width: 60px
-      height: auto
-      cursor: pointer
-      @media screen and (max-width: 900px)
-        width: 80px
-      img
-        width: 100%
-        height: auto
-  .right
-    width: 50%
+  margin-bottom: 24px
+  position: relative
+  z-index: 50
+
+  &-sec
     display: flex
-    justify-content: flex-end
+
+    .header-logout
+      margin-right: 20px
+
+  &-main
+    display: flex
     align-items: center
+
+    .header-info
+      margin-right: 20px
+
+  &-logout
+    background-color: #32333a
+    padding: .25rem .75rem
+    border-radius: 5px
+    color: #fff
+    padding: .4rem
+
+    @media (min-width: 768px)
+      padding: 4px 12px
+
+  &-info
+    padding: .3rem
+    background-color: #f4f4f7
+    border-radius: 5px
+    // display: flex
+
+    span
+      font-size: .9rem
+      padding: 5px 10px
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26)
+      border-radius: .375rem
+      background-color: #fff
+      color: rgba(0, 0, 0, .54)
+      display: block
 </style>
 
 <style scoped lang="sass">
-a
+.main
+  position: relative
+  z-index: 50
+  max-height: 80vh
+  overflow-y: auto
+  overflow-x: hidden
+  border-radius: 6px
+  background-color: #f4f4f7
+
+.tip
+  position: relative
+  z-index: 50
+  padding: .3rem
+  background-color: #f4f4f7
   border-radius: 4px
-  min-width: 100px
-  padding: 5px 16px
-  margin: .5em
-  font-size: 14px
-  letter-spacing: .15px
-  white-space: normal
-  transition: all .5s ease-in-out
-  text-align: center
-  font-weight: bold
-  cursor: pointer
-.btn-login
-  max-width: 130px
-  background-color: #262f37
-  border: 1px solid #262f37
-  color: #fff
+  margin-top: 16px
   display: flex
-  align-items: center
   justify-content: center
-  flex-flow: row nowrap
-  border-radius: 50px
-  svg
-    width: 22px
-    display: inline-block
-    margin-left: 10px
-.btn-reg
-  background-color: rgba(255, 255, 255, .8)
-  backdrop-filter: blur(30px)
-  border: 1px solid #ebedf0
-  color: #0f1215
+  align-items: center
+  color: #212529
+
+  span
+    padding: 0 16px
+    font-size: 22px
+
+  p
+    padding: 8px
+
+.back
+  position: relative
+  z-index: 50
+  padding: .3rem
+  background-color: #f4f4f7
+  display: inline-block
+  border-radius: 4px
+  margin-top: 32px
+  margin-bottom: 24px
+
+  &-btn
+    font-size: 1rem
+    padding: 6px 16px
+    background-color: #198754
+    color: #fff
+    cursor: pointer
+    border-radius: 4px
+    letter-spacing: .5px
+    text-align: center
+    border-style: none
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, .2), 0px 2px 2px 0px rgba(0, 0, 0, .14), 0px 3px 1px -2px rgba(0, 0, 0, .12)
+    outline: none
+    transition: all ease .2s
+    text-shadow: 0 0 10px rgba(0, 0, 0, .5)
+
+    &:hover
+      background-color: lighten(#198754, 15)
+
+  @media (min-width: 768px)
+    padding: 16px
+
+    &-btn
+      width: 100%
 </style>
 
-<style>
-.input {
-  min-height: 16px;
-}
+<style scoped lang="sass">
+.login-video
+  position: absolute
+  bottom: 0
+  right: 0
+  max-width: 100%
+  margin-left: auto
+  object-fit: contain
+
+@media screen and (min-width: 768px)
+  .login-video
+    max-width: 600px
+    right: 0
 </style>

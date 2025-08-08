@@ -27,10 +27,11 @@ const displayedActivities = computed(() => {
 
 <template>
   <div class="pages">
-    <div class="sec-title">
-      <span>{{ $lang('近期活動') }}</span>
+    <div class="activity-title">
       <i class="fas fa-gift"></i>
+      <span>{{ $lang('優惠活動') }}</span>
     </div>
+
     <ul class="pagination">
       <li :class="{ disabled: currentPage === 1 }" @click="previousPage">
         <a>« {{ $lang('上一頁') }}</a>
@@ -39,6 +40,7 @@ const displayedActivities = computed(() => {
         <a>{{ $lang('下一頁') }} »</a>
       </li>
     </ul>
+
     <div class="post">
       <div v-for="item in displayedActivities" :key="item.title" class="Item">
         <input :id="item.title" type="checkbox" />
@@ -58,54 +60,53 @@ const displayedActivities = computed(() => {
 </template>
 
 <style scoped lang="sass">
-@import '@/assets/sass/user/model2/coin2.scss'
+@import '@/assets/sass/user/model3/coin2.scss'
+
 .pages
   padding: 20px
   @media screen and (max-width: 768px)
     padding: 10px
-</style>
 
-<style scoped lang="sass">
-.router
-  width: 100%
-  height: 35px
-  position: relative
-  border-radius: 5px
-  font-size: 16px
-  background-color: #afafaf
-  color: #fff
-  display: flex
-  align-items: center
-  justify-content: flex-start
-  border: 1px solid #fff
-  svg
-    padding: 0 20px 0 10px
-  .home
-    cursor: pointer
-</style>
-
-<style scoped lang="sass">
 .pagination
   display: flex
-  padding-left: 0
-  list-style: none
-  border-radius: .25rem
-  margin: 20px 0
+  align-items: center
+  padding: 24px 0
+
   li
-    margin: 0 5px 0 0
-  li.disabled
-    opacity: .5
-    pointer-events: none
+    padding: 0px
   a
-    background-color: #ffffff
-    color: rgba(0, 0, 0, .87)
-    padding: 3px 10px
-    border-radius: 2px
-    font-size: 14px
-    font-weight: 500
-    transition: box-shadow .2s cubic-bezier(.4,0,1,1), background-color .2s cubic-bezier(.4,0,.2,1), color .2s cubic-bezier(.4,0,.2,1)
-    outline: 0
-    border: 0
+    padding: 8px
+    background-color: #fff
+    margin: 0 4px
+    cursor: pointer
+    transition: all 300ms
+
+    &:hover
+      background-color: darken(#fff, 10)
+</style>
+
+<style scoped lang="sass">
+.activity-title
+    font-weight: bold
+    padding: 12px 15px
+    font-size: 18px
+    margin-bottom: 6px
+    background-color: #32333a
+    color: #fff
+    border-radius: 6px
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26)
+    display: flex
+    align-items: center
+
+    span
+      display: block
+      margin-left: 10px
+      margin-top: 2px
+
+    @media (min-width: 768px)
+      padding: 22px 26px
+      font-size: 20px
+      margin-bottom: 16px
 </style>
 
 <style scoped lang="sass">

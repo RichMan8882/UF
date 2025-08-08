@@ -1,86 +1,230 @@
 <script lang="ts" setup>
 const { t } = useI18n()
-const siteStore = useSiteStore()
-
 const playerStore = usePlayerStore()
-console.log(playerStore.playerInfo, 'playerStoreplayerStore')
-const walletName = (type) => {
-  switch (type) {
-    case 1:
-      return siteStore.siteData.mainWalletType === type
-        ? t('我的資產(電子錢包)')
-        : t('美元資產(電子錢包)')
-    case 2:
-      return siteStore.siteData.mainWalletType === type
-        ? t('我的資產(電子錢包)')
-        : t('電力資產(電子錢包)')
-    case 3:
-      return siteStore.siteData.mainWalletType === type
-        ? t('我的資產(電子錢包)')
-        : t('商城資產(電子錢包)')
-    case 4:
-      return siteStore.siteData.mainWalletType === type
-        ? t('我的資產(電子錢包)')
-        : t('質押資產(電子錢包)')
-    default:
-      return t('其他資產')
+
+const { updatePassword, updateTrasactionPassword } = playerStore
+const pwd = ref({
+  oPwd: '',
+  nPwd: '',
+  nPwdConfirm: '',
+  showoPwd: false,
+  shownPwd: false,
+  shownPwdConfirm: false
+})
+const transactionPwd = ref({
+  oPwd: '',
+  nPwd: '',
+  nPwdConfirm: '',
+  showoPwd: false,
+  shownPwd: false,
+  shownPwdConfirm: false
+})
+const changePwd = ref(false)
+const changenTPwd = ref(false)
+// updatePassword()  更新密碼
+// updateTrasactionPassword()  更新交易密碼
+watch(
+  () => pwd.value.nPwdConfirm,
+  (val) => {
+    if (val) {
+      changePwd.value = true
+    } else {
+      changePwd.value = false
+    }
+  }
+)
+watch(
+  () => transactionPwd.value.nPwdConfirm,
+  (val) => {
+    if (val) {
+      changenTPwd.value = true
+    } else {
+      changenTPwd.value = false
+    }
+  }
+)
+const sendPasswordChange = async () => {
+  console.log('changePwd.value', changePwd.value)
+  console.log('changenTPwd.value', changenTPwd.value)
+  if (changePwd.value) {
+    if (pwd.value.nPwd !== pwd.value.nPwdConfirm) {
+      ElNotification({
+        title: `${t('密碼不一致')}`,
+        type: 'error',
+        duration: 1000,
+        showClose: false
+      })
+      return
+    }
+    const res = await updatePassword({
+      password: pwd.value.oPwd,
+      newPassword: pwd.value.nPwd
+    })
+    if (res.success) {
+      pwd.value.oPwd = ''
+      pwd.value.nPwd = ''
+      pwd.value.nPwdConfirm = ''
+    }
+  }
+  if (changenTPwd.value) {
+    if (transactionPwd.value.nPwd !== transactionPwd.value.nPwdConfirm) {
+      ElNotification({
+        title: `${t('交易密碼不一致')}`,
+        type: 'error',
+        duration: 1000,
+        showClose: false
+      })
+      return
+    }
+    const res = await updateTrasactionPassword({
+      password: transactionPwd.value.oPwd,
+      newPassword: transactionPwd.value.nPwd
+    })
+    if (res.success) {
+      transactionPwd.value.oPwd = ''
+      transactionPwd.value.nPwd = ''
+      transactionPwd.value.nPwdConfirm = ''
+    }
   }
 }
 </script>
 <template>
-  <div class="page">
-    <div class="sec-title">
-      <span>{{ $lang('用戶中心') }}</span>
-      <i class="fas fa-user-circle"></i>
-    </div>
+  <div class="card">
     <div class="sec-form-block">
       <div class="user-title">
-        <span>{{ $lang('用戶姓名') }}</span>
-        <span>{{ playerStore.playerInfo.username }}</span>
-      </div>
-      <div class="user-title">
-        <span>{{ $lang('用戶帳號') }}</span>
+        <span>{{ $lang('帳號') }}</span>
         <span>{{ playerStore.playerInfo.account }}</span>
       </div>
       <div class="user-title">
-        <span>{{ $lang('電話號碼') }}</span>
+        <span>{{ $lang('姓名') }}</span>
+        <span>{{ playerStore.playerInfo.username }}</span>
+      </div>
+      <div class="user-title">
+        <span>{{ $lang('手機號碼') }}</span>
         <span
           >{{ playerStore.playerInfo.countryCode }}
           {{ playerStore.playerInfo.mobile | maskMobile }}</span
         >
       </div>
-      <!-- <div class="user-title">
-        <span>{{ $lang('聯絡方式') }}</span>
-        <span
-          >《{{ playerStore.playerInfo.social.platform }}》{{
-            playerStore.playerInfo.social.id
-          }}</span
-        >
-      </div> -->
-      <div
-        v-for="(item, index) in playerStore.playerInfo?.wallet"
-        class="user-title"
-      >
-        <span class="b-$lang">
-          <b class="zh_TW">{{ walletName(item.type) }}</b>
-        </span>
-        <span class="get-wallet">
-          $ {{ new Intl.NumberFormat('zh-tw').format(item.balance) }}
-        </span>
-      </div>
       <div class="user-title">
-        <span>{{ $lang('交易資產') }}</span>
-        <span>{{ playerStore.playerInfo.additionalInfo['交易資產'] }}</span>
+        <span>{{ $lang('更換密碼') }}</span>
+        <div class="user-title-input">
+          <input
+            v-trim-input
+            v-model="pwd.oPwd"
+            type="password"
+            maxlength="40"
+            :placeholder="t('舊密碼')"
+          />
+          <input
+            v-trim-input
+            v-model="pwd.nPwd"
+            type="password"
+            maxlength="40"
+            :placeholder="t('新密碼')"
+          />
+          <input
+            v-trim-input
+            v-model="pwd.nPwdConfirm"
+            type="password"
+            maxlength="40"
+            :placeholder="t('確認密碼')"
+          />
+        </div>
       </div>
-      <div class="user-title">
-        <span>{{ $lang('信用評分') }}</span>
-        <span>{{ playerStore.playerInfo.additionalInfo['信用評分'] }}</span>
+      <div class="btn-wrap">
+        <button type="button" class="submit" @click="sendPasswordChange">
+          {{ $lang('送出') }}
+        </button>
       </div>
     </div>
-    <instruction></instruction>
-    <infoWidget></infoWidget>
   </div>
 </template>
 <style scoped lang="sass">
-@import '@/assets/sass/user/model2/coin2.scss'
+@import '@/assets/sass/user/model3/coin2.scss'
+
+.card
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26)
+  border-radius: .375rem
+  background-color: #fff
+  padding: 5px 10px
+
+  @media screen and (min-width: 768px)
+    padding: 30px
+
+.btn-wrap
+  display: flex
+  justify-content: center
+  align-items: center
+  padding: 30px 0
+
+  .submit
+    cursor: pointer
+    display: inline-block
+    border-radius: 4px
+    letter-spacing: .5px
+    text-align: center
+    border-style: none
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, .2), 0px 2px 2px 0px rgba(0, 0, 0, .14), 0px 3px 1px -2px rgba(0, 0, 0, .12)
+    outline: none
+    transition: all ease .2s
+    text-shadow: 0 0 10px rgba(0, 0, 0, .5)
+    padding: 6px 16px
+    font-size: .95rem
+    background-color: #6c757d
+    font-weight: bold
+    color: #fff
+    font-size: 13px
+
+    @media screen and (min-width: 768px)
+      padding: 6px 16px
+      font-size: 16px
+
+.sec-form-block
+  .user-title
+    padding: 10px 0
+    display: flex
+    @media screen and (min-width: 768px)
+      margin: 0
+
+    span:first-child
+      width: 40%
+      color: #252525
+      font-weight: bold
+      font-size: 15px
+
+      @media screen and (min-width: 768px)
+        width: 22%
+
+    span:last-child
+      width: 60%
+      text-align: left
+      padding: 5px 10px
+      background-color: #eee
+      color: #252525
+      border: none
+
+      @media screen and (min-width: 768px)
+        width: 78%
+
+    .user-title-input
+      width: 60%
+
+      @media screen and (min-width: 768px)
+        width: 78%
+
+      input
+        display: block
+        outline: none
+        border-bottom: 1px solid #252525
+        font-size: 15px
+        padding: 2px 3px
+
+        @media screen and (min-width: 768px)
+          padding: 5px
+
+
+        &::placeholder
+          color: lighten(#252525, 10)
+          font-size: 15px
 </style>
