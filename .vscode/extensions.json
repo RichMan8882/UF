@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+      "dbaeumer.vscode-eslint", // ESLint
+      "esbenp.prettier-vscode", // Prettier
+      "editorconfig.editorconfig", // EditorConfig for vscode
+      "Vue.volar",  // Vue 3
+      "mhutchie.git-graph", // Git graph
+      "Compulim.vscode-chinese-translation", // Chinese translation
+      "mervin.markdown-formatter", // Markdown formater
+      "syler.sass-indented", // Sass 
+      "vscode-icons-team.vscode-icons", // vscode-icons
+    ]
+  }
+  
