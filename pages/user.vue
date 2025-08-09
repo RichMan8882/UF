@@ -135,7 +135,7 @@ const walletName = (type) => {
 </script>
 <template>
   <div class="page">
-    <div class="container">
+    <div class="containers">
       <div class="header">
         <div class="header-sec">
           <button
@@ -259,7 +259,7 @@ const walletName = (type) => {
   overflow-y: auto
   overflow-x: hidden
   padding: 16px 0
-.container
+.containers
   width: 100%
   padding-right: 15px
   padding-left: 15px

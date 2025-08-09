@@ -97,7 +97,6 @@ const goPopup = async (title: string) => {
     return
   }
   if (title === t('歷史盤口')) {
-    record.value.title = ' 歷史總覽'
     record.value.type = 'historyRecord'
     const response = await queryRounds({
       symbol: symbol.value,
@@ -777,7 +776,7 @@ await onMounted(async () => {
     }
     timeoutId.value = setTimeout(
       () => {
-        navigateTo('/user/info')
+        navigateTo('/user')
       },
       siteStore.siteData?.gameCenterOutInterval
         ? siteStore.siteData?.gameCenterOutInterval * 60 * 1000
@@ -952,23 +951,23 @@ const checkSymbolTV = (value) => {
         :checked="coinBoxChecked"
       />
       <div class="bodyLeft">
-        <div class="leftItem" @click="goPopup('當前委託')">
+        <div class="leftItem" @click="goPopup(t('當前委託'))">
           <i class="fas fa-clipboard-list"></i>
           <div>{{ $lang('當前委託') }}</div>
         </div>
-        <div class="leftItem" @click="goPopup('歷史委託')">
+        <div class="leftItem" @click="goPopup(t('歷史委託'))">
           <i class="fas fa-history"></i>
           <div>{{ $lang('歷史委託') }}</div>
         </div>
-        <div class="leftItem" @click="goPopup('歷史盤口')">
+        <div class="leftItem" @click="goPopup(t('歷史盤口'))">
           <i class="fas fa-award"></i>
           <div>{{ $lang('歷史盤口') }}</div>
         </div>
-        <div class="leftItem" @click="goPopup('網站公告')">
+        <div class="leftItem" @click="goPopup(t('網站公告'))">
           <i class="fas fa-bullhorn"></i>
           <div>{{ $lang('網站公告') }}</div>
         </div>
-        <div class="leftItem" @click="goPopup('規則說明')">
+        <div class="leftItem" @click="goPopup(t('規則說明'))">
           <i class="fas fa-question-circle"></i>
           <div>{{ $lang('規則說明') }}</div>
         </div>
@@ -1492,7 +1491,7 @@ const checkSymbolTV = (value) => {
                               new Intl.NumberFormat('zh-TW', {
                                 minimumFractionDigits: 4,
                                 maximumFractionDigits: 6
-                              }).format(Number(item.closePirce))
+                              }).format(Number(item.closePrice))
                             }}
                           </div>
                         </td>

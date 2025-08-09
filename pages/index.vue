@@ -145,18 +145,18 @@ const languageList = ref([
     name: '繁體中文',
     value: 'zh_TW'
   },
-  {
-    name: '简体中文',
-    value: 'zh_CN'
-  },
+  // {
+  //   name: '简体中文',
+  //   value: 'zh_CN'
+  // },
   {
     name: 'English',
     value: 'en_US'
-  },
-  {
-    name: '日本語',
-    value: 'ja_JP'
   }
+  // {
+  //   name: '日本語',
+  //   value: 'ja_JP'
+  // }
 ])
 const { locale } = useI18n()
 const changeLang = (value) => {
