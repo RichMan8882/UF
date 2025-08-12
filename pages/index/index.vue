@@ -63,16 +63,14 @@ const swiperIndex = ref(0)
                   <van-swipe-item
                     v-for="(item, index) in news"
                     :key="index"
-                    @click="
-                      navigateTo('/user/news?title=' + item.title + '&type=2')
-                    "
+                    @click="navigateTo('/user/news?title=' + item.title)"
                     ><div class="notice-text">
                       {{ item.title }}
                     </div></van-swipe-item
                   >
                 </van-swipe>
               </div>
-              <div class="more">
+              <div class="more" @click="navigateTo('/user/news')">
                 {{ $lang('查看更多') }}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
