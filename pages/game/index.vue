@@ -1055,6 +1055,12 @@ const checkSymbolTV = (value) => {
                 hidden="hidden"
                 class="gameType"
               />
+              <div style="margin-left: 20px">
+                {{ $lang('期號') }}: {{ betData.roundNo }}
+              </div>
+              <div style="margin-left: 20px">
+                {{ $lang('最後購買時間') }}: {{ socketCurrentRoundCountdown }}s
+              </div>
               <div class="leftBox">
                 <label
                   v-if="showOption(0)"
