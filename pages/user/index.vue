@@ -26,7 +26,7 @@ const dashboardList = ref([
     icon: '<i class="fa-solid fa-gifts"></i>'
   },
   {
-    title: t('提幣'),
+    title: t('提幣管理'),
     path: '/user/withdraw',
     icon: '<i class="fa-solid fa-handshake-angle"></i>'
   },
@@ -41,8 +41,8 @@ const dashboardList = ref([
     icon: '<i class="fa-solid fa-gears"></i>'
   },
   {
-    title: t('聯繫客服'),
-    path: 'customer',
+    title: t('留言咨詢'),
+    path: '/user/message',
     icon: '<i class="fa-brands fa-facebook-messenger"></i>'
   },
   {
@@ -99,7 +99,7 @@ const filterPledge = computed(() => {
 <template>
   <div class="dashboard">
     <div class="dashboard-title">
-      {{ $lang('電子錢包') }}
+      {{ $lang('常用功能') }}
     </div>
 
     <ul class="dashboard-list">

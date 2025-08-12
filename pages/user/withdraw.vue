@@ -251,7 +251,7 @@ watch(
     >
       <div class="form-item">
         <h4>
-          {{ $lang('銀行名稱') }}
+          {{ $lang('交易所名稱') }}
         </h4>
         <input
           class="disabled"
@@ -261,7 +261,7 @@ watch(
       </div>
       <div class="form-item">
         <h4>
-          {{ $lang('銀行帳戶') }}
+          {{ $lang('提領地址') }}
         </h4>
         <input
           class="disabled"

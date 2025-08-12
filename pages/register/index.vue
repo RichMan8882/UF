@@ -623,7 +623,7 @@ await onMounted(() => {
                 v-model="recaptchaCode"
                 v-trim-input
                 type="text"
-                placeholder="驗證碼"
+                :placeholder="t('驗證碼')"
                 class="input_style"
               />
             </div>

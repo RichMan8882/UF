@@ -21,14 +21,14 @@ await useAsyncData(() => {
 // methods
 const submitBankApply = async () => {
   console.log(bankInfo)
-  if (bankInfo.value.branch === '') {
-    return ElMessage.error('請填寫分行')
-  }
-  if (bankInfo.value.account === '') {
-    return ElMessage.error('請填寫戶名')
-  }
+  // if (bankInfo.value.branch === '') {
+  //   return ElMessage.error('請填寫分行')
+  // }
+  // if (bankInfo.value.account === '') {
+  //   return ElMessage.error('請填寫戶名')
+  // }
   if (bankInfo.value.accountNo === '') {
-    return ElMessage.error('請填寫帳號')
+    return ElMessage.error('請填寫提領地址')
   }
   if (bankInfo.value.image[0] === '') {
     return ElMessage.error('請上傳身分證正面')
@@ -36,9 +36,9 @@ const submitBankApply = async () => {
   if (bankInfo.value.image[1] === '') {
     return ElMessage.error('請上傳身分證反面')
   }
-  if (bankInfo.value.image[2] === '') {
-    return ElMessage.error('請上傳存摺')
-  }
+  // if (bankInfo.value.image[2] === '') {
+  //   return ElMessage.error('請上傳存摺')
+  // }
   const bankApplyRes = await bankApply(bankInfo.value)
   if (bankApplyRes) {
     await playerStore.fetchInfo()
@@ -100,17 +100,17 @@ const updateImage = (data) => {
         </div> -->
         <div v-if="pageType === 'bank'" class="formSection">
           <div class="input-classic">
-            <span class="input-title">{{ $lang('銀行') }}</span>
+            <span class="input-title">{{ $lang('交易所名稱') }}</span>
             <select v-model="bankInfo.bankName" name="bName">
               <option
-                v-for="item in siteStore.siteData.depositOptions.bank"
+                v-for="item in siteStore.siteData.depositOptions.crypto"
                 :key="item"
               >
                 {{ item }}
               </option>
             </select>
           </div>
-          <div class="input-classic">
+          <!-- <div class="input-classic">
             <span class="input-title">{{ $lang('分行') }}</span>
             <input
               v-model="bankInfo.branch"
@@ -118,9 +118,9 @@ const updateImage = (data) => {
               name="bBranch"
               type="text"
             />
-          </div>
+          </div> -->
           <div class="input-classic">
-            <span class="input-title">{{ $lang('銀行帳號') }}</span>
+            <span class="input-title">{{ $lang('提領地址') }}</span>
             <input
               v-model="bankInfo.accountNo"
               v-trim-input
@@ -129,7 +129,7 @@ const updateImage = (data) => {
               required
             />
           </div>
-          <div class="input-classic">
+          <!-- <div class="input-classic">
             <span class="input-title">{{ $lang('戶名') }}</span>
             <input
               v-model="bankInfo.account"
@@ -138,7 +138,7 @@ const updateImage = (data) => {
               type="text"
               required
             />
-          </div>
+          </div> -->
           <!-- <div class="input-classic">
             <span class="input-title">{{ $lang('上傳檔案') }}</span>
             <input
@@ -165,14 +165,14 @@ const updateImage = (data) => {
               @update-image="updateImage"
             ></pureImgUploader>
           </div>
-          <div class="input-classic">
+          <!-- <div class="input-classic">
             <span class="input-title">{{ $lang('存摺封面照') }}</span>
             <pureImgUploader
               :limit="1"
               :index="2"
               @update-image="updateImage"
             ></pureImgUploader>
-          </div>
+          </div> -->
         </div>
         <!-- <div v-if="type === 'address'">
           <div class="input-classic">
@@ -205,7 +205,7 @@ const updateImage = (data) => {
       </div>
       <div v-else class="form-bg">
         <div class="input-classic">
-          <span class="input-title">{{ $lang('銀行資訊狀態') }}</span>
+          <span class="input-title">{{ $lang('交易所資訊狀態') }}</span>
           <div class="input-text text-center">
             {{ $lang('審核中') }}
           </div>

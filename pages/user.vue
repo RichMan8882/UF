@@ -114,19 +114,19 @@ const walletName = (type) => {
   switch (type) {
     case 1:
       return siteStore.siteData.mainWalletType === type
-        ? t('我的資產(電子錢包)')
+        ? t('資產總攬(電子錢包)')
         : t('美元資產(電子錢包)')
     case 2:
       return siteStore.siteData.mainWalletType === type
-        ? t('我的資產(電子錢包)')
+        ? t('資產總攬(電子錢包)')
         : t('電力資產(電子錢包)')
     case 3:
       return siteStore.siteData.mainWalletType === type
-        ? t('我的資產(電子錢包)')
+        ? t('資產總攬(電子錢包)')
         : t('商城資產(電子錢包)')
     case 4:
       return siteStore.siteData.mainWalletType === type
-        ? t('我的資產(電子錢包)')
+        ? t('資產總攬(電子錢包)')
         : t('質押資產(電子錢包)')
     default:
       return t('其他資產')
@@ -143,7 +143,7 @@ const walletName = (type) => {
             class="header-logout"
             @click="navigateTo('/user')"
           >
-            {{ $lang('會員中心') }}
+            {{ $lang('資產管理') }}
           </button>
           <!-- <div class="header-info">
             <span> $ {{ PlayerStore.playerInfo?.balance }} </span>
@@ -159,7 +159,7 @@ const walletName = (type) => {
           </span>
         </div>
         <div class="header-main">
-          <div class="header-info">
+          <div class="header-info accbg">
             <span>
               {{ PlayerStore.playerInfo?.account }}
             </span>
@@ -298,6 +298,12 @@ const walletName = (type) => {
 
     .header-info
       margin-right: 20px
+    .accbg
+      background-color: #fff
+      span
+        background-color: #32333a
+        color: white
+
 
   &-logout
     background-color: #32333a

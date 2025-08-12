@@ -196,7 +196,7 @@ export const usePlayerStore = defineStore('player', () => {
         res.statusCode === 400
           ? null
           : ElNotification({
-              title: `${t('申請銀行認證失敗')}`,
+              title: `${t('申請交易所認證失敗')}`,
               message: `${t(res.message)}`,
               showClose: false
             })
@@ -205,7 +205,7 @@ export const usePlayerStore = defineStore('player', () => {
         }
       }
       ElNotification({
-        title: `${t('申請銀行認證成功')}`,
+        title: `${t('申請交易所認證成功')}`,
         showClose: false
       })
       return {

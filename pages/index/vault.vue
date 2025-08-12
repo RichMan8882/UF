@@ -1,649 +1,564 @@
-<script lang="ts" setup>
-const indexContainer = ref(0)
-</script>
+<script lang="ts" setup></script>
 <template>
   <div class="content">
-    <div class="home-hero-section">
-      <div class="flex-center">
-        <h1
-          data-w-id="d3a249d5-63eb-dc19-ac26-4a8ad2d08e66"
-          style="
-            opacity: 1;
-            transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg)
-              rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-            transform-style: preserve-3d;
-          "
-          class="less-margin"
-        >
-          Kava
-        </h1>
-        <h1
-          data-w-id="5d8771fc-25de-09f4-9269-b02225e90475"
-          style="
-            opacity: 1;
-            transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg)
-              rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-            transform-style: preserve-3d;
-          "
-          class="gradient-text more-line-height"
-        >
-          {{ $lang('Strategic Vault') }}
-        </h1>
-        <p
-          data-w-id="d9b7cc3b-fe03-368d-c361-696dc0e7dbce"
-          style="
-            opacity: 1;
-            transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg)
-              rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-            transform-style: preserve-3d;
-          "
-          class="para-large home-hero-para vault"
-        >
+    <div class="main">
+      <div class="title">{{ $lang('用戶協議') }}</div>
+      <div class="time">2023-10-12 08:05:58</div>
+      <div style="font-size: 14px">
+        <p style="font-family: initial !important">
+          {{ $lang('尊敬的GTL用戶，') }}
+          <br /><br />
           {{
             $lang(
-              'A community owned vault funding rapid growth and security initiatives across the Kava ecosystem'
+              '歡迎您來到GTL平台（以下稱“我們”或“平台”）。在您開始使用我們的網站、移動應用程序，以及我們提供的所有相關服務（以下總稱為“本服務”）之前，請您詳細閱讀並理解本用戶協議（以下總稱為“本協議”）。您的訪問或使用代表您同意遵守本協議中規定的所有條款和條件，以及我們不時進行的修訂和更新。'
             )
           }}
+          <br /><br />
+          <strong> {{ $lang('我們的特別聲明') }} </strong>
+          <br />
+          {{
+            $lang(
+              '鑒於涉及資產交易和流動，我們強調保障您使用電腦的安全。出於瀏覽體驗和安全性的考慮，我們建議您使用最新版本的Google Chrome瀏覽器訪問GTL。請注意，任何由於個人操作不慎而導致的錯誤操作和財產損失，將由您自行承擔責任。'
+            )
+          }}
+          <br /><br />
+          <strong> {{ $lang('風險提示') }} </strong>
+          <br />
+          {{
+            $lang(
+              '為了讓您更全面地了解數字資產交易的相關風險，我們特此提醒：在開始使用GTL進行數字資產交易前，請您充分了解並謹慎評估數字資產交易所涉及的風險。您需要確定自己的風險承受能力，並在充分考慮後決定是否使用GTL進行交易。在使用GTL進行數字資產交易時，可能會面臨以下風險：'
+            )
+          }}
+          <br /><br />
+          {{
+            $lang(
+              '政策風險：如果您所在地的宏觀政策或相關法規發生變化，可能影響數字資產的正常交易，進而導致您的損失。'
+            )
+          }}
+          <br /><br />
+          {{
+            $lang(
+              '合規風險：在數字資產交易過程中，違反所在國家法律法規的風險將由您自行承擔。'
+            )
+          }}
+          <br /><br />
+          {{
+            $lang(
+              '收益風險：由於數字資產交易的特殊性，其價值可能波動較大，您需要自行承擔可能產生的貶值風險。'
+            )
+          }}
+          <br /><br />
+          {{
+            $lang(
+              '交易風險：交易成功取決於交易雙方的共識，我們無法保證交易一定成功。'
+            )
+          }}
+          <br /><br />
+          {{
+            $lang(
+              '不可抗力風險：包括自然災害、戰爭、罷工、黑客攻擊等無法預測且難以避免的情況，可能影響我們的正常運營，從而導致您的損失。'
+            )
+          }}
+          <br /><br />
+          {{
+            $lang(
+              '數字資產下線風險：數字資產的開發者可能因破產、清算、違法等原因被下線，導致您的資產受損。'
+            )
+          }}
+          <br /><br />
+          {{
+            $lang(
+              '技術風險：技術系統故障或錯誤可能影響交易進程，進而影響您的利益。'
+            )
+          }}
+          <br /><br />
+          {{ $lang('操作風險：由於操作失誤或違反規程可能導致風險。') }}
+          <br /><br />
+          {{
+            $lang(
+              '賬戶凍結風險：如涉嫌違法犯罪行為或債務違約，可能導致司法凍結或執行風險。'
+            )
+          }}
+          <br /><br />
+          {{
+            $lang(
+              '通過點擊同意本協議，您已經理解並同意自行承擔交易風險和損失，平台不會對數字資產本金和收益作任何保證或承擔連帶責任。'
+            )
+          }}
+          <br /><br />
+          <strong> {{ $lang('一、 總則') }} </strong>
+          <br /><br />
+          {{
+            $lang(
+              '歡迎您來到GTL平台（以下稱“我們”或“平台”）。本協議包括總則、了解您的客戶和反洗錢政策，以及我們已經或未來可能發佈的各類規則。在您開始使用我們的網站、移動應用程序，以及我們提供的所有相關服務（以下統稱為“本服務”）之前，請您仔細閱讀並理解本協議的全部內容。如您對協議有疑問，請向我們諮詢。您不得以未閱讀本協議或未獲得對您疑問的解答為由，主張本協議無效，或要求撤銷本協議。我們保留對本協議條款進行修改的權利。修改後的協議一經公佈即有效取代原協議，您可以隨時查閱最新協議。您使用、訪問或嘗試使用本服務即表示您同意受最新用戶協議的約束。如果您不同意，請勿訪問或使用本服務。'
+            )
+          }}
+          <br /><br />
+          <strong> {{ $lang('二、 註冊者資格') }} </strong>
+          <br /><br />
+          {{
+            $lang(
+              '在完成註冊過程或按GTL允許的其他方式實際使用本服務之前，您應確認自己是具有完全的民事權利能力和行為能力的自然人、法人或其他組織。若您不擁有上述主體資格，您及您的監護人將承擔由此導致的所有後果，並且我們有權註銷或永久凍結您的賬戶，並對您及您的監護人進行索償。'
+            )
+          }}<br /><strong>{{ $lang('三、 註冊和賬戶') }} </strong> <br /><br />
+          {{
+            $lang(
+              '當您按照註冊頁面的提示填寫信息、閱讀並同意本協議，並完成全部註冊過程，或按照激活頁面的提示填寫信息、閱讀並同意本協議，並完成全部激活過程，或者通過GTL允許的其他方式實際使用本服務時，即表示您同意受本協議的約束。您可以使用您提供的郵箱、手機號碼，或其他GTL允許的方式來登錄GTL。在註冊時，您應提供您的真實姓名、證件類型和證件號碼等法律法規要求的信息。如您在註冊時提供的信息不準確，我們對此不承擔責任，您將承擔由此產生的任何直接或間接損失和後果。我們保留根據市場和法律規定，在特定國家限制或拒絕提供本服務的權利。'
+            )
+          }}<br />{{ $lang('四、 用戶信息') }} <br /><br />
+          {{
+            $lang(
+              '在完成註冊或激活過程時，您應根據相關法律法規的要求，按照相應頁面的提示提供準確的信息，並確保及時更新您的資料，以保持其真實、及時、完整和準確。如有合理理由懷疑您提供的資料不正確、虛假、過時或不完整，我們有權向您詢問並要求您進行更正。我們有權根據情況中止或終止對您提供部分或全部服務。我們對因您未能遵守本協議規定而導致的任何損失或增加費用不承擔責任。您也應確保您提供的電子郵箱地址、聯繫電話、聯繫地址和郵政編碼等聯繫方式的準確性，以便我們或其他用戶能夠與您有效聯繫。您同意保持這些聯繫方式的有效性，並按我們的要求進行更新。'
+            )
+          }}
+          <br /><br />
+          <strong> {{ $lang('五、 賬戶安全') }} </strong>
+          <br /><br />
+          {{
+            $lang(
+              '您需自行負責保密您的GTL賬戶和密碼，並對您賬戶內的所有活動（包括但不限於信息披露、發布信息、網上點擊同意或提交各類規則協議、網上續簽協議或購買服務等）負責。您同意：'
+            )
+          }}<br />(a)
+          {{
+            $lang(
+              '如發現有未經授權使用您的GTL賬戶，或發生其他違反本協議情況，您將立即通知我們；'
+            )
+          }}
+          <br /><br />
+          (b)
+          {{
+            $lang(
+              '確保您嚴格遵守網站/服務的安全、認證、交易、充值、提現機制或流程；'
+            )
+          }}
+          <br /><br />
+          (c)
+          {{
+            $lang(
+              '在每個上網時段結束時，按正確步驟登出賬戶。我們不對因您未能遵守本協議而導致的任何損失承擔責任。您理解我們需要一定時間來執行您的請求，對於在執行之前產生的後果，我們不承擔責任。'
+            )
+          }}
+          <br /><br />
+          <strong> {{ $lang('六、 服務內容') }} </strong>
+          <br /><br />
+          {{
+            $lang(
+              '通過本服務，會員可以在GTL平台上瀏覽數字資產各項產品的實時行情和交易信息，提交交易指令以完成數字資產的交易，參加GTL組織的活動，並使用其他相關的信息和技術服務。'
+            )
+          }}
+          <br /><br />
+          <strong> {{ $lang('七、 服務規則') }} </strong>
+          <br /><br />
+          1.
+          {{
+            $lang(
+              '在您在GTL平台上進行交易過程中，如果與其他用戶產生交易糾紛，當您或其他用戶的任何一方或雙方共同向GTL提出調處請求時，GTL有權據此做出調處決定。您明白並同意，您將接受GTL的判斷和調處決定。'
+            )
+          }}
+          <br /><br />
+          2.
+          {{
+            $lang(
+              '您明白並同意，GTL有權根據政府部門（包括司法及行政部門）的要求，向其提供您向GTL提供的用戶信息和交易記錄等必要信息。如果您涉嫌侵犯他人的合法權益，GTL也有權在初步判斷涉嫌侵權行為存在的情況下，向權利人提供您必要的身份信息。'
+            )
+          }}
+          <br /><br />
+          3.
+          {{
+            $lang(
+              '在使用GTL服務的過程中，您需獨自承擔所產生的應納稅賦以及所有與硬件、軟件、服務和其他方面相關的費用。'
+            )
+          }}
+          <br /><br />
+          4. {{ $lang('在GTL平台上使用本服務的過程中，您承諾遵守以下約定：') }}
+          <br /><br />
+          - {{ $lang('所有行為均遵守您所在國家的法律、法規等規範性文件；')
+          }}<br />- {{ $lang('不違背社會公共利益或公共道德；') }}<br />-
+          {{ $lang('不損害他人的合法權益；') }}<br />-
+          {{ $lang('不偷逃應繳稅費；') }}<br />-
+          {{ $lang('不違反本協議及相關規則。') }}<br />{{
+            $lang(
+              '如果您違反上述承諾，導致產生任何法律後果，您將獨立承擔所有法律責任，並賠償GTL因此產生的任何損失。'
+            )
+          }}
+          <br /><br />
+          {{
+            $lang(
+              '在交易過程中，您應遵守誠實信用原則，不得進行不正當競爭行為，不得擾亂交易的正常秩序，包括但不限於價格操縱、沖銷交易、自我交易、搶先交易、塞單、欺詐或分層下單。'
+            )
+          }}
+          <br /><br />
+          {{
+            $lang(
+              '此外，您不得商業性利用GTL上的任何數據，包括但不限於在未經GTL事先書面同意的情況下，使用任何方式復制、傳播GTL上展示的資料。'
+            )
+          }}
+          <br /><br />
+          <strong> {{ $lang('除了上述內容外，您還不得：') }} </strong>
+          <br /><br />
+          (i)
+          {{
+            $lang(
+              '使用任何深層鏈接、頁面抓取、機器人、蜘蛛或其他自動設備、程序、腳本、算法或方法，未經GTL事先同意，訪問、獲取、複製或監控任何程序屬性的任何部分，或者以任何方式複製或繞過GTL服務的結構或演示，以獲取任何材料、文檔或信息；'
+            )
+          }}
+          <br /><br />
+          (ii)
+          {{
+            $lang(
+              '通過黑客攻擊、密碼“挖掘”或其他非法或禁止的手段，未經授權訪問程序屬性的任何部分或GTL任何部分之功能，或連接到GTL服務或任何GTL服務器或組成GTL服務的任何其他系統或網絡；'
+            )
+          }}
+          <br /><br />
+          (iii)
+          {{
+            $lang(
+              '探測、掃描或測試GTL服務或連接到程序屬性的任何網絡的漏洞，違反GTL服務或連接到GTL服務的任何網絡上的安全或認證措施；'
+            )
+          }}
+          <br /><br />
+          (iv)
+          {{
+            $lang(
+              '反向查找、跟踪或尋求跟踪GTL服務的任何其他用戶或訪問者的任何信息；'
+            )
+          }}
+          <br /><br />
+          (v)
+          {{
+            $lang(
+              '採取對GTL服務或GTL的系統或網絡或連接到GTL服務的任何系統或網絡的基礎設施施加不合理或不成比例的大負載的任何行動；'
+            )
+          }}
+          <br /><br />
+          (vi)
+          {{
+            $lang(
+              '使用任何設備、軟件或例行程序，以乾擾GTL服務的正常運行或GTL服務上進行的任何交易，或其他人對GTL服務的使用；'
+            )
+          }}
+          <br /><br />
+          (vii)
+          {{
+            $lang(
+              '偽造抬頭、冒充他人或以其他方式操縱標識符，以掩蓋您的身份或您發送給GTL的任何消息或傳輸的來源；'
+            )
+          }}
+          <br /><br />
+          (viii)
+          {{
+            $lang(
+              '以其他任何非法方式或GTL認定的不符合公平或社區價值的方式使用GTL服務。'
+            )
+          }}
+          <br /><br />
+          <strong> 10. {{ $lang('您明白並同意：') }} </strong>
+          <br /><br />
+          (a)
+          {{
+            $lang(
+              'GTL有權對您是否違反上述承諾進行單方認定，並根據結果適用本協議的規定予以處理或終止向您提供服務，且無需徵得您的同意或提前通知。出於維護GTL交易秩序和安全的需要，如果出現惡意出售或購買等擾亂市場正常交易秩序的情況，GTL有權根據實際情況進行適當的風控處理，包括但不限於關閉相應的交易訂單、凍結相關賬戶、恢復受影響的交易信息並追索相關損失，並向您所在地的司法機關報告相關事件。'
+            )
+          }}
+          <br /><br />
+          (b)
+          {{
+            $lang(
+              '如果您的違法行為或侵權行為經您所在國家行政或司法機關的生效法律文書確認，或者根據GTL的判斷，您的行為涉嫌違反本協議或違反您所在國家法律法規的規定，則GTL有權在GTL平台上公示您涉嫌違法或違約行為及已經採取的措施。對於您在GTL上發布的涉嫌違法或涉嫌侵犯他人合法權益或違反本協議的信息，GTL有權不經通知您即予以刪除，並按照本協議的規定進行處罰。'
+            )
+          }}
+          <br /><br />
+          (c)
+          {{
+            $lang(
+              '對於您在GTL平台上實施的行為，包括未在GTL上實施但已對GTL及其用戶產生影響的行為，GTL有權單方認定您行為的性質及是否構成對本協議的違反，並據此作出相應處罰。您應自行保留與您行為有關的全部證據，並對無法提供充分證據而承擔的不利後果。對於您涉嫌違反承諾的行為對任何第三方造成損害的，您均應以自己的名義獨立承擔所有的法律責任。如果您的違反行為使GTL遭受任何損失，或者受到任何第三方的索賠，或者受到任何行政管理部門的處罰，您應賠償GTL因此產生的損失和（或）費用，包括合理的律師費用。'
+            )
+          }}
+          <br /><br />
+          <strong> {{ $lang('責任限制與免責') }} </strong>
+          <br /><br />
+          11.
+          {{
+            $lang(
+              'GTL致力於向您提供現狀和可得到的服務。然而，我們需強調，GTL並未就本服務的適用性、錯誤或遺漏的不存在、持續性、準確性、可靠性以及特定用途的適用性作出任何明示或暗示的保證。同時，GTL亦無法對所涉及技術和信息的有效性、準確性、正確性、可靠性、質量、穩定性、完整性和及時性作出保證。'
+            )
+          }}
+          <br /><br />
+          12.
+          {{
+            $lang('您需了解，GTL上的信息由用戶自行發布，可能存在風險和瑕疵。')
+          }}
+          <br /><br />
+          13.
+          {{
+            $lang(
+              'GTL專為交易而生，提供數字資產信息、交易對象搜索以及數字資產交易協商的平台。但我們無法控制交易所涉及的數字資產質量、安全性或合法性，交易信息真實性或準確性，以及交易各方履行交易協議義務的能力。您需謹慎判斷確認數字資產和/或信息的真實性、合法性和有效性，並自行承擔因此產生的責任和損失。除非法律法規另有要求，或以下情形發生，GTL無義務對所有用戶的信息數據、數字資產信息、交易行為以及交易相關事項進行事前審查：GTL有合理理由認為特定用戶及具體交易可能涉及重大違法或違約情形，或GTL有合理理由認為用戶在GTL上的行為可能涉嫌違法或不當。'
+            )
+          }}
+          <br /><br />
+          14.
+          {{
+            $lang(
+              '根據您不可撤銷的授權，GTL或經GTL授權的第三方有權處理您和其他用戶間因交易而產生的爭議。他們有權獨立判斷爭議事實和適用規則，並作出處理決定，包括但不限於調整訂單狀態、指示第三方支付公司支付爭議款項給一方或雙方。該處理決定對您具有約束力。若您未在限期內執行處理決定，GTL有權（但無義務）使用您GTL賬戶內的款項，或您向GTL及其關聯公司交納的保證金，代為支付。'
+            )
+          }}
+          <br /><br />
+          {{
+            $lang(
+              '您須及時補足保證金並彌補GTL及其關聯公司的損失，否則GTL及其關聯公司有權直接抵減您在其他合同下的權益，並有權繼續追償。您理解並同意，GTL或經GTL授權的第三方非司法機構，僅以普通人身份對證據進行鑑別。因此，他們無法保證調處結果符合您期望，且不對調處結論承擔責任。若因此您遭受損失，您同意自行向受益人索償。'
+            )
+          }}
+          <br /><br />
+          15.
+          {{
+            $lang(
+              '您了解並同意，基於以下情形，GTL對於任何利潤、商譽、使用、數據等方面的損失，或其他無形損失，均不承擔賠償責任，無論是否事先告知可能性：GTL有合理理由認為特定用戶及具體交易可能涉及重大違法或違約情形，或GTL有合理理由認為用戶在GTL上的行為可能涉嫌違法或不當，或通過GTL服務購買或獲取數據、信息或進行交易等行為所產生的費用和損失，或對GTL服務誤解所致，或非因GTL原因引起的其他與GTL服務有關的損失。'
+            )
+          }}
+          <br /><br />
+          16.{{
+            $lang(
+              '在任何情況下，GTL均不對由以下原因導致的無法服務或延遲服務承擔責任：信息網絡正常的設備維護，信息網絡連接故障，電腦、通訊或其他系統故障，電力故障，罷工，勞動爭議，暴亂，起義，騷亂，生產力或生產資料不足，火災，洪水，風暴，爆炸，戰爭，政府行為，司法行政機關的命令或第三方的不作為。'
+            )
+          }}
+          <br /><br />
+          <strong> {{ $lang('協議終止') }} </strong>
+          <br /><br />
+          17.
+          {{
+            $lang(
+              '您同意，GTL有權出於任何理由自行決定中止、終止部分或全部GTL服務，暫時或永久凍結（註銷）您的賬戶在GTL的權限，且無需對您或任何第三方承擔責任。但GTL有權繼續保存您的用戶信息和交易數據。若出現以下情形，GTL有權直接註銷您的賬戶和終止本協議：'
+            )
+          }}<br />(a) {{ $lang('在GTL終止您的服務後，您再次註冊為用戶；') }}
+          <br /><br />
+          (b)
+          {{
+            $lang(
+              '您提供的電子郵箱不存在、無法接收電子郵件，且未在GTL通知後三個工作日內更改有效電子郵箱；'
+            )
+          }}
+          <br /><br />
+          (c) {{ $lang('您提供的用戶信息不真實、不准確、不及時或不完整；') }}
+          <br /><br />
+          (d) {{ $lang('您明示不接受新的服務協議；') }} <br /><br />
+          (e) {{ $lang('其他GTL認為需終止服務的情況。') }} <br /><br />
+          {{
+            $lang(
+              '在您的賬戶服務被終止或永久凍結後，GTL無義務保留或向您披露賬戶信息，也無義務轉發您未閱讀或發送的信息。'
+            )
+          }}
+          <br /><br />
+          <strong> 18. {{ $lang('您同意：') }} </strong><br />(a)
+          {{ $lang('即使合同終止，GTL仍有權保留您的用戶信息和交易數據；') }}
+          <br /><br />
+          (b)
+          {{ $lang('若您在使用期間違法或違反協議，GTL仍可主張相關權利；') }}
+          <br /><br />
+          (c)
+          {{
+            $lang(
+              '在中止或終止服務後，您需自行處理並承擔相關交易產生的爭議、損失或費用，且確保GTL免於損失和費用；'
+            )
+          }}
+          <br /><br />
+          (d)
+          {{
+            $lang(
+              '若您在中止或終止服務前上傳的數字資產未交易，GTL有權刪除相關信息；'
+            )
+          }}
+          <br /><br />
+          (e)
+          {{
+            $lang(
+              '在服務終止後，GTL無義務保留或向您披露賬戶信息，也無義務轉發您未閱讀或發送的信息；'
+            )
+          }}
+          <br /><br />
+          (f)
+          {{
+            $lang(
+              '若在服務終止前，您已與其他用戶達成交易且部分履行，GTL可以不刪除交易，但有權通知交易對方。'
+            )
+          }}
+          <br /><br />
+          <strong> {{ $lang('知識產權') }} </strong>
+          <br /><br />
+          19.
+          {{
+            $lang(
+              'GTL擁有本服務中的所有智力成果的知識產權，包括但不限於網站標誌、數據庫、網站設計、文字和圖表、軟件、照片、錄像、音樂、聲音及其組合，以及軟件編譯、相關源代碼和軟件，包括小應用程序和腳本。您不得將這些材料或內容用於商業目的，包括複製、更改、拷貝、發送或使用。'
+            )
+          }}
+          <br /><br />
+          20.{{
+            $lang(
+              '通過接受本協議，您主動將您在GTL上發表的任何形式的信息的著作權，如複製權、發行權、出租權、展覽權、表演權、放映權、廣播權、信息網絡傳播權、攝製權、改編權、翻譯權、彙編權以及其他可轉讓權利，無償獨家轉讓給GTL。GTL有權就任何侵權行為提起訴訟並獲得賠償。本協議適用於您在協議簽訂前或後在GTL上發布的受著作權法保護的作品內容。'
+            )
+          }}
+          <br /><br />
+          21.{{
+            $lang(
+              '在使用本服務時，您不得非法使用或處分GTL或他人的知識產權權利。您不得將在GTL發表的信息以任何形式發布或授權其他網站（及媒體）使用。'
+            )
+          }}
+          <br /><br />
+          22.{{
+            $lang('您登錄GTL或使用本服務不表示GTL向您轉讓任何知識產權。')
+          }}
+          <br /><br />
+          <strong> {{ $lang('適用法律') }} </strong>
+          <br /><br />
+          23.{{
+            $lang(
+              '本協議根據新加坡法律訂立，成立、解釋、內容及執行均適用新加坡相關法律規定。針對GTL的索賠或訴訟將受到新加坡法律管轄。您無條件獲得在新加坡法院進行訴訟和上訴的排他性管轄權。您同意任何與本協議相關的爭議、問題或索賠請求和訴訟均在新加坡解決，除非GTL對其他業務有專門約定。選擇管轄法院時不應適用不方便法院的原則。'
+            )
+          }}<br />{{ $lang('二、 客戶了解與反洗錢政策') }} <br /><br />
+          1.
+          {{
+            $lang(
+              'GTL承諾嚴格遵守了解客戶和反洗錢法規，並不會故意違反本協議中的有關政策。我們將在合理範圍內採取措施和技術，確保為您提供安全的服務，並盡量減少您可能因犯罪嫌疑人的洗錢行為造成的損失。了解客戶和反洗錢政策包括：'
+            )
+          }}<br />(a)
+          {{
+            $lang(
+              '頒布並定期更新了解客戶和反洗錢政策，以符合相應法律法規的標準；'
+            )
+          }}
+          <br /><br />
+          (b)
+          {{
+            $lang(
+              '頒布和更新運營本網站的指導原則和規則，並確保我們的員工根據這些指導原則和規則提供服務；'
+            )
+          }}
+          <br /><br />
+          (c)
+          {{
+            $lang(
+              '設計並實施內部監測和交易控制程序，包括嚴格的身份驗證，成立專業團隊負責反洗錢工作；'
+            )
+          }}
+          <br /><br />
+          (d) {{ $lang('通過風險預防的方法對客戶進行盡職調查和持續監督；') }}
+          <br /><br />
+          (e) {{ $lang('審查並定期檢查已執行的交易；以及') }} <br /><br />
+          (f) {{ $lang('向主管當局報告可疑交易。') }} <br /><br />
+          {{ $lang('身份信息和核實確認') }}
+          <br /><br />
+          2.
+          {{
+            $lang(
+              '根據不同司法管轄區的要求和不同實體類型，我們收集的信息內容可能有所不同。原則上，我們將向註冊的個人收集以下信息：'
+            )
+          }}<br />(a)
+          {{
+            $lang(
+              '個人基本信息：您的姓名、住址（包括永久地址，如果不同）、出生日期和國籍等。身份證明文件應依據官方或類似權威機構發放的文件，如護照、身份證等。'
+            )
+          }}
+          <br /><br />
+          (b)
+          {{
+            $lang(
+              '有效照片：在註冊之前，您需要提供您將身份證明文件放在胸前的照片；以及'
+            )
+          }}
+          <br /><br />
+          (c)
+          {{ $lang('聯繫方式：電話號碼、手機號碼和/或有效的電子郵件地址。') }}
+          <br /><br />
+          3.
+          {{
+            $lang(
+              '如果您是一家公司或其他合法實體，為了確定您或信託賬戶的最終受益人，我們將收集以下信息：'
+            )
+          }}<br />(a) {{ $lang('公司註冊、登記證；公司章程和備忘錄副本；') }}
+          <br /><br />
+          (b)
+          {{
+            $lang(
+              '公司股權結構和所有權的詳細證明文件，證明決定開立本網站賬戶的授權委託人的董事會決議；'
+            )
+          }}
+          <br /><br />
+          (c)
+          {{
+            $lang(
+              '根據需要，提交公司董事、大股東和網站賬戶簽字人的身份證明文件；'
+            )
+          }}
+          <br /><br />
+          (d)
+          {{
+            $lang(
+              '公司的主要營業地址，如果不同於郵寄地址，需提供郵寄地址。若公司的本地地址與主要營業地址不符，則需要提交額外文件；以及'
+            )
+          }}
+          <br /><br />
+          (e)
+          {{
+            $lang(
+              '根據不同司法管轄區的規定和實體類型，我們可能需要其他認證和權威機構發放的文件，以及我們認為必要的文件。'
+            )
+          }}
+          <br /><br />
+          4.
+          {{
+            $lang(
+              '我們只接受英語或漢語版本的身份信息，如果不是，請將您的身份信息翻譯成英文版本並加以公證。'
+            )
+          }}
+          <br /><br />
+          5. {{ $lang('身份信息的確認和核實要求如下：') }} <br /><br />
+          (a) {{ $lang('您需要提供身份證明文件的所有頁面；') }} <br /><br />
+          (b) {{ $lang('您需要提供您將身份證明文件放在胸前的照片；') }}
+          <br /><br />
+          (c)
+          {{
+            $lang(
+              '副本文件應與原件進行核對。然而，如果有可信的合適認證人可以證明副本是準確全面的原始複製件，則該副本是可接受的。這些認證人可能包括大使、司法官員、地方治安官等；以及'
+            )
+          }}
+          <br /><br />
+          (d)
+          {{
+            $lang(
+              '識別最終受益人和賬戶控制權的要求是確定那些個人最終擁有或控制您的客戶，以及確定正在進行的交易是否由他人代表執行。如果是公司，大股東的身份（例如持有10％或以上的投票權益的人）需要核實。'
+            )
+          }}
+          <br /><br />
+          <strong> {{ $lang('交易監控') }} </strong>
+          <br /><br />
+          6.
+          {{
+            $lang(
+              'GTL將根據安全性和實際交易情況，隨時設定和調整每日交易和數字資產提取的最高限額；'
+            )
+          }}
+          <br /><br />
+          7.
+          {{
+            $lang(
+              '若交易頻繁集中於某註冊用戶，或存在超乎合理的情況，GTL有權評估並決定其是否可疑；'
+            )
+          }}
+          <br /><br />
+          8.
+          {{
+            $lang(
+              'GTL憑藉自身判斷認定為可疑交易的情況，GTL可能會採取暫停該交易、拒絕該交易等限制性措施，甚或可能將盡快逆轉該交易，並同時向主管部門報告，但不會通知您；'
+            )
+          }}
+          <br /><br />
+          9. GTL
+          {{
+            $lang(
+              '有權拒絕不符合國際反洗錢標準轄區的個人，或被視為政治公眾人物的人的註冊申請。我們有權隨時暫停或終止我們自身判斷為可疑交易的交易，但這不會違反您的任何義務和責任。截至目前，GTL已拒絕來自朝鮮、帕勞、盧旺達、緬甸、古巴、蘇丹、敘利亞、克里米亞、中國大陸、中國香港、印尼、新加坡、委內瑞拉、孟加拉、巴基斯坦、加拿大以及美國等國家的用戶的交易或註冊申請，但此限制國家名單並非完整清單。GTL可能隨時調整此限制國家名單。您在此承諾，若您成為上述限制國家的居民，或知道任何用戶是上述限制國家的居民，您將立即通知GTL。您理解並同意，若GTL認定您在使用我們的服務時對您的所在地區、國籍或常駐地進行任何形式的隱瞞或虛假陳述，我們有權採取適當措施以確保GTL遵守適用法律法規，包括但不限於關閉您的帳戶並對帳戶中的任何倉位進行平倉。'
+            )
+          }}<br />
         </p>
-        <a class="nav-link-wrap vault w-inline-block">{{
-          $lang('View on MintScan')
-        }}</a>
-      </div>
-      <div
-        id="w-node-_287c3953-e927-f0b7-e773-fb3d470e5315-867e461c"
-        class="wrapper vault-stats"
-      >
-        <div class="w-layout-grid _12-col-grid vault">
-          <div
-            id="w-node-ee7dce2c-05dd-cd81-90c9-a60782c0cb29-867e461c"
-            data-w-id="ee7dce2c-05dd-cd81-90c9-a60782c0cb29"
-            style="
-              opacity: 1;
-              transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-              transform-style: preserve-3d;
-            "
-            class="vault-card"
-          >
-            <h4 class="vault-title">{{ $lang('Available Funds') }} (Kava)</h4>
-            <h1 class="vault-heading"><strong>560M</strong></h1>
-          </div>
-          <div
-            id="w-node-_8cec2efa-aef7-0816-0fbc-9a7c9124cef2-867e461c"
-            data-w-id="8cec2efa-aef7-0816-0fbc-9a7c9124cef2"
-            style="
-              opacity: 1;
-              transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-              transform-style: preserve-3d;
-            "
-            class="vault-card blue"
-          >
-            <h4 class="vault-title">{{ $lang('Kava Rise Protocols') }}</h4>
-            <h1 class="vault-heading">100+</h1>
-          </div>
-          <div
-            id="w-node-_61028e1a-efb4-5d5b-4492-f22e210b69ee-867e461c"
-            data-w-id="61028e1a-efb4-5d5b-4492-f22e210b69ee"
-            style="
-              opacity: 1;
-              transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-              transform-style: preserve-3d;
-            "
-            class="vault-card green"
-          >
-            <h4 class="vault-title">{{ $lang('Available Funds') }} (AKT)</h4>
-            <h1 class="vault-heading">2.5M</h1>
-          </div>
-          <div
-            id="w-node-e597de3e-fc6b-986e-a4b7-6fbb42f1c870-867e461c"
-            data-w-id="e597de3e-fc6b-986e-a4b7-6fbb42f1c870"
-            style="
-              opacity: 1;
-              transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-              transform-style: preserve-3d;
-            "
-            class="vault-card orange"
-          >
-            <h4 class="vault-title">
-              {{ $lang('Infrastructure') }} &amp;
-              {{ $lang('Security Partners') }}
-            </h4>
-            <h1 class="vault-heading">100+</h1>
-          </div>
-        </div>
-      </div>
-      <div class="hero-image-wrapper margin--60px">
-        <div class="gradient-top"></div>
-        <div class="gradient-sides"></div>
-        <img
-          src="@/assets/image/home1/KSV.jpg"
-          loading="lazy"
-          alt=""
-          class="hero-image"
-        />
-      </div>
-    </div>
-
-    <div class="section-4 bg-tile-top-lg bg-neutral-700">
-      <div
-        data-w-id="a552709f-7f45-a872-38e3-38184f2c4bff"
-        style="
-          opacity: 1;
-          transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg)
-            rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-          transform-style: preserve-3d;
-        "
-        class="container-lg"
-      >
-        <div class="max-width-xl larger">
-          <div class="w-layout-grid row-md">
-            <div id="w-node-a552709f-7f45-a872-38e3-38184f2c4c0d-867e461c">
-              <div class="margin-bottom margin-base">
-                <h2 class="h2-headline">
-                  <font _mstmutation="1"
-                    >{{ $lang('Programmatic, transparent') }}
-                  </font>
-                  <br />
-                  <span class="gradient-text">{{
-                    $lang('on-chain funding')
-                  }}</span>
-                </h2>
-                <p class="margin-top-10px">
-                  {{
-                    $lang(
-                      'The Kava Strategic Vault has fuelled rapid growth on-boarding 70+ protocols to the Kava ecosystem with many more to come This community owned funding mechanism aims to create sustained growth and stability across the Kava ecosystem'
-                    )
-                  }}.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container-xl">
-        <div
-          data-current="Tab 1"
-          data-easing="ease"
-          data-duration-in="0"
-          data-duration-out="0"
-          class="tabs-horizontal w-tabs"
-        >
-          <div
-            id="w-node-a552709f-7f45-a872-38e3-38184f2c4c18-867e461c"
-            class="tabs-menu-side w-tab-menu"
-            role="tablist"
-          >
-            <a
-              id="w-tabs-0-data-w-tab-0"
-              data-w-tab="Tab 1"
-              class="tabs-menu-side-link w-inline-block w-tab-link"
-              role="tab"
-              aria-controls="w-tabs-0-data-w-pane-0"
-              aria-selected="false"
-              style="
-                transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                  rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                transform-style: preserve-3d;
-              "
-              tabindex="-1"
-              @click="indexContainer = 0"
-              ><div
-                class="tab-content-2"
-                style="
-                  transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                "
-              >
-                <div class="accordion-item-wrapper">
-                  <div class="w-layout-grid tab-title">
-                    <h3
-                      id="w-node-a552709f-7f45-a872-38e3-38184f2c4c1e-867e461c"
-                    >
-                      {{ $lang('Fully Decentralized') }}
-                    </h3>
-                    <i
-                      class="fa-solid fa-chevron-right"
-                      style="color: #ffffff"
-                    ></i>
-                  </div>
-                  <div
-                    class="accordion-content"
-                    style="
-                      transform: translate3d(0px, 0px, 0px)
-                        scale3d(0.96, 0.96, 1) rotateX(0deg) rotateY(0deg)
-                        rotateZ(0deg) skew(0deg, 0deg);
-                      transform-style: preserve-3d;
-                      opacity: 1;
-                      width: 351px;
-                    "
-                  >
-                    <div
-                      v-show="indexContainer == 0"
-                      class="para-small grey-text"
-                    >
-                      {{
-                        $lang(
-                          'Transparent funding owned by the Kava community of stakers'
-                        )
-                      }}
-                    </div>
-                  </div>
-                </div>
-              </div></a
-            ><a
-              id="w-tabs-0-data-w-tab-1"
-              data-w-tab="Tab 2"
-              data-w-id="a552709f-7f45-a872-38e3-38184f2c4c25"
-              class="tabs-menu-side-link w-inline-block w-tab-link"
-              role="tab"
-              aria-controls="w-tabs-0-data-w-pane-1"
-              aria-selected="false"
-              style="
-                transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                  rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                transform-style: preserve-3d;
-              "
-              tabindex="-1"
-              @click="indexContainer = 1"
-              ><div
-                class="tab-content-2"
-                style="
-                  transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                "
-              >
-                <div class="accordion-item-wrapper">
-                  <div class="w-layout-grid tab-title">
-                    <h3
-                      id="w-node-_682e64af-ec09-b686-daac-b115483bc2e9-867e461c"
-                    >
-                      {{ $lang('Growth Optimized') }}
-                    </h3>
-                    <i
-                      class="fa-solid fa-chevron-right"
-                      style="color: #ffffff"
-                    ></i>
-                  </div>
-                  <div
-                    class="accordion-content"
-                    style="
-                      transform: translate3d(0px, 0, 0px) scale3d(0.96, 0.96, 1)
-                        rotateX(0deg) rotateY(0deg) rotateZ(0deg)
-                        skew(0deg, 0deg);
-                      transform-style: preserve-3d;
-                      opacity: 1;
-                      width: 351px;
-                    "
-                  >
-                    <div
-                      v-show="indexContainer == 1"
-                      class="para-small grey-text"
-                    >
-                      {{
-                        $lang(
-                          '70+ protocols successfully on-boarded over the past 6 months'
-                        )
-                      }}
-                    </div>
-                  </div>
-                </div>
-              </div></a
-            ><a
-              id="w-tabs-0-data-w-tab-2"
-              data-w-tab="Tab 3"
-              class="tabs-menu-side-link w-inline-block w-tab-link w--current"
-              role="tab"
-              aria-controls="w-tabs-0-data-w-pane-2"
-              aria-selected="true"
-              style="
-                transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                  rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                transform-style: preserve-3d;
-              "
-              @click="indexContainer = 2"
-              ><div
-                class="tab-content-2"
-                style="
-                  transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                "
-              >
-                <div class="accordion-item-wrapper">
-                  <div class="w-layout-grid tab-title">
-                    <h3
-                      id="w-node-_43432121-5f67-a94f-4ae0-1d6fd2d2d7d9-867e461c"
-                    >
-                      DAO&nbsp;{{ $lang('Flexibility') }}
-                    </h3>
-                    <i
-                      class="fa-solid fa-chevron-right"
-                      style="color: #ffffff"
-                    ></i>
-                  </div>
-                  <div
-                    class="accordion-content"
-                    style="
-                      transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                        rotateX(0deg) rotateY(0deg) rotateZ(0deg)
-                        skew(0deg, 0deg);
-                      transform-style: preserve-3d;
-                      opacity: 1;
-                      width: 351px;
-                    "
-                  >
-                    <div
-                      v-show="indexContainer == 2"
-                      class="para-small grey-text"
-                    >
-                      {{ $lang('Advanced Cosmos DAO technology') }}
-                    </div>
-                  </div>
-                </div>
-              </div></a
-            >
-          </div>
-          <div class="w-tab-content">
-            <div
-              v-show="indexContainer == 0"
-              id="w-tabs-0-data-w-pane-0"
-              data-w-tab="Tab 1"
-              class="tab-pane-tab-1-2 w-tab-pane"
-              role="tabpanel"
-              aria-labelledby="w-tabs-0-data-w-tab-0"
-            >
-              <div class="tab-content-wrap">
-                <h2 class="h2-headline">
-                  <font _mstmutation="1">{{
-                    $lang('A fully transparent, auditable vault controlled by')
-                  }}</font>
-                  <span class="gradient-text">
-                    {{ $lang('Kava stakers') }}</span
-                  >
-                </h2>
-                <p class="margin-top-10px">
-                  {{
-                    $lang(
-                      'The first fully decentralized vault built on Cosmos The Kava Strategic Vault assures the security and growth of the Kava ecosystem With transparency and auditability, owned by the Kava community'
-                    )
-                  }}
-                </p>
-              </div>
-            </div>
-            <div
-              v-show="indexContainer == 1"
-              id="w-tabs-0-data-w-pane-1"
-              data-w-tab="Tab 2"
-              class="tab-pane-tab-1-2 w-tab-pane"
-              role="tabpanel"
-              aria-labelledby="w-tabs-0-data-w-tab-1"
-            >
-              <div class="tab-content-wrap">
-                <h2>
-                  <font _mstmutation="1"
-                    >{{ $lang('70+ protocols join') }} </font
-                  ><span class="gradient-text">{{ $lang('Kava Rise') }} </span
-                  ><font _mstmutation="1">{{ $lang('in') }} 2022</font>
-                </h2>
-                <p class="margin-top-10px">
-                  {{
-                    $lang(
-                      'Through Kava Rise growth initiatives, Kava has become one of the fastest growing blockchains by TVL and protocols on-boarded'
-                    )
-                  }}.
-                </p>
-                <img
-                  src="@/assets/image/home1/vaultimgs.svg"
-                  loading="lazy"
-                  alt=""
-                  class="protocols"
-                />
-              </div>
-            </div>
-            <div
-              v-show="indexContainer == 2"
-              id="w-tabs-0-data-w-pane-2"
-              data-w-tab="Tab 3"
-              class="tab-pane-tab-1-2 w-tab-pane w--tab-active"
-              role="tabpanel"
-              aria-labelledby="w-tabs-0-data-w-tab-2"
-            >
-              <div class="tab-content-wrap">
-                <h2>
-                  <font _mstmutation="1"
-                    >{{ $lang('Bringing flexibility and control to') }} </font
-                  ><span class="gradient-text">{{ $lang('Cosmos DAOs') }}</span>
-                </h2>
-                <p class="margin-top-10px">
-                  {{
-                    $lang(
-                      'Kava pioneered the most advanced form of Cosmos DAO&nbsp;technology allowing the community to control funding initiatives'
-                    )
-                  }}.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-4 bg-neutral-800">
-      <div class="container">
-        <div class="flex-center">
-          <h1
-            data-w-id="f9ca9e20-231e-97dd-df89-fdf1950a71e7"
-            style="
-              opacity: 1;
-              transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-              transform-style: preserve-3d;
-            "
-            class="less-margin"
-          >
-            {{ $lang('Future') }}
-          </h1>
-          <h1
-            data-w-id="d03f7ead-e608-bcfd-2034-480327c4d114"
-            style="
-              opacity: 1;
-              transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-              transform-style: preserve-3d;
-            "
-            class="less-margin"
-          >
-            {{ $lang('Vault') }}
-          </h1>
-          <h1
-            data-w-id="f9ca9e20-231e-97dd-df89-fdf1950a71e9"
-            style="
-              opacity: 1;
-              transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-              transform-style: preserve-3d;
-            "
-            class="gradient-text more-line-height"
-          >
-            {{ $lang('Initiatives') }}
-          </h1>
-          <p>{{ $lang('Voted through governance') }}</p>
-        </div>
-        <div class="margin-bottom margin-2xl">
-          <div class="content-centered"></div>
-        </div>
-        <div class="w-layout-grid integrations-4x">
-          <div
-            id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc2286-867e461c"
-            class="fade-in-on-scroll"
-            style="
-              opacity: 1;
-              transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-              transform-style: preserve-3d;
-            "
-          >
-            <div class="integration-card-2 rounded-xs shadow">
-              <div class="w-layout-grid column-base">
-                <div
-                  id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc2289-867e461c"
-                  class="w-layout-grid row-sm items-center"
-                >
-                  <i
-                    class="fa-solid fa-shield-halved"
-                    style="margin: 0 15px"
-                  ></i>
-                  <h6
-                    id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc228d-867e461c"
-                  >
-                    {{ $lang('Smart contract interaction') }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc2291-867e461c"
-            class="fade-in-on-scroll"
-            style="
-              opacity: 1;
-              transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-              transform-style: preserve-3d;
-            "
-          >
-            <div class="integration-card-2 rounded-xs shadow">
-              <div class="w-layout-grid column-base">
-                <div
-                  id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc2294-867e461c"
-                  class="w-layout-grid row-sm items-center"
-                >
-                  <i class="fa-solid fa-building" style="margin: 0 15px"></i>
-                  <h6
-                    id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc2298-867e461c"
-                  >
-                    {{ $lang('Infrastructure improvements') }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc229c-867e461c"
-            class="fade-in-on-scroll"
-            style="
-              opacity: 1;
-              transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-              transform-style: preserve-3d;
-            "
-          >
-            <div class="integration-card-2 rounded-xs shadow">
-              <div class="w-layout-grid column-base">
-                <div
-                  id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc229f-867e461c"
-                  class="w-layout-grid row-sm items-center"
-                >
-                  <i
-                    class="fa-solid fa-chart-column"
-                    style="margin: 0 15px"
-                  ></i>
-                  <h6
-                    id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc22a3-867e461c"
-                  >
-                    {{ $lang('Scaling initiatives') }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc22a7-867e461c"
-            class="fade-in-on-scroll"
-            style="
-              opacity: 1;
-              transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-              transform-style: preserve-3d;
-            "
-          >
-            <div class="integration-card-2 rounded-xs shadow">
-              <div class="w-layout-grid column-base">
-                <div
-                  id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc22aa-867e461c"
-                  class="w-layout-grid row-sm items-center"
-                >
-                  <i class="fa-solid fa-signature" style="margin: 0 15px"></i>
-                  <h6
-                    id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc22ae-867e461c"
-                  >
-                    {{ $lang('Vault Diversification') }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc22b2-867e461c"
-            class="fade-in-on-scroll"
-            style="
-              opacity: 1;
-              transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-              transform-style: preserve-3d;
-            "
-          >
-            <div class="integration-card-2 rounded-xs shadow">
-              <div class="w-layout-grid column-base">
-                <div
-                  id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc22b5-867e461c"
-                  class="w-layout-grid row-sm items-center"
-                >
-                  <i class="fa-solid fa-code" style="margin: 0 15px"></i>
-                  <h6
-                    id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc22b9-867e461c"
-                  >
-                    {{ $lang('STRATEGIC developer funding') }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc22bd-867e461c"
-            class="fade-in-on-scroll"
-            style="
-              opacity: 1;
-              transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-              transform-style: preserve-3d;
-            "
-          >
-            <div class="integration-card-2 rounded-xs shadow">
-              <div class="w-layout-grid column-base">
-                <div
-                  id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc22c0-867e461c"
-                  class="w-layout-grid row-sm items-center"
-                >
-                  <i
-                    class="fa-solid fa-bitcoin-sign"
-                    style="margin: 0 15px"
-                  ></i>
-                  <h6
-                    id="w-node-_44a1a8e0-c547-ad27-be7b-b13fa2fc22c4-867e461c"
-                  >
-                    {{ $lang('Cross-chain Funding') }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <p>&nbsp;<br /></p>
       </div>
     </div>
   </div>
@@ -652,606 +567,21 @@ const indexContainer = ref(0)
 <style scoped lang="sass">
 .content
   color: white
-  padding-top: 80px
-  background-image: radial-gradient(circle at -18% -42%, rgba(255, 67, 62, 0.4) 28%, rgba(255, 255, 255, 0) 35%)
-</style>
-
-<style scoped lang="sass">
-.home-hero-section
-  padding-top: 50px
-  padding-bottom: 50px
-
-.flex-center
-  flex-direction: column
-  align-items: center
-  width: 100%
-  display: flex
-
-h1
-  color: white
-  text-align: center
-  letter-spacing: -2.5px
-  margin-top: 0
-  margin-bottom: 0
-  font-family: Neue Montreal, sans-serif
-  font-size: 105px
-  font-weight: 700
-  line-height: 1em
-  position: relative
-
-.less-margin
-  margin-bottom: -8px
-
-.gradient-text
-  background-image: linear-gradient(to right, #ff433e, #ef8534)
-  -webkit-text-fill-color: transparent
-  -webkit-background-clip: text
-  background-clip: text
-  font-weight: 700
-  position: relative
-
-  &.more-line-height
-    line-height: 1.3em
-
-p
-  color: #bebebe
-  margin-bottom: 0
-  font-weight: 500
-
-.para-large
-  margin-bottom: 25px
-  font-size: 1.5rem
-  line-height: 1.3em
-
-  &.home-hero-para
-    text-align: center
-    max-width: 700px
-    margin-top: 15px
-    margin-bottom: 15px
-    position: relative
-
-    &.vault
-      max-width: 580px
-
-a
-  color: #ff433e
-  text-decoration: none
-
-.w-inline-block
-  max-width: 100%
-  display: inline-block
-
-.nav-link-wrap
-  color: #bebebe
-  font-size: 24px
-  transition: opacity .3s
-
-.nav-link-item
-  grid-column-gap: 8px
-  grid-row-gap: 10px
-  grid-template-rows: auto
-  grid-template-columns: auto
-  grid-auto-columns: auto
-  grid-auto-flow: column
-  justify-content: start
-  align-items: center
-  font-weight: 400
-  display: grid
-
-.nav-link-text-wrap
-  grid-column-gap: 6px
-  grid-row-gap: 6px
-  grid-template-rows: auto
-  grid-template-columns: auto
-  grid-auto-columns: auto
-  grid-auto-flow: column
-  justify-content: start
-  margin-bottom: 2px
-  display: grid
-
-.nav-link-text
-  color: #fff
-  letter-spacing: -.01em
-  font-size: 18px
-  font-weight: 500
-  line-height: 1.5
-
-  &.vault
-    color: #bebebe
-    text-transform: uppercase
-
-.wrapper
-  justify-content: space-between
-  align-items: center
-  width: 85%
-  max-width: 1280px
-  margin-left: auto
-  margin-right: auto
-  display: flex
-  position: relative
-
-  &.vault-stats
-    margin-top: 40px
-    margin-bottom: 60px
-
-.w-layout-grid
-  grid-row-gap: 16px
-  grid-column-gap: 16px
-  grid-template-rows: auto auto
-  // grid-template-columns: 1fr 1fr
-  grid-auto-columns: 1fr
-  display: grid
-
-._12-col-grid
-  grid-template-rows: auto auto auto auto auto auto
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
-  width: 100%
-
-.vault-card
-  background-image: linear-gradient(to bottom, #fe6460, #ff433e)
-  border-radius: 12px
-  flex-direction: column
-  justify-content: center
-  align-items: center
-  width: 100%
-  height: 100%
-  padding: 40px
-  display: flex
-
-#w-node-ee7dce2c-05dd-cd81-90c9-a60782c0cb29-867e461c
-  grid-area: span 4 / span 7 / span 4 / span 7
-  place-self: auto
-
-h4
-  color: white
-  margin-top: 0
-  margin-bottom: 0
-  font-size: 24px
-  font-weight: 500
-  line-height: 125%
-
-.vault-title
-  text-align: center
-
-h1
-  color: white
-  text-align: center
-  letter-spacing: -2.5px
-  margin-top: 0
-  margin-bottom: 0
-  font-family: Neue Montreal, sans-serif
-  font-size: 105px
-  font-weight: 700
-  line-height: 1em
-  position: relative
-
-.vault-heading
-  padding-top: 1px
-  padding-bottom: 1px
-  font-weight: bold
-
-.vault-card.blue
-  background-image: linear-gradient(to bottom, #6e56ff, #4628ff)
-
-#w-node-_8cec2efa-aef7-0816-0fbc-9a7c9124cef2-867e461c
-  grid-area: 1 / 8 / 3 / 12
-  place-self: auto
-
-.vault-card.green
-  background-image: linear-gradient(to bottom, #ef8534, #feb57d 52%)
-
-#w-node-_61028e1a-efb4-5d5b-4492-f22e210b69ee-867e461c
-  grid-area: span 4 / span 5 / span 4 / span 5
-  place-self: auto
-
-.vault-card.orange
-  background-image: linear-gradient(#3d4f69, #1d2838)
-
-#w-node-e597de3e-fc6b-986e-a4b7-6fbb42f1c870-867e461c
-  grid-area: 5 / 3 / 8 / 8
-  place-self: auto end
-
-.hero-image-wrapper
-  flex-direction: column
-  align-items: center
-  display: flex
-
-  &.margin--60px
-    margin-top: -60px
-
-.gradient-top
-  background-image: linear-gradient(#000, #0000)
-  width: 100%
-  max-width: 100%
-  height: 200px
-  position: absolute
-  z-index: 2
-
-.gradient-sides
-  background-image: linear-gradient(to right, #000, #0000005c 8%, #0000 15% 85%, #0000005c 92%, #000)
-  width: 100%
-  height: 100%
-  position: absolute
-  z-index: 2
-
-
-.hero-image
-  width: 100%
-  max-width: 100%
-</style>
-
-<style scoped lang="sass">
-.section-4
-  width: 100%
-  padding-top: 5em
-  padding-bottom: 5em
-  position: relative
-  background-color: black
-
-.container-lg
-  margin: 0 auto
-  z-index: 5
-  width: 100%
-  max-width: 64em
-  padding-left: 1.25em
-  padding-right: 1.25em
-  position: relative
-
-.max-width-xl
-  width: 100%
-  max-width: 50.1em
-
-  &.larger
-    max-width: 50.1em
-
-.row-md
-  z-index: 5
-  grid-column-gap: 1.5em
-  grid-row-gap: 1.5em
-  grid-template-rows: auto
-  grid-template-columns: auto
-  grid-auto-columns: auto
-  grid-auto-flow: column
-  justify-content: start
-  display: grid
-  position: relative
-
-#w-node-a552709f-7f45-a872-38e3-38184f2c4c0d-867e461c
-  grid-area: span 1 / span 1 / span 1 / span 1
-
-.margin-bottom
-  margin-top: 0
-  margin-left: 0
-  margin-right: 0
-
-h2
-  color: white
-  margin-top: 0
-  margin-bottom: 0
-  font-family: Neue Montreal, sans-serif
-  font-size: 58px
-  font-weight: 700
-  line-height: 1.3em
-
-.h2-headline
-  text-align: left
-  font-family: Neue Montreal, sans-serif
-  font-weight: 700
-  position: relative
-
-.gradient-text
-  background-image: linear-gradient(to right, #ff433e, #ef8534)
-  -webkit-text-fill-color: transparent
-  -webkit-background-clip: text
-  background-clip: text
-  font-weight: 700
-  position: relative
-
-p
-  color: #bebebe
-  margin-bottom: 0
-  font-weight: 500
-
-.margin-top-10px
-  margin-top: 10px
-
-.container-xl
-  z-index: 5
-  width: 100%
-  max-width: 72em
-  margin-left: auto
-  margin-right: auto
-  padding-left: 1.25em
-  padding-right: 1.25em
-  position: relative
-
-.w-tabs
-  position: relative
-
-.tabs-horizontal
-  grid-column-gap: 2em
-  grid-row-gap: 16px
-  grid-template-rows: auto
-  grid-template-columns: .5fr 1fr
-  grid-auto-columns: 1fr
-  align-items: center
-  margin-top: 4em
-  padding-top: 4em
-  display: grid
-
-.w-tabs
-  &:before, &:after
-    content: " "
-    grid-area: 1 / 1 / 2 / 2
-    display: table
-
-.w-tab-menu
-  position: relative
-
-.tabs-menu-side
-  grid-column-gap: 1em
-  grid-row-gap: 1em
-  flex-direction: column
-  grid-template-rows: auto
-  grid-template-columns: 1fr
-  grid-auto-columns: 1fr
-  display: grid
-
-#w-node-a552709f-7f45-a872-38e3-38184f2c4c18-867e461c
-  grid-area: 1 / 1 / 2 / 2
-
-.w-inline-block
-  max-width: 100%
-  display: inline-block
-
-.w-tab-link
-  vertical-align: top
-  text-align: left
-  cursor: pointer
-  color: #222
-  background-color: #ddd
-  padding: 9px 30px
-  text-decoration: none
-  display: inline-block
-  position: relative
-
-.tabs-menu-side-link
-  background-color: #11151c
-  color: #a7b5c4
-  border-radius: .5em
-  padding: 1.5em
-  box-shadow: inset 0 0 0 1px #1e252c
-
-.tab-content-2
-  width: 100%
-  display: flex
-
-.accordion-item-wrapper
-  flex-direction: column
-  width: 100%
-  display: flex
-
-.tab-title
-  grid-column-gap: 1em
-  grid-row-gap: 16px
-  grid-template-rows: auto
-  grid-template-columns: 1fr auto
-  align-items: center
-  width: 100%
-  height: 3em
-
-h3
-  color: white
-  letter-spacing: -.4px
-  margin-top: 0
-  margin-bottom: 0
-  font-family: Neue Montreal, sans-serif
-  font-size: 32px
-  font-weight: 500
-  line-height: 159%
-
-.w-tab-content
-  display: block
-  position: relative
-  overflow: hidden
-
-.tab-pane-tab-1-2
-  width: 100%
-  height: 100%
-
-.w--tab-active
-  display: block
-
-.w-tab-pane
-  // display: none
-  position: relative
-
-.tab-content-wrap
-  flex-direction: column
-  justify-content: center
-  align-items: flex-start
-  width: 100%
-  height: 100%
-  padding: 0 2.5em
-  display: flex
-  position: relative
-
-h2
-  color: white
-  margin-top: 0
-  margin-bottom: 0
-  font-family: Neue Montreal, sans-serif
-  font-size: 58px
-  font-weight: 700
-  line-height: 1.3em
-
-.gradient-text
-  background-image: linear-gradient(to right, #ff433e, #ef8534)
-  -webkit-text-fill-color: transparent
-  -webkit-background-clip: text
-  background-clip: text
-  font-weight: 700
-  position: relative
-
-p
-  color: #bebebe
-  margin-bottom: 0
-  font-weight: 500
-
-.margin-top-10px
-  margin-top: 10px
-
-.para-small
-  &.grey-text
-    color: #acacac
-    font-size: 15px
-
-  max-width: 860px
-  font-size: 16px
-  line-height: 1.3em
-
-.accordion-content
-  z-index: 2
-  text-align: left
-  position: relative
-  overflow: hidden
-</style>
-
-<style scoped lang="sass">
-.container
-  z-index: 2
-  width: 100%
-  max-width: 100em
-  margin-left: auto
-  margin-right: auto
-  padding: 4em
-  position: relative
-
-  .flex-center
-    flex-direction: column
-    align-items: center
+  padding: 120px 20px
+  background-color: #0d0e0f
+  .main
+    max-width: 1200px
+    margin: 0 auto
     width: 100%
-    display: flex
-
-  .less-margin
-    margin-bottom: -8px
-
-  h1
-    color: white
-    text-align: center
-    letter-spacing: -2.5px
-    margin-top: 0
-    margin-bottom: 0
-    font-family: Neue Montreal, sans-serif
-    font-size: 105px
-    font-weight: 700
-    line-height: 1em
-    position: relative
-
-  .gradient-text
-    &.more-line-height
-      line-height: 1.1em
-
-    background-image: linear-gradient(to right, #ff433e, #ef8534)
-    -webkit-text-fill-color: transparent
-    -webkit-background-clip: text
-    background-clip: text
-    font-weight: 700
-    position: relative
-
-  p
-    color: #bebebe
-    margin-bottom: 0
-    font-weight: 500
-
-  .w-layout-grid
-    grid-row-gap: 16px
-    grid-column-gap: 16px
-    grid-template-rows: auto auto
-    grid-template-columns: 1fr 1fr 1fr
-    grid-auto-columns: 1fr
-    display: grid
-
-  .integrations-4x
-    grid-column-gap: 1em
-    grid-row-gap: 1em
-    grid-template-rows: auto
-    grid-template-columns: 1fr 1fr 1fr
-    margin-top: 43px
-    margin-bottom: 43px
-
-  .integration-card-2
-    background-color: #1e252c
-    padding: 1em
-
-    &.rounded-xs.shadow
-      border-radius: 12px
-      box-shadow: inset 0 0 0 1px #272e35, 0 4px 8px -4px #101720
-
-  .column-base
-    z-index: 5
-    grid-column-gap: 1em
-    grid-row-gap: 1em
-    grid-template-rows: auto
-    grid-template-columns: 1fr
-    grid-auto-columns: 1fr
-    justify-items: start
-    display: grid
-    position: relative
-
-  .row-sm
-    grid-column-gap: .5em
-    grid-row-gap: .5em
-    grid-template-rows: auto
-    grid-template-columns: auto
-    grid-auto-columns: auto
-    grid-auto-flow: column
-    justify-content: start
-    display: grid
-
-    &.items-center
-      align-items: center
-
-  .avatar-md
-    object-fit: cover
-    border-radius: 9999px
-    justify-content: center
-    align-items: center
-    width: 2.25em
-    height: 2.25em
-    display: flex
-
-  h6
-    color: white
-    letter-spacing: 1px
-    text-transform: uppercase
-    margin-top: 0
-    margin-bottom: 0
-    font-size: 14px
-    font-weight: 500
-    line-height: 150%
-    font-weight: bold
-@media screen and (max-width: 767px)
-  .integrations-4x
-    grid-template-columns: 1fr !important
-  h1
-    font-size: 50px !important
-  p
-    font-size: 16px !important
-  h2
-    font-size: 32px !important
-  ._12-col-grid.vault
-    flex-direction: column
-    display: flex
-  .w-tab-link
-    display: block
-
-  .tabs-menu-side-link
-    padding-top: 1em
-    padding-left: 1em
-    padding-right: 1em
-    padding-top: .7em
-    padding-bottom: .7em
-  .tabs-horizontal
-    grid-template-columns: 1fr
+    .title
+      margin-bottom: 24px
+      line-height: 28px
+      font-weight: 700
+      font-size: 24px
+      color: #f2f4f6
+    .time
+      font-size: 14px
+      color: #87909f
+      margin-bottom: 40px
+      margin-top: 14px
 </style>

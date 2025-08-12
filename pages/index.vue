@@ -175,7 +175,7 @@ const footerList = ref([
     title: t('關於我們'),
     items: [
       {
-        name: t('戰略金庫'),
+        name: t('用戶協議'),
         link: '/vault'
       },
       {
@@ -367,7 +367,8 @@ const footerList = ref([
   width: 100%
   position: relative
   box-sizing: border-box
-  background-color: black
+  background-color: #0a0a0a
+  overflow: hidden
   // background-color: rgb(13, 20, 24)
 
   .header

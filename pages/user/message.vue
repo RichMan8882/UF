@@ -93,10 +93,6 @@ const formatDate = (timestamp: string) => {
 
 <template>
   <div class="pages">
-    <div class="sec-title">
-      <span>{{ $lang('站內訊息') }}</span>
-      <i class="far fa-comments"></i>
-    </div>
     <div class="formSection">
       <div class="formContent">
         <div class="changeType">
@@ -196,8 +192,8 @@ const formatDate = (timestamp: string) => {
             <div class="input-classic">
               <span class="input-title">{{ $lang('主旨') }}</span>
               <input
-                v-trim-input
                 v-model="sendMessage.title"
+                v-trim-input
                 type="text"
                 name="title"
                 required
@@ -252,16 +248,12 @@ const formatDate = (timestamp: string) => {
 
 <style scoped lang="sass">
 .formSection
-  margin: 20px 0 0 0
   width: 100%
-  height: 58vh
+  height: 48vh
   position: relative
   border-radius: 5px
   font-size: 16px
-  border: 1px solid #fff
   overflow-y: auto
-  @media screen and (max-width: 768px)
-    height: 48vh
   .formContent
     width: 100%
 </style>
@@ -439,6 +431,7 @@ const formatDate = (timestamp: string) => {
   display: flex
   justify-content: flex-start
   align-items: center
+  margin-bottom: 20px
 </style>
 
 <style scoped lang="sass">
@@ -560,4 +553,58 @@ const formatDate = (timestamp: string) => {
   margin-left: 5px;
   font-weight: bold;
 }
+</style>
+<style scoped lang="sass">
+.form-bg
+  padding: 5px 10px 20px
+  margin-top: 0
+  @media screen and (min-width: 768px)
+    padding: 30px
+
+.btn-submit.submit
+  cursor: pointer
+  display: block
+  border-radius: 4px
+  letter-spacing: .5px
+  text-align: center
+  border-style: none
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, .2), 0px 2px 2px 0px rgba(0, 0, 0, .14), 0px 3px 1px -2px rgba(0, 0, 0, .12)
+  outline: none
+  text-shadow: 0 0 10px rgba(0, 0, 0, .5)
+  padding: 6px 16px
+  font-size: 13px
+  background-color: #6c757d
+  font-weight: bold
+  color: #fff
+  margin: 0 auto
+
+  @media screen and (min-width: 768px)
+    padding: 6px 16px
+    font-size: 16px
+
+.input-classic
+  display: flex
+  flex-wrap: nowrap
+  margin-bottom: 25px
+
+  @media screen and (min-width: 768px)
+    width: 100%
+    max-width: 100%
+    margin-left: 0
+    margin-right: 0
+
+  span.input-title
+    color: #252525
+    font-weight: bold
+    font-size: 15px
+    width: 35%
+
+  select,
+  textarea,
+  input
+    width: 100%
+    color: rgba(0, 0, 0, .87)
+    padding: 5px
+    background-color: #fff
+    border-radius: 4px
 </style>

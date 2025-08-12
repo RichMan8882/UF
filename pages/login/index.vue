@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 const siteStore = useSiteStore()
 const { queryChatbox } = siteStore
+const { t } = useI18n()
 const { signin } = useAuthStore()
 const passwordEyes = ref(false)
 const recaptchaCode = ref('')
@@ -17,14 +18,14 @@ const showPassword = (type: boolean) => {
 const setLogin = async () => {
   if (!fetchSigninApi.value.account) {
     ElMessage({
-      message: '請輸入帳號',
+      message: t('請輸入帳號'),
       type: 'error'
     })
     return
   }
   if (!fetchSigninApi.value.password) {
     ElMessage({
-      message: '請輸入密碼',
+      message: t('請輸入密碼'),
       type: 'error'
     })
     return
@@ -34,7 +35,7 @@ const setLogin = async () => {
   )
   if (!recaptchaCheck) {
     ElMessage({
-      message: '驗證碼錯誤',
+      message: t('驗證碼錯誤'),
       type: 'error'
     })
   } else {
