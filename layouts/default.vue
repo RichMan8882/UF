@@ -138,7 +138,7 @@ const routerName = (router: String) => {
 }
 const siteStore = useSiteStore()
 useHead({
-  title: `${siteStore.siteData.title}- ${routerName(router.currentRoute.value.name)}`,
+  title: `${siteStore.siteData.title}`,
   link: [
     {
       rel: 'icon',
@@ -174,7 +174,7 @@ watch(
       router.currentRoute.value.name
     )
     useHead({
-      title: `${siteStore.siteData.title}- ${routerName(router.currentRoute.value.name)}`,
+      title: `${siteStore.siteData.title}`,
       link: [
         {
           rel: 'icon',

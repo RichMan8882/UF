@@ -46,15 +46,15 @@ const openChatBox = () => {
   <div class="deposit">
     <div class="form-item">
       <h4>
-        {{ $lang('帳戶資產') }}
+        {{ $lang('儲值請聯繫客服，將會有專人為您處理') }}
       </h4>
-      <input
+      <!-- <input
         class="disabled"
         type="text"
         :value="PlayerStore?.playerInfo?.balance || 0"
-      />
+      /> -->
     </div>
-    <div class="form-item">
+    <!-- <div class="form-item">
       <h4>
         {{ $lang('USDT錢包地址') }}
       </h4>
@@ -73,7 +73,7 @@ const openChatBox = () => {
         type="text"
         :value="PlayerStore?.playerInfo?.balance || 0"
       />
-    </div>
+    </div> -->
 
     <instruction />
 
@@ -89,6 +89,7 @@ const openChatBox = () => {
 
   .form-item
     width: 100%
+    text-align: center
 
   p
     margin-top: 24px
@@ -96,7 +97,7 @@ const openChatBox = () => {
     text-align: center
 
   .form-btn-sec
-    margin: 0 auto
+    margin: 30px auto
     display: block
 
 

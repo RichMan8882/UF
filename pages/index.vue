@@ -94,8 +94,8 @@ const menuList = computed(() => {
         link: '/user/news'
       },
       {
-        name: t('使用條款'),
-        link: '/services'
+        name: t('用戶協議'),
+        link: '/vault'
       },
       {
         name: t('風險聲明'),
@@ -125,8 +125,8 @@ const menuList = computed(() => {
         link: '/register'
       },
       {
-        name: t('使用條款'),
-        link: '/services'
+        name: t('用戶協議'),
+        link: '/vault'
       },
       {
         name: t('風險聲明'),
