@@ -94,7 +94,7 @@ export default {
           locale: 'en_US',
           toolbar_bg: '#e9edf0',
           enable_publishing: false,
-          hide_top_toolbar: true,
+          hide_top_toolbar: false,
           hide_legend: true,
           save_image: false,
           container_id: 'tradingview_a45bd'

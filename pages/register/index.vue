@@ -235,7 +235,10 @@ await onMounted(() => {
       </div>
       <div class="formSection">
         <div class="content">
-          <div v-if="showReferrerInput" class="form_input">
+          <div
+            v-if="showReferrerInput || siteStore.siteData.referrerCodeRequired"
+            class="form_input"
+          >
             <div class="inputTitle">
               {{ $lang('推薦碼') }}
             </div>

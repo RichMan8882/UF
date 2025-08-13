@@ -6,7 +6,8 @@ const { queryTicket, createTicket, read, reply } = store
 // methods
 const sendMessage = ref({
   title: '',
-  content: ''
+  content: '',
+  images: []
 })
 const sendReply = ref('')
 const pageType = ref('message')
@@ -26,7 +27,8 @@ const sendTicket = async () => {
   }
   const res = await createTicket({
     title: sendMessage.value.title,
-    content: sendMessage.value.content
+    content: sendMessage.value.content,
+    images: sendMessage.value.images
   })
   if (res) {
     ElNotification({
@@ -36,6 +38,7 @@ const sendTicket = async () => {
     })
     sendMessage.value.title = ''
     sendMessage.value.content = ''
+    sendMessage.value.images = []
     await queryTicket()
     pageType.value = 'message'
   }
@@ -88,6 +91,14 @@ const formatDate = (timestamp: string) => {
   const seconds = String(date.getSeconds()).padStart(2, '0')
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+}
+const updateImage = (data) => {
+  // console.log(data, 'ssssssssssss')
+  sendMessage.value.images = []
+  data.url.forEach((item) => {
+    sendMessage.value.images.push(item.url)
+  })
+  // console.log(sendMessage.value.images, 'sendMessage.value.images')
 }
 </script>
 
@@ -209,6 +220,10 @@ const formatDate = (timestamp: string) => {
                 class="textarea-classic"
                 required
               ></textarea>
+            </div>
+            <div class="input-classic">
+              <span class="input-title">{{ $lang('圖片') }}</span>
+              <pureImgUploader @update-image="updateImage"></pureImgUploader>
             </div>
           </div>
           <button type="button" class="buttonWhGreen" @click="sendTicket">

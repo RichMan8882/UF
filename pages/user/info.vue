@@ -87,6 +87,23 @@ const sendPasswordChange = async () => {
     }
   }
 }
+const hiddenAccountNo = (value) => {
+  if (value) {
+    if (value.length <= 3) return '***'
+
+    // 计算中间位置
+    const middle = Math.floor(value.length / 2)
+
+    // 替换中间三位
+    const start = middle - 1
+    const end = middle + 2
+
+    // 构建新字符串
+    return value.substring(0, start) + '***' + value.substring(end)
+  } else {
+    return ''
+  }
+}
 </script>
 <template>
   <div class="card">
@@ -103,29 +120,29 @@ const sendPasswordChange = async () => {
         <span>{{ $lang('手機號碼') }}</span>
         <span
           >{{ playerStore.playerInfo.countryCode }}
-          {{ playerStore.playerInfo.mobile | maskMobile }}</span
+          {{ hiddenAccountNo(playerStore.playerInfo.mobile) }}</span
         >
       </div>
       <div class="user-title">
         <span>{{ $lang('更換密碼') }}</span>
         <div class="user-title-input">
           <input
-            v-trim-input
             v-model="pwd.oPwd"
+            v-trim-input
             type="password"
             maxlength="40"
             :placeholder="t('舊密碼')"
           />
           <input
-            v-trim-input
             v-model="pwd.nPwd"
+            v-trim-input
             type="password"
             maxlength="40"
             :placeholder="t('新密碼')"
           />
           <input
-            v-trim-input
             v-model="pwd.nPwdConfirm"
+            v-trim-input
             type="password"
             maxlength="40"
             :placeholder="t('確認密碼')"
