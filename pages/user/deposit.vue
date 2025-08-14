@@ -7,6 +7,7 @@ const walletList = ref([])
 const { deposit, getWallet, queryDepositRecords, updateDeposit } =
   useWalletStore()
 const { t } = useI18n()
+const scrollContainer = ref(null)
 onMounted(async () => {
   if (!playerStore.playerInfo?.bankInfo) {
     navigateTo('/user/bank')
@@ -21,6 +22,16 @@ onMounted(async () => {
   walletInfo.value = walletList.value.find((item) => item.walletTypeId === 1)
   form.value.walletId = playerStore?.playerInfo.wallet[0].id
 })
+const loading = ref(false)
+const handleScroll = () => {
+  if (!scrollContainer.value) return
+  const { scrollTop, clientHeight, scrollHeight } = scrollContainer.value
+  if (scrollTop + clientHeight >= scrollHeight - 10) {
+    if (!isNull.value) {
+      queryRecords(true)
+    }
+  }
+}
 const config = useRuntimeConfig()
 const { siteId } = config.public
 const form = ref({
@@ -141,15 +152,40 @@ const depositType = ref('deposit')
 const depositList = ref([])
 const getRecord = async () => {
   depositType.value = 'record'
-  queryRecords()
-}
-const queryRecords = async () => {
-  const res = await queryDepositRecords({
-    playerId: playerStore.playerInfo.id,
-    sortWay: 'desc',
-    sortKey: 'createdAt'
+  nextTick(() => {
+    if (scrollContainer.value) {
+      scrollContainer.value.addEventListener('scroll', handleScroll)
+    }
   })
-  depositList.value = res.data.result
+  queryRecords(false)
+}
+const recordParams = ref({
+  playerId: playerStore.playerInfo.id,
+  page: 1,
+  sortWay: 'desc',
+  sortKey: 'createdAt',
+  pageSize: 15
+})
+const isNull = ref(false)
+const queryRecords = async (e) => {
+  if (loading.value) return
+  loading.value = true
+  if (e) {
+    recordParams.value.page++
+  } else {
+    recordParams.value.page = 1
+  }
+  const res = await queryDepositRecords(recordParams.value)
+  if (e) {
+    depositList.value = depositList.value.concat(res.data.result)
+    if (res.data.result.length < 10) {
+      isNull.value = true
+    }
+  } else {
+    depositList.value = res.data.result
+    isNull.value = false
+  }
+  loading.value = false
 }
 const formatDate = (timestamp) => {
   const date = new Date(timestamp)
@@ -199,7 +235,7 @@ const cancelDeposit = () => {
 
       if (res.success) {
         dialogVisible.value = false
-        queryRecords()
+        queryRecords(false)
         ElNotification({
           title: `${t('成功取消儲值訂單')}`,
           type: 'success',
@@ -279,7 +315,11 @@ const cancelDeposit = () => {
         {{ $lang('送出') }}
       </button>
     </div>
-    <div class="recordBox" v-if="depositType === 'record'">
+    <div
+      ref="scrollContainer"
+      class="recordBox"
+      v-if="depositType === 'record'"
+    >
       <table>
         <tr class="recordBox-title">
           <th>{{ $lang('時間') }}</th>
@@ -298,7 +338,7 @@ const cancelDeposit = () => {
         </tr>
       </table>
     </div>
-    <el-dialog v-model="dialogVisible" width="500">
+    <el-dialog v-model="dialogVisible" width="400">
       <div class="depositDialog">
         <div v-if="depositDetails.status === 1" class="address">
           {{ $lang('地址') }}
@@ -386,6 +426,8 @@ const cancelDeposit = () => {
 <style scoped lang="sass">
 .recordBox
   width: 100%
+  max-height: 400px
+  overflow-y: scroll
   padding: 20px 30px
   @media screen and (max-width: 768px)
     padding: 20px 5px 10px 5px
