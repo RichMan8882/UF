@@ -232,12 +232,12 @@ const checkBetData = () => {
           if (response.success) {
             ElMessageBox.alert(
               `
-               <p style="margin:0 0 8px 0"> ${t('交易期別')}: ${response.data.roundNo} </p>
+               <p style="margin:0 0 8px 0"> ${t('交易日期')}: ${response.data.roundNo} </p>
                <p style="margin:0 0 8px 0"> ${t('交易金額')}: ${response.data.amount} </p>
-               <p style="margin:0 0 8px 0"> ${t('交易期別')}: ${gameOptionNameList(
+               <p style="margin:0 0 8px 0"> ${t('交易類別')}: ${gameOptionNameList(
                  response.data.option
                )} </p>
-               <p style="margin:0 0 8px 0"> ${t('時間')}: ${formatDate(
+               <p style="margin:0 0 8px 0"> ${t('詳細時間')}: ${formatDate(
                  response.data.openAt
                )} </p>
              `,
@@ -1099,17 +1099,21 @@ const checkSymbolTV = (value) => {
                   for="game-5"
                   class=""
                   @click="addBetGameType(4)"
-                  ><span>{{ $lang('看漲') }}</span>
-                  <span class="odds">{{ gameOptionOdd(4) }}</span></label
-                >
+                  ><span style="text-align: center; width: 100%">{{
+                    $lang('看漲')
+                  }}</span>
+                  <!-- <span class="odds">{{ gameOptionOdd(4) }}</span> -->
+                </label>
                 <label
                   v-if="showOption(5)"
                   for="game-6"
                   class=""
                   @click="addBetGameType(5)"
-                  ><span>{{ $lang('看跌') }}</span>
-                  <span class="odds">{{ gameOptionOdd(5) }}</span></label
-                >
+                  ><span style="text-align: center; width: 100%">{{
+                    $lang('看跌')
+                  }}</span>
+                  <!-- <span class="odds">{{ gameOptionOdd(5) }}</span> -->
+                </label>
               </div>
               <div class="rightBox">
                 <label

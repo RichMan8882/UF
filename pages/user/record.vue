@@ -223,7 +223,7 @@ const formatMemo = (value: any) => {
               :class="recordType === 'transaction' ? 'active' : ''"
               @click="changeRecordType('transaction')"
             >
-              {{ $lang('入金紀錄') }}
+              {{ $lang('入幣紀錄') }}
             </button>
             <button
               type="button"
@@ -231,7 +231,7 @@ const formatMemo = (value: any) => {
               :class="recordType === 'withdraw' ? 'active' : ''"
               @click="changeRecordType('withdraw')"
             >
-              {{ $lang('匯出紀錄') }}
+              {{ $lang('提幣明細') }}
             </button>
           </div>
           <div v-if="recordType === 'transaction'" class="recordBox">

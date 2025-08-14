@@ -31,7 +31,7 @@ const dashboardList = ref([
     icon: '<i class="fa-solid fa-handshake-angle"></i>'
   },
   {
-    title: t('提領紀錄'),
+    title: t('提幣紀錄'),
     path: '/user/record',
     icon: '<i class="fa-solid fa-file-invoice"></i>'
   },

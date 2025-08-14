@@ -258,7 +258,7 @@ const cancelDeposit = () => {
         :class="depositType === 'deposit' ? 'active' : ''"
         @click="depositType = 'deposit'"
       >
-        {{ $lang('储值申请') }}
+        {{ $lang('入幣申請') }}
       </button>
       <button
         type="button"
@@ -266,7 +266,7 @@ const cancelDeposit = () => {
         :class="depositType === 'record' ? 'active' : ''"
         @click="getRecord"
       >
-        {{ $lang('儲值記錄') }}
+        {{ $lang('入幣紀錄') }}
       </button>
     </div>
     <div v-if="depositType === 'deposit'" style="margin-top: 15px">

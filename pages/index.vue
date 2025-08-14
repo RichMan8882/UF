@@ -82,7 +82,7 @@ const menuList = computed(() => {
         link: '/user/activity'
       },
       {
-        name: t('期權交易'),
+        name: t('貨幣合約'),
         link: '/game'
       },
       {
@@ -117,7 +117,7 @@ const menuList = computed(() => {
         link: '/user/activity'
       },
       {
-        name: t('期權交易'),
+        name: t('貨幣合約'),
         link: '/game'
       },
       {
