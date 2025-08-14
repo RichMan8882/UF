@@ -30,7 +30,7 @@ const displayedActivities = computed(() => {
 <template>
   <div class="news">
     <div class="news-title">
-      <span>{{ $lang('網站公告') }}</span>
+      <span>{{ $lang('公告') }}</span>
     </div>
 
     <ul class="pagination">

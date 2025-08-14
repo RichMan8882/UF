@@ -88,7 +88,7 @@ const goPopup = async (title: string) => {
     record.value.search = true
     return
   }
-  if (title === t('歷史委託')) {
+  if (title === t('歷史倉位')) {
     orderList.value = socketOrderList.value.sort((a, b) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
@@ -113,12 +113,12 @@ const goPopup = async (title: string) => {
     record.value.search = true
     return
   }
-  if (title === t('網站公告')) {
+  if (title === t('瞭解USDT')) {
     record.value.type = 'announcement'
     record.value.search = false
     return
   }
-  if (title === t('規則說明')) {
+  if (title === t('規則簡介')) {
     record.value.type = 'rule'
     record.value.search = false
   }
@@ -382,9 +382,9 @@ const gameOptionName = (type: Number) => {
     case 3:
       return `${t('雙')}`
     case 4:
-      return `${t('漲')}`
+      return `${t('看漲')}`
     case 5:
-      return `${t('跌')}`
+      return `${t('看跌')}`
     case 6:
       return `${t('反指標')}`
     default:
@@ -392,7 +392,7 @@ const gameOptionName = (type: Number) => {
   }
 }
 const gameResultName = (type: Number) => {
-  // 0 : 高、1 : 低、2 : 單、3 : 雙、4 : 漲、5 : 跌 6 : 合
+  // 0 : 高、1 : 低、2 : 單、3 : 雙、4 : 漲、5 : 看跌 6 : 合
   switch (type) {
     case 0:
       return `${t('高')}`
@@ -403,9 +403,9 @@ const gameResultName = (type: Number) => {
     case 3:
       return `${t('雙')}`
     case 4:
-      return `${t('漲')}`
+      return `${t('看漲')}`
     case 5:
-      return `${t('跌')}`
+      return `${t('看跌')}`
     case 6:
       return `${t('和')}`
     default:
@@ -955,21 +955,21 @@ const checkSymbolTV = (value) => {
           <i class="fas fa-clipboard-list"></i>
           <div>{{ $lang('當前委託') }}</div>
         </div>
-        <div class="leftItem" @click="goPopup(t('歷史委託'))">
+        <div class="leftItem" @click="goPopup(t('歷史倉位'))">
           <i class="fas fa-history"></i>
-          <div>{{ $lang('歷史委託') }}</div>
+          <div>{{ $lang('歷史倉位') }}</div>
         </div>
-        <div class="leftItem" @click="goPopup(t('歷史盤口'))">
+        <!-- <div class="leftItem" @click="goPopup(t('歷史盤口'))">
           <i class="fas fa-award"></i>
           <div>{{ $lang('歷史盤口') }}</div>
-        </div>
-        <div class="leftItem" @click="goPopup(t('網站公告'))">
+        </div> -->
+        <div class="leftItem" @click="goPopup(t('瞭解USDT'))">
           <i class="fas fa-bullhorn"></i>
-          <div>{{ $lang('網站公告') }}</div>
+          <div>{{ $lang('瞭解USDT') }}</div>
         </div>
-        <div class="leftItem" @click="goPopup(t('規則說明'))">
+        <div class="leftItem" @click="goPopup(t('規則簡介'))">
           <i class="fas fa-question-circle"></i>
-          <div>{{ $lang('規則說明') }}</div>
+          <div>{{ $lang('規則簡介') }}</div>
         </div>
         <label for="coinBox" class="leftItem rankBtn"
           ><i class="fas fa-chart-bar"></i>
@@ -1056,10 +1056,10 @@ const checkSymbolTV = (value) => {
                 class="gameType"
               />
               <div style="margin-left: 20px">
-                {{ $lang('期號') }}: {{ betData.roundNo }}
+                {{ $lang('交易時間') }}: {{ betData.roundNo }}
               </div>
               <div style="margin-left: 20px">
-                {{ $lang('最後購買時間') }}: {{ socketCurrentRoundCountdown }}s
+                {{ $lang('買入倒計時') }}: {{ socketCurrentRoundCountdown }}s
               </div>
               <div class="leftBox">
                 <label
@@ -1099,7 +1099,7 @@ const checkSymbolTV = (value) => {
                   for="game-5"
                   class=""
                   @click="addBetGameType(4)"
-                  ><span>{{ $lang('漲') }}</span>
+                  ><span>{{ $lang('看漲') }}</span>
                   <span class="odds">{{ gameOptionOdd(4) }}</span></label
                 >
                 <label
@@ -1107,7 +1107,7 @@ const checkSymbolTV = (value) => {
                   for="game-6"
                   class=""
                   @click="addBetGameType(5)"
-                  ><span>{{ $lang('跌') }}</span>
+                  ><span>{{ $lang('看跌') }}</span>
                   <span class="odds">{{ gameOptionOdd(5) }}</span></label
                 >
               </div>
@@ -1286,7 +1286,7 @@ const checkSymbolTV = (value) => {
                     v-trim-input
                     type="text"
                     name="number"
-                    :placeholder="`${$lang('請輸入期號')}`"
+                    :placeholder="`${$lang('請輸入交易時間')}`"
                 /></label>
                 <label for="dateStart" class="inputDate"
                   ><i class="fas fa-calendar-alt"></i>
@@ -1338,7 +1338,8 @@ const checkSymbolTV = (value) => {
                         </td>
                         <td>
                           <div>
-                            {{ $lang('期號') }}: <span>{{ item.roundNo }}</span>
+                            {{ $lang('交易時間') }}:
+                            <span>{{ item.roundNo }}</span>
                           </div>
                           <div>
                             {{ $lang('賠率') }}:
@@ -1411,7 +1412,8 @@ const checkSymbolTV = (value) => {
                         </td>
                         <td>
                           <div>
-                            {{ $lang('期號') }}: <span>{{ item.roundNo }}</span>
+                            {{ $lang('交易時間') }}:
+                            <span>{{ item.roundNo }}</span>
                           </div>
                           <div>
                             {{ $lang('賠率') }}:
@@ -1475,7 +1477,7 @@ const checkSymbolTV = (value) => {
                   <table>
                     <thead>
                       <tr>
-                        <th>{{ $lang('期號/類別') }}</th>
+                        <th>{{ $lang('交易時間/類別') }}</th>
                         <th>{{ $lang('盤口') }}</th>
                         <th>{{ $lang('結果') }}</th>
                       </tr>

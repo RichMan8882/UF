@@ -7,6 +7,8 @@ export const useWalletStore = defineStore('wallet', () => {
   const { t } = nuxtapp.$i18n
   const { api: $API } = useApi()
   const { getAccessToken } = useAuthStore()
+  const config = useRuntimeConfig()
+  const { siteId } = config.public
   const playerStore = usePlayerStore()
   const withdrawRecords = ref([])
   const depositRecords = ref([])
@@ -89,7 +91,7 @@ export const useWalletStore = defineStore('wallet', () => {
   }
   const queryDepositRecords = async (params: any) => {
     try {
-      const res: any = await $API(`/deposit/query`, {
+      const res: any = await $API(`/depositV2/query`, {
         method: 'POST',
         body: JSON.stringify(params),
         headers: {
@@ -249,13 +251,119 @@ export const useWalletStore = defineStore('wallet', () => {
       }
     }
   }
-
+  const getWallet = async () => {
+    try {
+      const res: any = await $API(`/site/wallet?siteId=${siteId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: getAccessToken()
+        }
+      })
+      if (res.statusCode !== 200) {
+        res.statusCode === 400
+          ? null
+          : ElNotification({
+              title: `${t('獲取失敗')}`,
+              showClose: false,
+              message: `${t(res.message)}`
+            })
+        return {
+          success: false,
+          message: `${t(res.message)}`
+        }
+      }
+      return {
+        success: true,
+        data: res.data
+      }
+    } catch (error: any) {
+      console.log(`withdraw error: `, error)
+      return {
+        success: false,
+        message: error.toString()
+      }
+    }
+  }
+  const deposit = async (params: any) => {
+    try {
+      const res: any = await $API(`/depositV2`, {
+        method: 'POST',
+        body: JSON.stringify(params),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: getAccessToken()
+        }
+      })
+      if (res.statusCode !== 200) {
+        res.statusCode === 400
+          ? null
+          : ElNotification({
+              title: `${t('儲值失敗')}`,
+              showClose: false,
+              message: `${t(res.message)}`
+            })
+        return {
+          success: false,
+          message: `${t(res.message)}`
+        }
+      }
+      return {
+        success: true,
+        data: res.data
+      }
+    } catch (error: any) {
+      console.log(`transfer error: `, error)
+      return {
+        success: false,
+        message: error.toString()
+      }
+    }
+  }
+  const updateDeposit = async (params: any) => {
+    try {
+      const res: any = await $API(`/depositV2`, {
+        method: 'PUT',
+        body: JSON.stringify(params),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: getAccessToken()
+        }
+      })
+      if (res.statusCode !== 200) {
+        res.statusCode === 400
+          ? null
+          : ElNotification({
+              title: `${t('取消儲值訂單失敗')}`,
+              showClose: false,
+              message: `${t(res.message)}`
+            })
+        return {
+          success: false,
+          message: `${t(res.message)}`
+        }
+      }
+      return {
+        success: true,
+        data: res.data
+      }
+    } catch (error: any) {
+      console.log(`transfer error: `, error)
+      return {
+        success: false,
+        message: error.toString()
+      }
+    }
+  }
   return {
     withdrawRecords,
     depositRecords,
     queryWithdrawRecord,
     withdraw,
     transfer,
+    getWallet,
+    updateDeposit,
+    deposit,
     queryDepositRecords,
     deeplink,
     queryWalletLog

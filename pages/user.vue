@@ -114,20 +114,20 @@ const walletName = (type) => {
   switch (type) {
     case 1:
       return siteStore.siteData.mainWalletType === type
-        ? t('資產總攬(電子錢包)')
-        : t('美元資產(電子錢包)')
+        ? t('資產總攬')
+        : t('美元資產')
     case 2:
       return siteStore.siteData.mainWalletType === type
-        ? t('資產總攬(電子錢包)')
-        : t('電力資產(電子錢包)')
+        ? t('資產總攬')
+        : t('電力資產')
     case 3:
       return siteStore.siteData.mainWalletType === type
-        ? t('資產總攬(電子錢包)')
-        : t('商城資產(電子錢包)')
+        ? t('資產總攬')
+        : t('商城資產')
     case 4:
       return siteStore.siteData.mainWalletType === type
-        ? t('資產總攬(電子錢包)')
-        : t('質押資產(電子錢包)')
+        ? t('資產總攬')
+        : t('質押資產')
     default:
       return t('其他資產')
   }
@@ -238,7 +238,8 @@ const walletName = (type) => {
     font-size: 15px
     font-weight: bold
 
-  input
+  input,
+  select
     padding: 5px 10px
     color: #000
     font-size: 14px
@@ -362,7 +363,7 @@ const walletName = (type) => {
 
 .back
   position: relative
-  z-index: 50
+  z-index: 40
   padding: .3rem
   background-color: #f4f4f7
   display: inline-block

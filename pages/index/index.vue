@@ -285,7 +285,13 @@ const swiperIndex = ref(0)
           </div>
         </div>
         <div class="right">
-          <video autoplay loop src="@/assets/image/home1/1.mp4"></video>
+          <video
+            autoplay
+            loop
+            muted
+            playsinline
+            src="@/assets/image/home1/1.mp4"
+          ></video>
         </div>
       </div>
       <div class="list list-2">

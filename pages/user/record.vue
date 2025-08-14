@@ -287,7 +287,7 @@ const formatMemo = (value: any) => {
                 :key="index"
                 class="recordBox-toggle"
               >
-                <th>{{ formatDate(item.timestamp) }}</th>
+                <th>{{ formatDate(item.createdAt) }}</th>
                 <th v-if="showSectionType(item.bankData.bankName)">
                   <div>{{ $lang('交易所') }}:{{ item.bankData.bankName }}</div>
                   <div>

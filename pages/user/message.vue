@@ -144,6 +144,11 @@ const updateImage = (data) => {
                 <input :id="item.id" type="checkbox" />
                 <label :for="item.id" @click="sandRead(item)">
                   <div class="msg">
+                    <div class="images" v-if="item.images.length > 0">
+                      <div v-for="items in item.images">
+                        <img :src="items" alt="" />
+                      </div>
+                    </div>
                     <div class="info-title">
                       <span>{{ item.title }}</span>
                     </div>
@@ -502,6 +507,11 @@ const updateImage = (data) => {
       font-weight: bold
       color: #000
       margin: 0 0 5px 0
+    .images
+      display: flex
+      margin: 5px
+      img
+        margin-right: 12px
   .msgContent
     .content
       margin-top: 3px
