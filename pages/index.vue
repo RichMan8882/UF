@@ -75,7 +75,7 @@ const menuList = computed(() => {
     return [
       {
         name: t('聯絡我方'),
-        link: 'openChatBox'
+        link: '/user/message'
       },
       {
         name: t('近期活動'),
@@ -110,7 +110,7 @@ const menuList = computed(() => {
     return [
       {
         name: t('聯絡我方'),
-        link: 'openChatBox'
+        link: '/user/message'
       },
       {
         name: t('近期活動'),
@@ -197,7 +197,7 @@ const footerList = ref([
   },
   {
     title: t('聯絡我方'),
-    items: [{ name: t('聯絡我們'), link: 'openChatBox' }]
+    items: [{ name: t('聯絡我們'), link: '/user/message' }]
   }
 ])
 </script>

@@ -110,7 +110,7 @@ const chartSetting = () => {
             width: w,
             height: h
           },
-          styles: { style: 'fill', color: 'rgba(255, 0, 0, 0.3)' },
+          styles: { style: 'fill', color: 'rgba(255, 0, 0, 0)' },
           ignoreEvent: true
         },
         {
@@ -123,17 +123,7 @@ const chartSetting = () => {
           },
           ignoreEvent: true
         },
-        {
-          type: 'text',
-          attrs: {
-            x: startX,
-            y: 80,
-            align: 'center',
-            baseline: 'bottom',
-            text: overlay.extendData[0]
-          },
-          ignoreEvent: true
-        },
+
         {
           type: 'text',
           attrs: {
@@ -214,7 +204,7 @@ const ruleLine = async (reset: Boolean) => {
     rect: {
       color: '#F9761E'
     },
-    extendData: ['最後買點', `本期結算${countDown.value}S`]
+    extendData: ['最後買點', `自動平倉處理${countDown.value}S`]
   }
   if (countDown.value === 60) {
     console.log('nowTime', new Date(y, m, d, hh, mm, 50))

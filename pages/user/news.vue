@@ -25,6 +25,9 @@ const displayedActivities = computed(() => {
   const start = (currentPage.value - 1) * activitiesPerPage.value
   return store.news.result.slice(start, start + activitiesPerPage.value)
 })
+
+// 展開公告
+const expandNews = ref(false)
 </script>
 
 <template>
@@ -46,9 +49,12 @@ const displayedActivities = computed(() => {
         <div class="itemTitle" style="cursor: pointer">
           <div class="image"><img :src="item.image" /></div>
         </div>
-        <div class="itemContent">
-          {{ item.title }}
-          <br />
+        <div
+          class="itemContent"
+          @click="expandNews = !expandNews"
+          :class="{ itemContentAtive: expandNews }"
+        >
+          <h3>{{ item.title }}</h3>
           <div class="html" v-html="item.content"></div>
         </div>
       </div>
@@ -58,6 +64,17 @@ const displayedActivities = computed(() => {
 
 <style scoped lang="sass">
 @import '@/assets/sass/user/model3/coin2.scss'
+
+.itemContent
+  max-height: 40px
+  overflow: hidden
+  box-shadow: 0 0 10px 5pxrgba(0,0,0,0.1)
+  transition: all 0.5s
+  h3
+    line-height: 40px
+.itemContentAtive
+  max-height: 330px
+  overflow: auto
 
 .pagination
   display: flex

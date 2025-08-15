@@ -113,7 +113,7 @@ const updateImage = (data) => {
             :class="pageType === 'message' ? 'active' : ''"
             @click="pageType = 'message'"
           >
-            {{ $lang('站內訊息') }}
+            {{ $lang('待回覆案件') }}
           </button>
           <button
             type="button"

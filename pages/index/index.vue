@@ -394,6 +394,8 @@ const swiperIndex = ref(0)
           <a
             data-w-id="7ce69de6-1760-55b0-3b75-4c11feffbb8f"
             class="button text-left w-button"
+            href="https://followin.io/zh-Hant"
+            target="_blank"
             >{{ $lang('View All') }}</a
           >
         </div>
@@ -850,6 +852,9 @@ h1
     padding-left: 0
     transition-property: all
     transition-duration: .3s
+    transition-timing-function: cubic-bezier(.4,0,.2,1)
+    &:hover
+      color: #fff
 
 .relative-block
   position: relative

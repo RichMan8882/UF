@@ -1129,7 +1129,7 @@ const checkSymbolTV = (value) => {
             <div class="bottomRow">
               <div class="totalBox">
                 <label for="keyInput" class="inputBox"
-                  ><span>{{ $lang('自行輸入金額') }}</span>
+                  ><span>{{ $lang('成本') }}</span>
                   <div class="outerBtn hidden">
                     <i class="far fa-caret-square-up"></i>
                   </div>
@@ -1225,11 +1225,18 @@ const checkSymbolTV = (value) => {
               ><span class="itemImg">
                 <img :src="item.symbolData.icon" />
               </span>
-              <span data-itemname="" class="itemName">{{
-                item.symbolData.label ||
-                item.symbolData.name ||
-                item.symbolData.symbol
-              }}</span>
+              <span data-itemname="" class="itemName"
+                >{{
+                  item.symbolData.label ||
+                  item.symbolData.name ||
+                  item.symbolData.symbol
+                }}
+                <img
+                  src="/assets/image/fire.png"
+                  alt=""
+                  style="width: 20px; height: 20px"
+                />
+              </span>
               <span
                 :data-type="
                   item.price[item.price.length - 1].close >
@@ -1325,8 +1332,8 @@ const checkSymbolTV = (value) => {
                     <thead>
                       <tr>
                         <th>{{ $lang('時間/幣種') }}</th>
-                        <th>{{ $lang('投注內容') }}</th>
-                        <th>{{ $lang('投注金額') }}</th>
+                        <th>{{ $lang('歷史倉位') }}</th>
+                        <th>{{ $lang('保證金(USDT)') }}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1346,8 +1353,9 @@ const checkSymbolTV = (value) => {
                             <span>{{ item.roundNo }}</span>
                           </div>
                           <div>
-                            {{ $lang('賠率') }}:
-                            <span>{{ item.odds }}</span>
+                            {{ $lang('槓桿倍率') }}:
+                            <!-- <span>{{ item.odds }}</span> -->
+                            <span>{{ '1x' }}</span>
                           </div>
                           <div v-if="item.option.length > 0">
                             {{ $lang('內容') }}:
@@ -1365,7 +1373,7 @@ const checkSymbolTV = (value) => {
                             >
                           </div>
                           <div>
-                            {{ $lang('匯率') }}:
+                            {{ $lang('標記價格') }}:
                             <span>{{
                               new Intl.NumberFormat('zh-TW', {
                                 minimumFractionDigits: 4,
@@ -1398,9 +1406,11 @@ const checkSymbolTV = (value) => {
                     <thead>
                       <tr>
                         <th>{{ $lang('時間/幣種') }}</th>
-                        <th>{{ $lang('投注內容') }}</th>
-                        <th>{{ $lang('投注金額') }}</th>
-                        <th style="text-align: center">{{ $lang('輸贏') }}</th>
+                        <th>{{ $lang('歷史倉位') }}</th>
+                        <th>{{ $lang('保證金(USDT)') }}</th>
+                        <th style="text-align: center">
+                          {{ $lang('盈虧額') }}
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1420,8 +1430,9 @@ const checkSymbolTV = (value) => {
                             <span>{{ item.roundNo }}</span>
                           </div>
                           <div>
-                            {{ $lang('賠率') }}:
-                            <span>{{ item.odds }}</span>
+                            {{ $lang('槓桿倍率') }}:
+                            <!-- <span>{{ item.odds }}</span> -->
+                            <span>{{ '1x' }}</span>
                           </div>
                           <div v-if="item.option.length > 0">
                             {{ $lang('內容') }}:
@@ -1439,7 +1450,7 @@ const checkSymbolTV = (value) => {
                             >
                           </div>
                           <div>
-                            {{ $lang('匯率') }}:
+                            {{ $lang('標記價格') }}:
                             <span>{{
                               new Intl.NumberFormat('zh-TW', {
                                 minimumFractionDigits: 4,
@@ -1448,7 +1459,7 @@ const checkSymbolTV = (value) => {
                             }}</span>
                           </div>
                           <div>
-                            {{ $lang('結束') }}:
+                            {{ $lang(' 自平均價') }}:
                             <span>{{
                               new Intl.NumberFormat('zh-TW', {
                                 minimumFractionDigits: 4,
@@ -1752,6 +1763,8 @@ const checkSymbolTV = (value) => {
       margin-right: auto
       padding-left: 10px
       font-weight: 700
+      display: flex
+      align-items: center
     .itemInfo
       color: #fff
       svg
