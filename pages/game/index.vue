@@ -232,7 +232,7 @@ const checkBetData = () => {
           if (response.success) {
             ElMessageBox.alert(
               `
-               <p style="margin:0 0 8px 0"> ${t('交易日期')}: ${response.data.roundNo} </p>
+               <p style="margin:0 0 8px 0"> ${t('交易序號')}: ${response.data.roundNo} </p>
                <p style="margin:0 0 8px 0"> ${t('交易金額')}: ${response.data.amount} </p>
                <p style="margin:0 0 8px 0"> ${t('交易類別')}: ${gameOptionNameList(
                  response.data.option
@@ -241,7 +241,7 @@ const checkBetData = () => {
                  response.data.openAt
                )} </p>
              `,
-              `${t('下單成功')}`,
+              `${t('狀態：已完成')}`,
               {
                 confirmButtonText: `${t('確認')}`,
                 center: true,
